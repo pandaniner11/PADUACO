@@ -1,586 +1,591 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>1 Percent Consulting — Federal Retirement Clarity</title>
-  <style>
-    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
-    :root {
-      --navy:        #1B2A6B;
-      --text-gray:   #5A6070;
-      --accent-gray: #4B5563;
-      --white:       #FFFFFF;
-      --light-bg:    #F7F8FB;
-    }
-
-    html { scroll-behavior: smooth; }
-
-    body {
-      font-family: 'Georgia', serif;
-      background-color: var(--white);
-      color: var(--navy);
-    }
-
-    /* ───── NAVBAR ───── */
-    nav {
-      background-color: var(--navy);
-      padding: 14px 48px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      position: sticky;
-      top: 0;
-      z-index: 100;
-    }
-
-    .brand {
-      display: flex;
-      align-items: baseline;
-      gap: 10px;
-      text-decoration: none;
-    }
-
-    .brand-numeral {
-      font-size: 1.7rem;
-      font-weight: 700;
-      color: var(--white);
-      font-family: 'Georgia', serif;
-      line-height: 1;
-    }
-
-    .brand-stack {
-      display: flex;
-      flex-direction: column;
-      line-height: 1.15;
-    }
-
-    .brand-stack .pct {
-      font-size: 0.6rem;
-      letter-spacing: 0.28em;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.55);
-      font-family: 'Arial', sans-serif;
-    }
-
-    .brand-stack .co {
-      font-size: 0.75rem;
-      font-weight: 700;
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-      color: var(--white);
-      font-family: 'Arial', sans-serif;
-    }
-
-    .nav-cta {
-      display: inline-block;
-      background: transparent;
-      border: 1px solid rgba(255,255,255,0.45);
-      color: var(--white);
-      text-decoration: none;
-      font-family: 'Arial', sans-serif;
-      font-size: 0.7rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      padding: 9px 24px;
-      transition: background 0.2s, border-color 0.2s;
-    }
-
-    .nav-cta:hover {
-      background: rgba(255,255,255,0.1);
-      border-color: var(--white);
-    }
-
-    /* ───── HERO ───── */
-    .hero {
-      background-color: var(--white);
-      padding: 90px 24px 80px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-    }
-
-    .hero-eyebrow {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 28px;
-    }
-
-    .eyebrow-line {
-      width: 36px;
-      height: 1px;
-      background-color: var(--accent-gray);
-      opacity: 0.45;
-    }
-
-    .eyebrow-dot {
-      width: 5px;
-      height: 5px;
-      border-radius: 50%;
-      background-color: var(--accent-gray);
-    }
-
-    .eyebrow-text {
-      font-family: 'Arial', sans-serif;
-      font-size: 0.68rem;
-      letter-spacing: 0.32em;
-      text-transform: uppercase;
-      color: var(--text-gray);
-    }
-
-    .hero h1 {
-      font-size: clamp(2rem, 4.5vw, 3.6rem);
-      font-weight: 700;
-      color: var(--navy);
-      line-height: 1.18;
-      max-width: 780px;
-      margin-bottom: 24px;
-    }
-
-    .hero h1 em {
-      font-style: italic;
-      color: var(--text-gray);
-    }
-
-    .hero-sub {
-      font-size: 1.05rem;
-      color: var(--text-gray);
-      line-height: 1.8;
-      max-width: 580px;
-      margin-bottom: 52px;
-      font-family: 'Arial', sans-serif;
-    }
-
-    /* ───── VIDEO PLACEHOLDER ───── */
-    .video-wrap {
-      width: 100%;
-      max-width: 680px;
-      margin-bottom: 52px;
-      position: relative;
-    }
-
-    .video-box {
-      width: 100%;
-      aspect-ratio: 16 / 9;
-      background-color: var(--light-bg);
-      border: 1px solid rgba(75,85,99,0.18);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 16px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    /* swap this <div> for a real <video> or <iframe> when ready */
-    .video-box .play-ring {
-      width: 68px;
-      height: 68px;
-      border-radius: 50%;
-      border: 2px solid var(--navy);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      opacity: 0.35;
-    }
-
-    .video-box .play-ring svg {
-      width: 26px;
-      height: 26px;
-      fill: var(--navy);
-      margin-left: 4px;
-    }
-
-    .video-label {
-      font-family: 'Arial', sans-serif;
-      font-size: 0.7rem;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--text-gray);
-      opacity: 0.6;
-    }
-
-    /* ───── CTA BUTTONS ───── */
-    .cta-group {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 14px;
-      margin-bottom: 16px;
-    }
-
-    .btn-primary {
-      display: inline-block;
-      background-color: var(--navy);
-      color: var(--white);
-      text-decoration: none;
-      font-family: 'Arial', sans-serif;
-      font-size: 0.8rem;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      padding: 20px 56px;
-      border: 2px solid var(--navy);
-      cursor: pointer;
-      transition: background-color 0.22s, letter-spacing 0.22s;
-    }
-
-    .btn-primary:hover {
-      background-color: #14205a;
-    }
-
-    .btn-secondary {
-      display: inline-block;
-      background: transparent;
-      color: var(--navy);
-      text-decoration: none;
-      font-family: 'Arial', sans-serif;
-      font-size: 0.75rem;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      padding: 14px 40px;
-      border: 1px solid rgba(27,42,107,0.35);
-      cursor: pointer;
-      transition: border-color 0.2s, color 0.2s;
-    }
-
-    .btn-secondary:hover {
-      border-color: var(--navy);
-      color: var(--navy);
-    }
-
-    .cta-note {
-      font-family: 'Arial', sans-serif;
-      font-size: 0.7rem;
-      color: var(--text-gray);
-      opacity: 0.65;
-      letter-spacing: 0.05em;
-      margin-top: 4px;
-    }
-
-    /* ───── DIVIDER ───── */
-    .section-divider {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0;
-      padding: 0 24px;
-    }
-
-    .section-divider .sd-line {
-      flex: 1;
-      max-width: 320px;
-      height: 1px;
-      background-color: var(--accent-gray);
-      opacity: 0.18;
-    }
-
-    .section-divider .sd-dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background-color: var(--accent-gray);
-      opacity: 0.35;
-      margin: 0 8px;
-    }
-
-    /* ───── FAQ / OBJECTION SECTION ───── */
-    .faq {
-      background-color: var(--light-bg);
-      padding: 88px 24px 80px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    .faq-header {
-      text-align: center;
-      margin-bottom: 56px;
-    }
-
-    .faq-header .section-eyebrow {
-      font-family: 'Arial', sans-serif;
-      font-size: 0.68rem;
-      letter-spacing: 0.32em;
-      text-transform: uppercase;
-      color: var(--text-gray);
-      margin-bottom: 16px;
-    }
-
-    .faq-header h2 {
-      font-size: clamp(1.5rem, 3vw, 2.2rem);
-      font-weight: 700;
-      color: var(--navy);
-    }
-
-    .faq-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 2px;
-      width: 100%;
-      max-width: 900px;
-    }
-
-    .faq-card {
-      background-color: var(--white);
-      padding: 44px 40px;
-      border-left: 3px solid transparent;
-      transition: border-color 0.25s;
-    }
-
-    .faq-card:hover {
-      border-left-color: var(--navy);
-    }
-
-    .faq-card .q {
-      font-family: 'Georgia', serif;
-      font-size: 1.05rem;
-      font-weight: 700;
-      color: var(--navy);
-      margin-bottom: 16px;
-      line-height: 1.35;
-    }
-
-    .faq-card .divider-line {
-      width: 28px;
-      height: 1px;
-      background-color: var(--accent-gray);
-      opacity: 0.4;
-      margin-bottom: 16px;
-    }
-
-    .faq-card .a {
-      font-family: 'Arial', sans-serif;
-      font-size: 0.92rem;
-      color: var(--text-gray);
-      line-height: 1.75;
-    }
-
-    /* ───── BOTTOM CTA STRIP ───── */
-    .bottom-cta {
-      background-color: var(--navy);
-      padding: 72px 24px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      gap: 28px;
-    }
-
-    .bottom-cta h2 {
-      font-size: clamp(1.5rem, 3vw, 2.2rem);
-      font-weight: 700;
-      color: var(--white);
-      max-width: 560px;
-      line-height: 1.25;
-    }
-
-    .bottom-cta p {
-      font-family: 'Arial', sans-serif;
-      font-size: 0.92rem;
-      color: rgba(255,255,255,0.65);
-      max-width: 440px;
-      line-height: 1.7;
-    }
-
-    .btn-white {
-      display: inline-block;
-      background-color: var(--white);
-      color: var(--navy);
-      text-decoration: none;
-      font-family: 'Arial', sans-serif;
-      font-size: 0.78rem;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      padding: 20px 52px;
-      border: 2px solid var(--white);
-      cursor: pointer;
-      transition: background-color 0.22s, color 0.22s;
-    }
-
-    .btn-white:hover {
-      background-color: transparent;
-      color: var(--white);
-    }
-
-    /* ───── DISCLAIMER ───── */
-    .disclaimer {
-      background-color: var(--white);
-      padding: 40px 48px;
-      border-top: 1px solid rgba(75,85,99,0.12);
-    }
-
-    .disclaimer p {
-      font-family: 'Arial', sans-serif;
-      font-size: 0.68rem;
-      color: var(--text-gray);
-      opacity: 0.6;
-      line-height: 1.7;
-      max-width: 860px;
-      margin: 0 auto;
-      text-align: center;
-    }
-
-    /* ───── FOOTER ───── */
-    footer {
-      background-color: var(--white);
-      padding: 28px 48px;
-      border-top: 1px solid rgba(75,85,99,0.1);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 12px;
-    }
-
-    footer .footer-brand {
-      font-family: 'Arial', sans-serif;
-      font-size: 0.68rem;
-      letter-spacing: 0.26em;
-      text-transform: uppercase;
-      color: var(--text-gray);
-    }
-
-    footer .footer-copy {
-      font-family: 'Arial', sans-serif;
-      font-size: 0.65rem;
-      color: var(--accent-gray);
-      opacity: 0.45;
-    }
-
-    /* ───── RESPONSIVE ───── */
-    @media (max-width: 640px) {
-      nav { padding: 14px 20px; }
-      .hero { padding: 64px 20px 60px; }
-      .btn-primary, .btn-secondary, .btn-white { width: 100%; max-width: 340px; text-align: center; }
-      .faq-card { padding: 36px 28px; }
-      footer { padding: 24px 20px; }
-      .disclaimer { padding: 32px 20px; }
-    }
-  </style>
-</head>
-<body>
-
-  <!-- ── NAVBAR ── -->
-  <nav>
-    <a class="brand" href="#">
-      <span class="brand-numeral">1</span>
-      <span class="brand-stack">
-        <span class="pct">Percent</span>
-        <span class="co">Consulting</span>
-      </span>
-    </a>
-    <a class="nav-cta" href="#consult">Get Clarity</a>
-  </nav>
-
-
-  <!-- ── HERO ── -->
-  <section class="hero">
-
-    <div class="hero-eyebrow">
-      <span class="eyebrow-line"></span>
-      <span class="eyebrow-dot"></span>
-      <span class="eyebrow-text">Padua Co &nbsp;·&nbsp; Federal Retirement Consulting</span>
-      <span class="eyebrow-dot"></span>
-      <span class="eyebrow-line"></span>
-    </div>
-
-    <h1>Could You Retire<br><em>Sooner Than You Think?</em></h1>
-
-    <p class="hero-sub">
-      Get a free, no-pressure educational consultation with a former Federal HR professional —
-      and finally get clarity on where you actually stand.
-    </p>
-
-    <!-- VIDEO PLACEHOLDER — replace this entire .video-wrap block with your <video> or <iframe> embed when ready -->
-    <div class="video-wrap">
-      <div class="video-box">
-        <div class="play-ring">
-          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <polygon points="5,3 19,12 5,21"/>
-          </svg>
-        </div>
-        <span class="video-label">Video coming soon — replace this block with your embed</span>
-      </div>
-    </div>
-
-    <div class="cta-group" id="consult">
-      <a class="btn-primary" href="#">Get My Free Consultation</a>
-      <a class="btn-secondary" href="#">Yes, I Want Clarity</a>
-    </div>
-    <p class="cta-note">No cost. No obligation. Just honest answers.</p>
-
-  </section>
-
-
-  <div class="section-divider">
-    <span class="sd-line"></span>
-    <span class="sd-dot"></span>
-    <span class="sd-line"></span>
-  </div>
-
-
-  <!-- ── FAQ / OBJECTION HANDLER ── -->
-  <section class="faq">
-
-    <div class="faq-header">
-      <p class="section-eyebrow">Common Questions</p>
-      <h2>You May Be Wondering...</h2>
-    </div>
-
-    <div class="faq-grid">
-
-      <div class="faq-card">
-        <p class="q">Are you qualified?</p>
-        <div class="divider-line"></div>
-        <p class="a">I spent 10+ years in Federal HR — I know your benefits from the inside out.</p>
-      </div>
-
-      <div class="faq-card">
-        <p class="q">What's the catch?</p>
-        <div class="divider-line"></div>
-        <p class="a">There is no catch, just free advice from a professional. I'm here to educate.</p>
-      </div>
-
-      <div class="faq-card">
-        <p class="q">Is this relevant to me?</p>
-        <div class="divider-line"></div>
-        <p class="a">I've seen firsthand the costly mistakes employees make with their benefits — I help you avoid them.</p>
-      </div>
-
-    </div>
-
-  </section>
-
-
-  <!-- ── BOTTOM CTA STRIP ── -->
-  <section class="bottom-cta">
-    <h2>Ready to See Where You Actually Stand?</h2>
-    <p>One conversation could change everything. No sales pitch — just clarity.</p>
-    <a class="btn-white" href="#consult">Get My Free Consultation</a>
-  </section>
-
-
-  <!-- ── DISCLAIMER ── -->
-  <div class="disclaimer">
-    <p>
-      The information provided on this website is for educational and informational purposes only.
-      It does not constitute financial, investment, tax, or legal advice. Please consult a licensed
-      financial advisor, tax professional, or attorney for advice specific to your situation. Results
-      vary based on individual circumstances. Nothing on this site guarantees or implies a specific
-      retirement outcome or financial result.
-    </p>
-  </div>
-
-
-  <!-- ── FOOTER ── -->
-  <footer>
-    <span class="footer-brand">1 Percent Consulting</span>
-    <span class="footer-copy">&copy; 2026 Padua Co. All rights reserved.</span>
-  </footer>
-
-</body>
-</html>
+  <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <title>1 Percent Consulting — Federal Retirement Clarity</title>
+    <style>
+          *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+          :root {
+                  --navy:        #1B2A6B;
+                  --text-gray:   #5A6070;
+                  --accent-gray: #4B5563;
+                  --white:       #FFFFFF;
+                  --light-bg:    #F7F8FB;
+          }
+
+          html { scroll-behavior: smooth; }
+
+          body {
+                  font-family: 'Georgia', serif;
+                  background-color: var(--white);
+                  color: var(--navy);
+          }
+
+          /* ───── NAVBAR ───── */
+          nav {
+                  background-color: var(--navy);
+                  padding: 14px 48px;
+                  display: flex;
+                  align-items: center;
+                  justify-content: space-between;
+                  position: sticky;
+                  top: 0;
+                  z-index: 100;
+          }
+
+          .brand {
+                  display: flex;
+                  align-items: baseline;
+                  gap: 10px;
+                  text-decoration: none;
+          }
+
+          .brand-numeral {
+                  font-size: 1.7rem;
+                  font-weight: 700;
+                  color: var(--white);
+                  font-family: 'Georgia', serif;
+                  line-height: 1;
+          }
+
+          .brand-stack {
+                  display: flex;
+                  flex-direction: column;
+                  line-height: 1.15;
+          }
+
+          .brand-stack .pct {
+                  font-size: 0.6rem;
+                  letter-spacing: 0.28em;
+                  text-transform: uppercase;
+                  color: rgba(255,255,255,0.55);
+                  font-family: 'Arial', sans-serif;
+          }
+
+          .brand-stack .co {
+                  font-size: 0.75rem;
+                  font-weight: 700;
+                  letter-spacing: 0.3em;
+                  text-transform: uppercase;
+                  color: var(--white);
+                  font-family: 'Arial', sans-serif;
+          }
+
+          .nav-cta {
+                  display: inline-block;
+                  background: transparent;
+                  border: 1px solid rgba(255,255,255,0.45);
+                  color: var(--white);
+                  text-decoration: none;
+                  font-family: 'Arial', sans-serif;
+                  font-size: 0.7rem;
+                  letter-spacing: 0.2em;
+                  text-transform: uppercase;
+                  padding: 9px 24px;
+                  transition: background 0.2s, border-color 0.2s;
+          }
+
+          .nav-cta:hover {
+                  background: rgba(255,255,255,0.1);
+                  border-color: var(--white);
+          }
+
+          /* ───── HERO ───── */
+          .hero {
+                  background-color: var(--white);
+                  padding: 90px 24px 80px;
+                  display: flex;
+                  flex-direction: column;
+                  align-items: center;
+                  text-align: center;
+          }
+
+          .hero-eyebrow {
+                  display: flex;
+                  align-items: center;
+                  gap: 10px;
+                  margin-bottom: 28px;
+          }
+
+          .eyebrow-line {
+                  width: 36px;
+                  height: 1px;
+                  background-color: var(--accent-gray);
+                  opacity: 0.45;
+          }
+
+          .eyebrow-dot {
+                  width: 5px;
+                  height: 5px;
+                  border-radius: 50%;
+                  background-color: var(--accent-gray);
+          }
+
+          .eyebrow-text {
+                  font-family: 'Arial', sans-serif;
+                  font-size: 0.68rem;
+                  letter-spacing: 0.32em;
+                  text-transform: uppercase;
+                  color: var(--text-gray);
+          }
+
+          .hero h1 {
+                  font-size: clamp(2rem, 4.5vw, 3.6rem);
+                  font-weight: 700;
+                  color: var(--navy);
+                  line-height: 1.18;
+                  max-width: 780px;
+                  margin-bottom: 24px;
+          }
+
+          .hero h1 em {
+                  font-style: italic;
+                  color: var(--text-gray);
+          }
+
+          .hero-sub {
+                  font-size: 1.05rem;
+                  color: var(--text-gray);
+                  line-height: 1.8;
+                  max-width: 580px;
+                  margin-bottom: 52px;
+                  font-family: 'Arial', sans-serif;
+          }
+
+          /* ───── VIDEO PLACEHOLDER ───── */
+          .video-wrap {
+                  width: 100%;
+                  max-width: 680px;
+                  margin-bottom: 52px;
+                  position: relative;
+          }
+
+          .video-box {
+                  width: 100%;
+                  aspect-ratio: 16 / 9;
+                  background-color: var(--light-bg);
+                  border: 1px solid rgba(75,85,99,0.18);
+                  display: flex;
+                  flex-direction: column;
+                  align-items: center;
+                  justify-content: center;
+                  gap: 16px;
+                  position: relative;
+                  overflow: hidden;
+          }
+
+          .video-box .play-ring {
+                  width: 68px;
+                  height: 68px;
+                  border-radius: 50%;
+                  border: 2px solid var(--navy);
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  opacity: 0.35;
+          }
+
+          .video-box .play-ring svg {
+                  width: 26px;
+                  height: 26px;
+                  fill: var(--navy);
+                  margin-left: 4px;
+          }
+
+          .video-label {
+                  font-family: 'Arial', sans-serif;
+                  font-size: 0.7rem;
+                  letter-spacing: 0.22em;
+                  text-transform: uppercase;
+                  color: var(--text-gray);
+                  opacity: 0.6;
+          }
+
+          /* ───── CTA BUTTONS ───── */
+          .cta-group {
+                  display: flex;
+                  flex-direction: column;
+                  align-items: center;
+                  gap: 14px;
+                  margin-bottom: 16px;
+          }
+
+          .btn-primary {
+                  display: inline-block;
+                  background-color: var(--navy);
+                  color: var(--white);
+                  text-decoration: none;
+                  font-family: 'Arial', sans-serif;
+                  font-size: 0.8rem;
+                  letter-spacing: 0.22em;
+                  text-transform: uppercase;
+                  padding: 20px 56px;
+                  border: 2px solid var(--navy);
+                  cursor: pointer;
+                  transition: background-color 0.22s, letter-spacing 0.22s;
+          }
+
+          .btn-primary:hover {
+                  background-color: #14205a;
+          }
+
+          .btn-secondary {
+                  display: inline-block;
+                  background: transparent;
+                  color: var(--navy);
+                  text-decoration: none;
+                  font-family: 'Arial', sans-serif;
+                  font-size: 0.75rem;
+                  letter-spacing: 0.18em;
+                  text-transform: uppercase;
+                  padding: 14px 40px;
+                  border: 1px solid rgba(27,42,107,0.35);
+                  cursor: pointer;
+                  transition: border-color 0.2s, color 0.2s;
+          }
+
+          .btn-secondary:hover {
+                  border-color: var(--navy);
+                  color: var(--navy);
+          }
+
+          .cta-note {
+                  font-family: 'Arial', sans-serif;
+                  font-size: 0.7rem;
+                  color: var(--text-gray);
+                  opacity: 0.65;
+                  letter-spacing: 0.05em;
+                  margin-top: 4px;
+          }
+
+          /* ───── DIVIDER ───── */
+          .section-divider {
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  gap: 0;
+                  padding: 0 24px;
+          }
+
+          .section-divider .sd-line {
+                  flex: 1;
+                  max-width: 320px;
+                  height: 1px;
+                  background-color: var(--accent-gray);
+                  opacity: 0.18;
+          }
+
+          .section-divider .sd-dot {
+                  width: 6px;
+                  height: 6px;
+                  border-radius: 50%;
+                  background-color: var(--accent-gray);
+                  opacity: 0.35;
+                  margin: 0 8px;
+          }
+
+          /* ───── FAQ / OBJECTION SECTION ───── */
+          .faq {
+                  background-color: var(--light-bg);
+                  padding: 88px 24px 80px;
+                  display: flex;
+                  flex-direction: column;
+                  align-items: center;
+          }
+
+          .faq-header {
+                  text-align: center;
+                  margin-bottom: 56px;
+          }
+
+          .faq-header .section-eyebrow {
+                  font-family: 'Arial', sans-serif;
+                  font-size: 0.68rem;
+                  letter-spacing: 0.32em;
+                  text-transform: uppercase;
+                  color: var(--text-gray);
+                  margin-bottom: 16px;
+          }
+
+          .faq-header h2 {
+                  font-size: clamp(1.5rem, 3vw, 2.2rem);
+                  font-weight: 700;
+                  color: var(--navy);
+          }
+
+          .faq-grid {
+                  display: grid;
+                  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+                  gap: 2px;
+                  width: 100%;
+                  max-width: 900px;
+          }
+
+          .faq-card {
+                  background-color: var(--white);
+                  padding: 44px 40px;
+                  border-left: 3px solid transparent;
+                  transition: border-color 0.25s;
+          }
+
+          .faq-card:hover {
+                  border-left-color: var(--navy);
+          }
+
+          .faq-card .q {
+                  font-family: 'Georgia', serif;
+                  font-size: 1.05rem;
+                  font-weight: 700;
+                  color: var(--navy);
+                  margin-bottom: 16px;
+                  line-height: 1.35;
+          }
+
+          .faq-card .divider-line {
+                  width: 28px;
+                  height: 1px;
+                  background-color: var(--accent-gray);
+                  opacity: 0.4;
+                  margin-bottom: 16px;
+          }
+
+          .faq-card .a {
+                  font-family: 'Arial', sans-serif;
+                  font-size: 0.92rem;
+                  color: var(--text-gray);
+                  line-height: 1.75;
+          }
+
+          /* ───── BOTTOM CTA STRIP ───── */
+          .bottom-cta {
+                  background-color: var(--navy);
+                  padding: 72px 24px;
+                  display: flex;
+                  flex-direction: column;
+                  align-items: center;
+                  text-align: center;
+                  gap: 28px;
+          }
+
+          .bottom-cta h2 {
+                  font-size: clamp(1.5rem, 3vw, 2.2rem);
+                  font-weight: 700;
+                  color: var(--white);
+                  max-width: 560px;
+                  line-height: 1.25;
+          }
+
+          .bottom-cta p {
+                  font-family: 'Arial', sans-serif;
+                  font-size: 0.92rem;
+                  color: rgba(255,255,255,0.65);
+                  max-width: 440px;
+                  line-height: 1.7;
+          }
+
+          .btn-white {
+                  display: inline-block;
+                  background-color: var(--white);
+                  color: var(--navy);
+                  text-decoration: none;
+                  font-family: 'Arial', sans-serif;
+                  font-size: 0.78rem;
+                  letter-spacing: 0.22em;
+                  text-transform: uppercase;
+                  padding: 20px 52px;
+                  border: 2px solid var(--white);
+                  cursor: pointer;
+                  transition: background-color 0.22s, color 0.22s;
+          }
+
+          .btn-white:hover {
+                  background-color: transparent;
+                  color: var(--white);
+          }
+
+          /* ───── DISCLAIMER ───── */
+          .disclaimer {
+                  background-color: var(--white);
+                  padding: 40px 48px;
+                  border-top: 1px solid rgba(75,85,99,0.12);
+          }
+
+          .disclaimer p {
+                  font-family: 'Arial', sans-serif;
+                  font-size: 0.68rem;
+                  color: var(--text-gray);
+                  opacity: 0.6;
+                  line-height: 1.7;
+                  max-width: 860px;
+                  margin: 0 auto;
+                  text-align: center;
+          }
+
+          /* ───── FOOTER ───── */
+          footer {
+                  background-color: var(--white);
+                  padding: 28px 48px;
+                  border-top: 1px solid rgba(75,85,99,0.1);
+                  display: flex;
+                  align-items: center;
+                  justify-content: space-between;
+                  flex-wrap: wrap;
+                  gap: 12px;
+          }
+
+          footer .footer-brand {
+                  font-family: 'Arial', sans-serif;
+                  font-size: 0.68rem;
+                  letter-spacing: 0.26em;
+                  text-transform: uppercase;
+                  color: var(--text-gray);
+          }
+
+          footer .footer-copy {
+                  font-family: 'Arial', sans-serif;
+                  font-size: 0.65rem;
+                  color: var(--accent-gray);
+                  opacity: 0.45;
+          }
+
+          /* ───── RESPONSIVE ───── */
+          @media (max-width: 640px) {
+                  nav { padding: 14px 20px; }
+                  .hero { padding: 64px 20px 60px; }
+                  .btn-primary, .btn-secondary, .btn-white { width: 100%; max-width: 340px; text-align: center; }
+                  .faq-card { padding: 36px 28px; }
+                  footer { padding: 24px 20px; }
+                  .disclaimer { padding: 32px 20px; }
+          }
+        </style>
+  </head>
+  <body>
+
+      <!-- ── NAVBAR ── -->
+      <nav>
+            <a class="brand" href="#">
+                    <span class="brand-numeral">1</span>span>
+                    <span class="brand-stack">
+                              <span class="pct">Percent</span>span>
+                              <span class="co">Consulting</span>span>
+                    </span>span>
+            </a>a>
+            <a class="nav-cta" href="https://calendly.com/p1consulting/45" target="_blank">Get Clarity</a>a>
+      </nav>
+
+
+      <!-- ── HERO ── -->
+      <section class="hero">
+
+            <div class="hero-eyebrow">
+                    <span class="eyebrow-line"></span>span>
+                    <span class="eyebrow-dot"></span>span>
+                    <span class="eyebrow-text">Padua Co &nbsp;&middot;&nbsp; Federal Retirement Consulting</span>span>
+                    <span class="eyebrow-dot"></span>span>
+                    <span class="eyebrow-line"></span>span>
+            </div>div>
+
+            <h1>Could You Retire<br><em>Sooner Than You Think?</em></h1>
+      
+          <p class="hero-sub">
+            Get a free, no-pressure educational consultation with a former Federal HR professional &mdash;
+            and finally get clarity on where you actually stand.
+          </p>p>
+      
+          <!-- VIDEO PLACEHOLDER — replace this entire .video-wrap block with your <video> or <iframe> embed when ready -->
+          <div class="video-wrap">
+                <div class="video-box">
+                        <div class="play-ring">
+                                  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                              <polygon points="5,3 19,12 5,21"/>
+                                  </svg>svg>
+                        </div>div>
+                        <span class="video-label">Video coming soon &mdash; replace this block with your embed</span>span>
+                </div>div>
+          </div>div>
+      
+          <div class="cta-group" id="consult">
+                <a class="btn-primary" href="https://calendly.com/p1consulting/45" target="_blank">Get My Free Consultation</a>a>
+                <a class="btn-secondary" href="https://calendly.com/p1consulting/45" target="_blank">Yes, I Want Clarity</a>a>
+          </div>div>
+          <p class="cta-note">No cost. No obligation. Just honest answers.</p>p>
+      
+      </section>section>
+  
+  
+    <div class="section-divider">
+        <span class="sd-line"></span>span>
+        <span class="sd-dot"></span>span>
+        <span class="sd-line"></span>span>
+    </div>div>
+  
+  
+    <!-- ── FAQ / OBJECTION HANDLER ── -->
+    <section class="faq">
+    
+        <div class="faq-header">
+              <p class="section-eyebrow">Common Questions</p>p>
+              <h2>You May Be Wondering...</h2>
+        </div>div>
+    
+        <div class="faq-grid">
+        
+              <div class="faq-card">
+                      <p class="q">Are you qualified?</p>p>
+                      <div class="divider-line"></div>div>
+                      <p class="a">I spent 10+ years in Federal HR &mdash; I know your benefits from the inside out.</p>p>
+              </div>div>
+        
+              <div class="faq-card">
+                      <p class="q">What's the catch?</p>p>
+                      <div class="divider-line"></div>div>
+                      <p class="a">There is no catch, just free advice from a professional. I'm here to educate.</p>p>
+              </div>div>
+        
+              <div class="faq-card">
+                      <p class="q">Is this relevant to me?</p>p>
+                      <div class="divider-line"></div>div>
+                      <p class="a">I've seen firsthand the costly mistakes employees make with their benefits &mdash; I help you avoid them.</p>p>
+              </div>div>
+        
+        </div>div>
+    
+    </section>section>
+  
+  
+    <!-- ── BOTTOM CTA STRIP ── -->
+    <section class="bottom-cta">
+        <h2>Ready to See Where You Actually Stand?</h2>
+        <p>One conversation could change everything. No sales pitch &mdash; just clarity.</p>
+        <a class="btn-white" href="https://calendly.com/p1consulting/45" target="_blank">Get My Free Consultation</a>a>
+    </section>section>
+  
+  
+    <!-- ── DISCLAIMER ── -->
+    <div class="disclaimer">
+        <p>
+                The information provided on this website is for educational and informational purposes only.
+                It does not constitute financial, investment, tax, or legal advice. Please consult a licensed
+                financial advisor, tax professional, or attorney for advice specific to your situation. Results
+                vary based on individual circumstances. Nothing on this site guarantees or implies a specific
+                retirement outcome or financial result.
+        </p>
+    </div>div>
+
+
+      <!-- ── FOOTER ── -->
+      <footer>
+            <span class="footer-brand">1 Percent Consulting</span>span>
+            <span class="footer-copy">&copy; 2026 Padua Co. All rights reserved.</span>span>
+      </footer>
+
+  </body>
+</html>html>
+      </footer>
+        </p></p></em></h1>
+      </nav>
+  </body>
+    </style></title>
+  </head>
