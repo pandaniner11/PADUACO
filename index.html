@@ -445,6 +445,8 @@
             background: var(--white);
             padding: 0;
             overflow: hidden;
+            display: flex;
+            flex-direction: column;
         }
         .app-section-inner {
             display: flex;
@@ -474,6 +476,7 @@
         }
         .app-download-label {
             color: var(--navy);
+            padding: 1.5rem 0 0.5rem;
             font-size: 1.6rem;
             font-family: 'Georgia', serif;
             font-weight: bold;
@@ -537,7 +540,7 @@
             margin-bottom: 0.5rem;
         }
         .pwr-logo-img {
-            height: 4em;
+            height: 2.5em;
             width: auto;
         }
 </style>
@@ -629,11 +632,11 @@
 
         <!-- APP DOWNLOAD -->
         <section class="app-section">
+            <div class="app-download-label">Download the App Today!</div>
             <div class="app-section-inner">
                 <!-- LEFT: dark image panel -->
                 <div class="app-left">
                     <div class="app-left-content">
-                        <div class="app-download-label">Download the App Today!</div>
                         <h2 class="pwr-logo-heading"><img src="pwr-logo.png" alt="PWR" class="pwr-logo-img"> Retirement Group</h2>
                         <p>Plan smarter. Stay informed. Your federal retirement, always at your fingertips.</p>
                     </div>
