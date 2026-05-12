@@ -409,7 +409,36 @@
           color: var(--text-gray);
         }
 
-              </style>
+              
+        /* ------ HERO CLARITY BUTTON ------ */
+        .btn-hero-clarity {
+            display: inline-block;
+            padding: 0.85rem 2.8rem;
+            background: var(--navy);
+            color: var(--white);
+            text-decoration: none;
+            font-size: 0.85rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            font-family: 'Georgia', serif;
+            border: 2px solid var(--navy);
+            transition: background 0.2s, color 0.2s;
+        }
+        .btn-hero-clarity:hover { background: transparent; color: var(--navy); }
+
+        /* ------ LEAD FORM SECTION ------ */
+        .lead-form-section {
+            padding: 4rem 1.5rem;
+            background: var(--light-bg);
+            text-align: center;
+        }
+        .lead-form-section .form-guarantee {
+            margin-top: 1rem;
+            font-size: 0.82rem;
+            color: var(--text-gray);
+        }
+
+</style>
     </head>
     <body>
 
@@ -434,30 +463,35 @@
               </div>
         </div>
     
-        <!-- HERO -->
-        <section class="hero">
+                <!-- HERO -->
+        <section class="hero" style="padding: 3rem 1.5rem 2.5rem;">
               <h1>Could You Retire<br><em>Sooner Than You Think?</em></h1>
               <p>Get a free, no-pressure educational consultation with a former Federal HR professional — and finally get clarity on where you actually stand.</p>
-        
-              <!-- LEAD FORM -->
-              <div class="lead-form-card" id="lead-form">
+
+              <!-- VIDEO PLACEHOLDER -->
+              <div class="video-wrap" style="margin: 2rem auto 0;">
+                    <div class="video-placeholder">
+                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
+                            Video Coming Soon — Replace This Block With Your Embed
+                    </div>
+              </div>
+
+              <div style="text-align:center; margin-top: 2rem;">
+                    <a href="#lead-form" class="btn-hero-clarity">GET CLARITY</a>
+              </div>
+        </section>
+
+        <!-- LEAD FORM -->
+        <section class="lead-form-section" id="lead-form">
+              <div class="lead-form-card">
                       <h2>Get My Free Consultation</h2>
                       <p class="sub">One conversation. Real answers. No sales pitch.</p>
                       <!-- HubSpot Form Embed -->
                       <div id="hubspot-form-container"></div>
               </div>
-        
               <p class="form-guarantee">No cost. No obligation. Just honest answers.</p>
         </section>
-    
-        <!-- VIDEO PLACEHOLDER -->
-        <div class="video-wrap">
-              <div class="video-placeholder">
-                      <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
-                      Video Coming Soon — Replace This Block With Your Embed
-              </div>
-        </div>
-    
+
         <!-- FAQ -->
         <section class="faq">
               <p class="faq-tag">Common Questions</p>
@@ -491,12 +525,7 @@
       <p class="review-note">★★★★★ &nbsp;Tap the button above — it opens Google directly</p>
     </section>
 
-<!-- BOTTOM CTA -->
-        <section class="cta-section">
-              <h2>Ready to See Where You Actually Stand?</h2>
-              <p>One conversation could change everything. No sales pitch — just clarity.</p>
-              <a href="#lead-form" class="btn-primary" onclick="event.preventDefault();document.getElementById('lead-form').scrollIntoView({behavior:'smooth'})">Get My Free Consultation</a>
-        </section>
+
     
         <!-- FOOTER -->
         <footer>
