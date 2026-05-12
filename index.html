@@ -442,50 +442,89 @@
 
         /* ------ APP DOWNLOAD SECTION ------ */
         .app-section {
-            padding: 3rem 1.5rem;
-            background: var(--navy);
-            text-align: center;
-            color: var(--white);
+            background: #0d1b2a;
+            padding: 0;
+            overflow: hidden;
         }
-        .app-section h2 {
-            font-size: clamp(1.6rem, 4vw, 2.2rem);
-            margin-bottom: 0.5rem;
-            color: var(--gold);
-        }
-        .app-section p {
-            font-size: 1rem;
-            color: rgba(255,255,255,0.8);
-            margin-bottom: 2rem;
-        }
-        .app-badges {
+        .app-section-inner {
             display: flex;
-            gap: 1.2rem;
-            justify-content: center;
-            flex-wrap: wrap;
+            align-items: stretch;
+            min-height: 180px;
         }
-        .app-badge-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.6rem;
-            background: var(--white);
-            color: var(--navy);
-            text-decoration: none;
-            padding: 0.7rem 1.4rem;
-            border-radius: 8px;
+        .app-left {
+            flex: 1 1 55%;
+            position: relative;
+            background: linear-gradient(135deg, #0d1b2a 60%, #1b2a6b 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            padding: 2rem 2.5rem;
+            overflow: hidden;
+        }
+        .app-left::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: url('https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?w=800&q=60') center/cover no-repeat;
+            opacity: 0.18;
+        }
+        .app-left-content {
+            position: relative;
+            z-index: 1;
+        }
+        .app-download-label {
+            color: #fff;
+            font-size: 1.1rem;
             font-family: 'Georgia', serif;
-            font-size: 0.9rem;
             font-weight: bold;
-            letter-spacing: 0.03em;
-            transition: background 0.2s, color 0.2s;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            margin-bottom: 0.4rem;
         }
-        .app-badge-btn:hover {
-            background: var(--gold);
-            color: var(--white);
+        .app-left h2 {
+            color: var(--gold);
+            font-size: clamp(1.4rem, 3.5vw, 2rem);
+            font-family: 'Georgia', serif;
+            margin-bottom: 0.5rem;
+            line-height: 1.2;
         }
-        .app-badge-btn svg {
-            width: 22px;
-            height: 22px;
-            flex-shrink: 0;
+        .app-left p {
+            color: rgba(255,255,255,0.75);
+            font-size: 0.9rem;
+            max-width: 340px;
+        }
+        .app-right {
+            flex: 0 0 auto;
+            background: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            padding: 2rem 2.5rem;
+            min-width: 220px;
+        }
+        .store-badge {
+            display: flex;
+            align-items: center;
+            gap: 0.55rem;
+            background: #000;
+            color: #fff;
+            text-decoration: none;
+            padding: 0.55rem 1.3rem;
+            border-radius: 8px;
+            width: 190px;
+            transition: opacity 0.2s;
+        }
+        .store-badge:hover { opacity: 0.82; }
+        .store-badge svg { width: 26px; height: 26px; flex-shrink: 0; fill: #fff; }
+        .store-badge-text { display: flex; flex-direction: column; line-height: 1.1; }
+        .store-badge-text span:first-child { font-size: 0.62rem; letter-spacing: 0.04em; opacity: 0.85; }
+        .store-badge-text span:last-child { font-size: 1rem; font-weight: bold; }
+        @media (max-width: 600px) {
+            .app-section-inner { flex-direction: column; }
+            .app-right { flex-direction: row; flex-wrap: wrap; justify-content: center; min-width: unset; }
+            .store-badge { width: 160px; }
         }
 </style>
     </head>
@@ -576,17 +615,32 @@
 
         <!-- APP DOWNLOAD -->
         <section class="app-section">
-            <h2>Take Your Retirement Planning With You</h2>
-            <p>Download the PWR Retirement Group app &mdash; available on Android and iOS.</p>
-            <div class="app-badges">
-                <a class="app-badge-btn" href="https://play.google.com/store/apps/details?id=com.wgt.pwr_retirement_group" target="_blank" rel="noopener">
-                    <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M3.18 23.76c.37.2.8.22 1.19.05l12.12-6.99-2.61-2.62-10.7 9.56zm-1.14-20.3A1.5 1.5 0 0 0 2 4.5v15a1.5 1.5 0 0 0 .04.44l10.35-10.3-10.35-6.18zm14.65 8.54L14.04 10 3.67.44A1.5 1.5 0 0 1 4.37.5l12.32 7.11-2 2.39zM22.45 10.7l-2.8-1.61-2.22 2.21 2.22 2.22 2.82-1.63a1.24 1.24 0 0 0 0-2.19z"/></svg>
-                    Google Play
-                </a>
-                <a class="app-badge-btn" href="https://apps.apple.com/app/pwr-retirement-group/id6450320408" target="_blank" rel="noopener">
-                    <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.37 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
-                    App Store
-                </a>
+            <div class="app-section-inner">
+                <!-- LEFT: dark image panel -->
+                <div class="app-left">
+                    <div class="app-left-content">
+                        <div class="app-download-label">Download the App Today!</div>
+                        <h2>PWR Retirement Group</h2>
+                        <p>Plan smarter. Stay informed. Your federal retirement, always at your fingertips.</p>
+                    </div>
+                </div>
+                <!-- RIGHT: store badges -->
+                <div class="app-right">
+                    <a class="store-badge" href="https://play.google.com/store/apps/details?id=com.wgt.pwr_retirement_group" target="_blank" rel="noopener">
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3.18 23.76c.37.2.8.22 1.19.05l12.12-6.99-2.61-2.62-10.7 9.56zm-1.14-20.3A1.5 1.5 0 0 0 2 4.5v15a1.5 1.5 0 0 0 .04.44l10.35-10.3-10.35-6.18zm14.65 8.54L14.04 10 3.67.44A1.5 1.5 0 0 1 4.37.5l12.32 7.11-2 2.39zM22.45 10.7l-2.8-1.61-2.22 2.21 2.22 2.22 2.82-1.63a1.24 1.24 0 0 0 0-2.19z"/></svg>
+                        <div class="store-badge-text">
+                            <span>GET IT ON</span>
+                            <span>Google Play</span>
+                        </div>
+                    </a>
+                    <a class="store-badge" href="https://apps.apple.com/app/pwr-retirement-group/id6450320408" target="_blank" rel="noopener">
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.37 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+                        <div class="store-badge-text">
+                            <span>DOWNLOAD ON THE</span>
+                            <span>App Store</span>
+                        </div>
+                    </a>
+                </div>
             </div>
         </section>
 
