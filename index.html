@@ -290,7 +290,7 @@
         function bwEsc(t){return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
         function bwAdd(role,text){const c=document.getElementById('bw-messages'),d=document.createElement('div');d.className='bw-msg-'+(role==='user'?'user':'bot');if(role==='bot'){const a=document.createElement('div');a.className='bw-avatar';d.appendChild(a);}const b=document.createElement('div');b.className='bw-bubble-'+(role==='user'?'user':'bot');b.innerHTML=bwEsc(text).replace(/\n/g,'<br>');d.appendChild(b);c.appendChild(d);c.scrollTop=c.scrollHeight;}
         function bwTyping(){const c=document.getElementById('bw-messages'),d=document.createElement('div');d.className='bw-msg-bot';d.id='bw-typing';const a=document.createElement('div');a.className='bw-avatar';d.appendChild(a);const b=document.createElement('div');b.className='bw-bubble-bot';b.innerHTML='<span class="bw-dot"></span><span class="bw-dot"></span><span class="bw-dot"></span>';d.appendChild(b);c.appendChild(d);c.scrollTop=c.scrollHeight;}
-        window.bwAsk=function(q){document.getElementById('bw-input').value=q;window.bwSend();}
+        window.bwAsk=function(q){var txt=typeof q==='string'?q:(q&&q.textContent?q.textContent.trim():String(q));document.getElementById('bw-input').value=txt;window.bwSend();}
         window.bwSend=async function(){
             const inp=document.getElementById('bw-input'),txt=inp.value.trim();
             if(!txt||bwLoading)return;
