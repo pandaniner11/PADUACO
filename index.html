@@ -282,60 +282,35 @@
 
     <!-- Benefits Assistant Script -->
     <script>
-    (function(){
-        const SIGNUP='https://paduaco.us/#lead-form';
-        let bwOpen=false,bwLoading=false,bwMsgs=[];
-        const SYS=`You are a federal retirement benefits assistant for 1 Percent Consulting. Your ONLY sources of information are OPM.gov (Office of Personnel Management) and TSP.gov (Thrift Savings Plan). 
+        const SYS="You are a federal retirement benefits assistant for 1 Percent Consulting. Your ONLY sources of information are OPM.gov (Office of Personnel Management) and TSP.gov (Thrift Savings Plan). You specialize in: FERS retirement eligibility and calculation, FEHB health benefits in retirement, FEGLI life insurance, TSP contributions and withdrawals, Social Security supplement, survivor benefits, sick leave credit, military service credit deposits, VERA and VSIP, and the retirement application process. Key rules: FERS full retirement is MRA+30 years, age 60+20 years, or age 62+5 years. MRA is 55-57 depending on birth year. FERS annuity = 1% x high-3 x years of service (1.1% if age 62+ with 20+ years). FEHB 5-year rule requires enrollment 5 years before retirement. TSP 2024 limit is $23,000 ($30,500 if age 50+). FERS employees get 1% automatic agency contribution plus up to 4% matching. IMPORTANT: Only answer using OPM.gov and TSP.gov information. If you are unsure or the question is outside this scope, say: I don't have enough information to answer that accurately. For personalized guidance, please schedule a free consultation with 1 Percent Consulting at the top of this page.";
 
-You specialize in:
-- FERS (Federal Employees Retirement System) — eligibility, calculation, MRA, immediate vs deferred retirement
-- FEHB (Federal Employees Health Benefits) — coverage in retirement, 5-year rule, premiums
-- FEGLI (Federal Employees Group Life Insurance) — basic/optional coverage, retirement conversion
-- TSP (Thrift Savings Plan) — contribution limits, matching, fund options (G, F, C, S, I, L funds), loans, withdrawals, RMDs
-- Social Security supplement (FERS Special Retirement Supplement)
-- Survivor benefits — election options, costs, spousal/child coverage
-- Sick leave credit toward retirement
-- Military service credit deposits
-- Voluntary Early Retirement Authority (VERA) and Voluntary Separation Incentive Pay (VSIP)
-- Leave Without Pay (LWOP) impact on retirement
-- Retirement application process and timeline
-
-Key rules to know:
-- FERS full retirement: MRA+30 years, age 60+20 years, age 62+5 years
-- MRA is between 55-57 depending on birth year
-- FERS basic annuity = 1% x high-3 x years of service (1.1% if age 62+ with 20+ years)
-- FEHB 5-year rule: must be enrolled 5 years before retirement to keep coverage
-- TSP 2024 limit: $23,000 ($30,500 if age 50+)
-- TSP traditional vs Roth options available
-- FERS employees get 1% automatic agency contribution + up to 4% matching (5% total if contributing 5%)
-- High-3 average salary = highest 3 consecutive years of base pay
-
-IMPORTANT RULES:
-1. Only answer using information from OPM.gov and TSP.gov
-2. Do not make up information or guess
-3. If you are unsure or the question is outside OPM/TSP scope, respond with: "I don't have enough information to answer that accurately. For personalized guidance, I recommend scheduling a free consultation with 1 Percent Consulting — a former Federal HR professional who can give you clarity on exactly where you stand. Sign up at the top of this page."
-4. Always be helpful, clear, and concise
-5. Do not give investment advice — only factual benefit information`;
-
+        let bwMsgs=[],bwLoading=false,bwOpen=false;
+        function bwToggle(){bwOpen=!bwOpen;const w=document.getElementById('bw-window'),t=document.getElementById('bw-tooltip'),s=document.getElementById('bw-shield'),c=document.getElementById('bw-close');if(bwOpen){w.style.display='flex';w.style.animation='bwSlide 0.25s ease';t.style.opacity='0';s.style.display='none';c.style.display='flex';}else{w.style.display='none';s.style.display='flex';c.style.display='none';}}
+        function bwUpdateBtn(){const b=document.getElementById('bw-send');if(b)b.disabled=bwLoading;}
+        function bwEsc(t){return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+        function bwAdd(role,text){const c=document.getElementById('bw-messages'),d=document.createElement('div');d.className='bw-msg-'+(role==='user'?'user':'bot');if(role==='bot'){const a=document.createElement('div');a.className='bw-avatar';d.appendChild(a);}const b=document.createElement('div');b.className='bw-bubble-'+(role==='user'?'user':'bot');b.innerHTML=bwEsc(text).replace(/\n/g,'<br>');d.appendChild(b);c.appendChild(d);c.scrollTop=c.scrollHeight;}
+        function bwTyping(){const c=document.getElementById('bw-messages'),d=document.createElement('div');d.className='bw-msg-bot';d.id='bw-typing';const a=document.createElement('div');a.className='bw-avatar';d.appendChild(a);const b=document.createElement('div');b.className='bw-bubble-bot';b.innerHTML='<span class="bw-dot"></span><span class="bw-dot"></span><span class="bw-dot"></span>';d.appendChild(b);c.appendChild(d);c.scrollTop=c.scrollHeight;}
+        window.bwAsk=function(q){document.getElementById('bw-input').value=q;window.bwSend();}
         window.bwSend=async function(){
             const inp=document.getElementById('bw-input'),txt=inp.value.trim();
             if(!txt||bwLoading)return;
             inp.value='';bwUpdateBtn();bwMsgs.push({role:'user',content:txt});bwAdd('user',txt);bwLoading=true;bwTyping();
             try{
-                // Build conversation history for Gemini
-                const geminiHistory=bwMsgs.slice(0,-1).map(m=>({role:m.role==='user'?'user':'model',parts:[{text:m.content}]}));
-                const body={
-                    system_instruction:{parts:[{text:SYS}]},
-                    contents:[...geminiHistory,{role:'user',parts:[{text:txt}]}],
-                    generationConfig:{maxOutputTokens:600,temperature:0.3}
-                };
+                const history=bwMsgs.slice(0,-1).map(function(m){return{role:m.role==='user'?'user':'model',parts:[{text:m.content}]};});
+                const body={system_instruction:{parts:[{text:SYS}]},contents:history.concat([{role:'user',parts:[{text:txt}]}]),generationConfig:{maxOutputTokens:600,temperature:0.3}};
                 const r=await fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=AIzaSyCi5220eoexH0unZ9P6r_lyJVO2mRqlHuY',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
                 const data=await r.json();
-                const reply=data?.candidates?.[0]?.content?.parts?.[0]?.text||"I don't have enough information to answer that accurately. For personalized guidance, I recommend scheduling a free consultation with 1 Percent Consulting. Sign up at the top of this page.";
-                bwMsgs.push({role:'assistant',content:reply});document.getElementById('bw-typing')?.remove();bwAdd('bot',reply);
-            }catch(e){document.getElementById('bw-typing')?.remove();bwAdd('bot',"I'm having trouble connecting right now. Please try again in a moment.");}
+                const reply=data&&data.candidates&&data.candidates[0]&&data.candidates[0].content&&data.candidates[0].content.parts&&data.candidates[0].content.parts[0]?data.candidates[0].content.parts[0].text:"I don't have enough information to answer that accurately. For personalized guidance, please schedule a free consultation with 1 Percent Consulting at the top of this page.";
+                bwMsgs.push({role:'assistant',content:reply});document.getElementById('bw-typing').remove();bwAdd('bot',reply);
+            }catch(e){
+                const t=document.getElementById('bw-typing');if(t)t.remove();
+                bwAdd('bot',"I'm having trouble connecting right now. Please try again in a moment.");
+            }
             bwLoading=false;bwUpdateBtn();
-        };</script>
+        };
+        setTimeout(function(){if(!bwOpen){var tt=document.getElementById('bw-tooltip');if(tt)tt.style.opacity='1';}},2000);
+        setTimeout(function(){var tt=document.getElementById('bw-tooltip');if(tt)tt.style.opacity='0';},7000);
+    </script>
 
 </body>
 </html>
