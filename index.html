@@ -328,7 +328,7 @@ IMPORTANT RULES:
                     contents:[...geminiHistory,{role:'user',parts:[{text:txt}]}],
                     generationConfig:{maxOutputTokens:600,temperature:0.3}
                 };
-                const r=await fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=AIzaSyCi5220eoexH0unZ9P6r_lyJVO2mRqlHuY',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
+                const r=await fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=AIzaSyCi5220eoexH0unZ9P6r_lyJVO2mRqlHuY',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
                 const data=await r.json();
                 const reply=data?.candidates?.[0]?.content?.parts?.[0]?.text||"I don't have enough information to answer that accurately. For personalized guidance, I recommend scheduling a free consultation with 1 Percent Consulting. Sign up at the top of this page.";
                 bwMsgs.push({role:'assistant',content:reply});document.getElementById('bw-typing')?.remove();bwAdd('bot',reply);
