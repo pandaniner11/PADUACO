@@ -1,0 +1,335 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>One Percent Consulting — Logo Variations</title>
+<style>
+  :root {
+    --navy: #11173F;
+    --gray: #5E5E5E;
+    --light: #F4F4F1;
+    --paper: #FAFAF7;
+    --line: #E4E4DE;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: Helvetica, Arial, sans-serif;
+    background: var(--paper);
+    color: var(--navy);
+    padding: 56px 48px 96px;
+  }
+  header {
+    max-width: 1280px;
+    margin: 0 auto 48px;
+    padding-bottom: 32px;
+    border-bottom: 1px solid var(--line);
+  }
+  .eyebrow {
+    font-size: 12px;
+    letter-spacing: 0.22em;
+    color: var(--gray);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  h1 {
+    font-weight: 600;
+    font-size: 40px;
+    margin: 0 0 10px;
+    letter-spacing: -0.01em;
+  }
+  .lede {
+    font-size: 16px;
+    color: var(--gray);
+    line-height: 1.55;
+    max-width: 720px;
+    margin: 0;
+  }
+  .grid {
+    max-width: 1280px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 28px;
+  }
+  .card {
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+  .thumb {
+    background: #ECECE7;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+  .thumb.checker {
+    background-image:
+      linear-gradient(45deg, #e8e8e2 25%, transparent 25%),
+      linear-gradient(-45deg, #e8e8e2 25%, transparent 25%),
+      linear-gradient(45deg, transparent 75%, #e8e8e2 75%),
+      linear-gradient(-45deg, transparent 75%, #e8e8e2 75%);
+    background-size: 20px 20px;
+    background-position: 0 0, 0 10px, 10px -10px, 10px 0;
+    background-color: #f3f3ee;
+  }
+  .thumb img {
+    display: block;
+    max-width: 100%;
+    max-height: 100%;
+  }
+  .meta {
+    padding: 16px 18px 18px;
+    border-top: 1px solid var(--line);
+  }
+  .meta .row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 12px;
+  }
+  .meta h3 {
+    margin: 0;
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: -0.005em;
+  }
+  .meta .dim {
+    font-family: ui-monospace, "SF Mono", Menlo, monospace;
+    font-size: 11px;
+    color: var(--gray);
+    white-space: nowrap;
+  }
+  .meta p {
+    margin: 6px 0 12px;
+    font-size: 12.5px;
+    color: var(--gray);
+    line-height: 1.5;
+  }
+  .meta a {
+    display: inline-block;
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--navy);
+    text-decoration: none;
+    border-bottom: 1px solid var(--navy);
+    padding-bottom: 2px;
+  }
+  .meta a:hover { color: var(--gray); border-color: var(--gray); }
+
+  /* Sizing by aspect category */
+  .span-wide   { grid-column: span 6; }
+  .span-wide .thumb { aspect-ratio: 16 / 5; }
+  .span-square { grid-column: span 4; }
+  .span-square .thumb { aspect-ratio: 1 / 1; }
+  .span-port   { grid-column: span 3; }
+  .span-port .thumb { aspect-ratio: 9 / 16; }
+  .span-tall   { grid-column: span 3; }
+  .span-tall .thumb { aspect-ratio: 1 / 3; }
+  .span-og     { grid-column: span 4; }
+  .span-og .thumb { aspect-ratio: 1200 / 630; }
+
+  @media (max-width: 980px) {
+    .span-wide, .span-square, .span-port, .span-tall, .span-og { grid-column: span 6; }
+  }
+  @media (max-width: 620px) {
+    body { padding: 32px 20px 64px; }
+    h1 { font-size: 28px; }
+    .grid { gap: 18px; }
+    .span-wide, .span-square, .span-port, .span-tall, .span-og { grid-column: span 12; }
+  }
+
+  .section-label {
+    grid-column: 1 / -1;
+    margin-top: 16px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--line);
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--gray);
+  }
+  .section-label:first-child { margin-top: 0; }
+
+  .footer {
+    max-width: 1280px;
+    margin: 64px auto 0;
+    padding-top: 32px;
+    border-top: 1px solid var(--line);
+    font-size: 13px;
+    color: var(--gray);
+    line-height: 1.6;
+  }
+  .footer strong { color: var(--navy); }
+</style>
+</head>
+<body>
+  <header>
+    <div class="eyebrow">One Percent Consulting — Brand assets</div>
+    <h1>Logo variations</h1>
+    <p class="lede">Fifteen ready-to-use JPEGs derived from your existing logo files. Banners for email and social, square and portrait posts, repeated-logo patterns, and gray watermark backgrounds. Click any file name to open, then right-click → Save image.</p>
+  </header>
+
+  <div class="grid">
+
+    <div class="section-label">Banners — horizontal</div>
+
+    <div class="card span-wide">
+      <div class="thumb"><img src="exports/01-email-signature-banner.jpg" alt=""></div>
+      <div class="meta">
+        <div class="row"><h3>01 · Email signature banner</h3><span class="dim">1200 × 300</span></div>
+        <p>Drop into the bottom of email signatures. Icon + wordmark + tagline, navy bar accent.</p>
+        <a href="exports/01-email-signature-banner.jpg" target="_blank" rel="noopener">Open JPEG</a>
+      </div>
+    </div>
+
+    <div class="card span-wide">
+      <div class="thumb"><img src="exports/02-email-header.jpg" alt=""></div>
+      <div class="meta">
+        <div class="row"><h3>02 · Email header</h3><span class="dim">1600 × 400</span></div>
+        <p>Wide centered lockup on cream — top of newsletters and announcements.</p>
+        <a href="exports/02-email-header.jpg" target="_blank" rel="noopener">Open JPEG</a>
+      </div>
+    </div>
+
+    <div class="card span-wide">
+      <div class="thumb"><img src="exports/03-linkedin-cover.jpg" alt=""></div>
+      <div class="meta">
+        <div class="row"><h3>03 · LinkedIn cover</h3><span class="dim">1584 × 396</span></div>
+        <p>Native LinkedIn company-page banner size. Navy panel + tagline split layout.</p>
+        <a href="exports/03-linkedin-cover.jpg" target="_blank" rel="noopener">Open JPEG</a>
+      </div>
+    </div>
+
+    <div class="card span-wide">
+      <div class="thumb"><img src="exports/15-social-share-cover.jpg" alt=""></div>
+      <div class="meta">
+        <div class="row"><h3>15 · Social share / OG cover</h3><span class="dim">1200 × 630</span></div>
+        <p>Open Graph / Facebook / Twitter share card size for blog posts and pages.</p>
+        <a href="exports/15-social-share-cover.jpg" target="_blank" rel="noopener">Open JPEG</a>
+      </div>
+    </div>
+
+    <div class="section-label">Banners — vertical</div>
+
+    <div class="card span-port">
+      <div class="thumb"><img src="exports/04-vertical-banner-sidebar.jpg" alt=""></div>
+      <div class="meta">
+        <div class="row"><h3>04 · Vertical sidebar</h3><span class="dim">600 × 1800</span></div>
+        <p>For web sidebars or printed pull-up banners. Navy caps + centered lockup.</p>
+        <a href="exports/04-vertical-banner-sidebar.jpg" target="_blank" rel="noopener">Open JPEG</a>
+      </div>
+    </div>
+
+    <div class="card span-tall">
+      <div class="thumb"><img src="exports/05-vertical-banner-tall.jpg" alt=""></div>
+      <div class="meta">
+        <div class="row"><h3>05 · Tall narrow banner</h3><span class="dim">400 × 1200</span></div>
+        <p>Slim navy banner with white knockout logo. Web sidebar ads / event signage.</p>
+        <a href="exports/05-vertical-banner-tall.jpg" target="_blank" rel="noopener">Open JPEG</a>
+      </div>
+    </div>
+
+    <div class="section-label">Squares & portrait</div>
+
+    <div class="card span-square">
+      <div class="thumb"><img src="exports/06-square-light.jpg" alt=""></div>
+      <div class="meta">
+        <div class="row"><h3>06 · Square — light</h3><span class="dim">1080 × 1080</span></div>
+        <p>Profile pictures, Instagram posts, avatars.</p>
+        <a href="exports/06-square-light.jpg" target="_blank" rel="noopener">Open JPEG</a>
+      </div>
+    </div>
+
+    <div class="card span-square">
+      <div class="thumb"><img src="exports/07-square-navy.jpg" alt=""></div>
+      <div class="meta">
+        <div class="row"><h3>07 · Square — navy</h3><span class="dim">1080 × 1080</span></div>
+        <p>Dark version of the square. Strong on light-themed feeds.</p>
+        <a href="exports/07-square-navy.jpg" target="_blank" rel="noopener">Open JPEG</a>
+      </div>
+    </div>
+
+    <div class="card span-square">
+      <div class="thumb"><img src="exports/08-square-framed.jpg" alt=""></div>
+      <div class="meta">
+        <div class="row"><h3>08 · Square — framed</h3><span class="dim">1080 × 1080</span></div>
+        <p>Cream background with navy corner marks. Editorial / premium feel.</p>
+        <a href="exports/08-square-framed.jpg" target="_blank" rel="noopener">Open JPEG</a>
+      </div>
+    </div>
+
+    <div class="card span-port">
+      <div class="thumb"><img src="exports/09-portrait-story.jpg" alt=""></div>
+      <div class="meta">
+        <div class="row"><h3>09 · Portrait story</h3><span class="dim">1080 × 1920</span></div>
+        <p>Instagram / WhatsApp story size. Logo on top, tagline on navy bottom block.</p>
+        <a href="exports/09-portrait-story.jpg" target="_blank" rel="noopener">Open JPEG</a>
+      </div>
+    </div>
+
+    <div class="section-label">Repeated logo backgrounds</div>
+
+    <div class="card span-wide">
+      <div class="thumb"><img src="exports/10-pattern-wide.jpg" alt=""></div>
+      <div class="meta">
+        <div class="row"><h3>10 · Pattern — wide</h3><span class="dim">1920 × 1080</span></div>
+        <p>Repeated logo on cream. Slide backdrops, web hero behind dark text.</p>
+        <a href="exports/10-pattern-wide.jpg" target="_blank" rel="noopener">Open JPEG</a>
+      </div>
+    </div>
+
+    <div class="card span-square">
+      <div class="thumb"><img src="exports/11-pattern-tile.jpg" alt=""></div>
+      <div class="meta">
+        <div class="row"><h3>11 · Pattern — tile</h3><span class="dim">1080 × 1080</span></div>
+        <p>Square repeated tile. Social posts where you want texture, not a single mark.</p>
+        <a href="exports/11-pattern-tile.jpg" target="_blank" rel="noopener">Open JPEG</a>
+      </div>
+    </div>
+
+    <div class="section-label">Gray watermark backgrounds</div>
+
+    <div class="card span-wide">
+      <div class="thumb"><img src="exports/12-watermark-wide-gray.jpg" alt=""></div>
+      <div class="meta">
+        <div class="row"><h3>12 · Watermark — wide gray</h3><span class="dim">1920 × 1080</span></div>
+        <p>Soft gray gradient with the logo at low opacity. Use behind content for a subtle branded backdrop.</p>
+        <a href="exports/12-watermark-wide-gray.jpg" target="_blank" rel="noopener">Open JPEG</a>
+      </div>
+    </div>
+
+    <div class="card span-port">
+      <div class="thumb"><img src="exports/13-watermark-portrait-gray.jpg" alt=""></div>
+      <div class="meta">
+        <div class="row"><h3>13 · Watermark — portrait</h3><span class="dim">1080 × 1920</span></div>
+        <p>Vertical watermark for proposals, decks, story-format placeholders.</p>
+        <a href="exports/13-watermark-portrait-gray.jpg" target="_blank" rel="noopener">Open JPEG</a>
+      </div>
+    </div>
+
+    <div class="section-label">Utility</div>
+
+    <div class="card span-wide">
+      <div class="thumb"><img src="exports/14-zoom-background.jpg" alt=""></div>
+      <div class="meta">
+        <div class="row"><h3>14 · Zoom / Teams background</h3><span class="dim">1920 × 1080</span></div>
+        <p>Split layout designed so the speaker (right side) reads clearly while the logo holds the left panel.</p>
+        <a href="exports/14-zoom-background.jpg" target="_blank" rel="noopener">Open JPEG</a>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="footer">
+    <strong>Note on text.</strong> The tagline “Marginal gains. Outsized results.” and “Strategy · Operations · Growth” are placeholder copy I added so the layouts feel finished — tell me your real tagline / services line and I’ll regenerate. <br>
+    All files are saved individually in <code>exports/</code>.
+  </div>
+
+</body>
+</html>

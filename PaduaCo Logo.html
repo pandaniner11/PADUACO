@@ -1,0 +1,484 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PaduaCo · Logo Explorations</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:wght@300;400;500;600;700&family=Italiana&family=Playfair+Display:wght@400;500;600;700;800&family=EB+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink:   #0E0E0E;
+    --ivory: #F5F1E8;
+    --paper: #F2EEE4;
+    --line:  #DDD8CB;
+    --muted: #6B6354;
+    --brass: #8E7438;
+    --oxblood: #6B1F22;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: 'Inter', Helvetica, Arial, sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    -webkit-font-smoothing: antialiased;
+  }
+  header {
+    padding: 56px 56px 32px;
+    max-width: 1280px;
+    margin: 0 auto;
+    border-bottom: 1px solid var(--line);
+  }
+  .eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 18px;
+  }
+  h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 400;
+    font-size: 56px;
+    letter-spacing: -0.005em;
+    line-height: 1;
+    margin: 0 0 16px;
+  }
+  h1 em { font-style: italic; color: var(--brass); }
+  .lede {
+    max-width: 720px;
+    font-size: 15px;
+    line-height: 1.65;
+    color: var(--muted);
+    margin: 0;
+  }
+  main {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 48px 56px 120px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+  }
+  @media (max-width: 820px) {
+    header { padding: 40px 24px 28px; }
+    h1 { font-size: 40px; }
+    main { grid-template-columns: 1fr; padding: 32px 24px 80px; gap: 24px; }
+  }
+
+  /* ── Card frame ── */
+  .card {
+    background: var(--ivory);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+  .stage {
+    flex-grow: 1;
+    min-height: 380px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 48px;
+    position: relative;
+    background:
+      radial-gradient(800px 400px at 50% 50%, rgba(0,0,0,0.025), transparent 70%),
+      var(--ivory);
+  }
+  .stage.dark {
+    background:
+      radial-gradient(800px 400px at 50% 50%, rgba(255,255,255,0.04), transparent 70%),
+      var(--ink);
+    color: var(--ivory);
+  }
+  .meta {
+    padding: 18px 22px 20px;
+    border-top: 1px solid var(--line);
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 16px;
+    background: var(--paper);
+  }
+  .meta .name {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 20px;
+    font-weight: 500;
+    color: var(--ink);
+  }
+  .meta .num {
+    font-size: 10px;
+    letter-spacing: 0.24em;
+    color: var(--muted);
+    font-family: ui-monospace, monospace;
+  }
+  .meta p {
+    grid-column: 1 / -1;
+    margin: 6px 0 0;
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+  .meta-inner { display: grid; grid-template-columns: 1fr auto; gap: 16px; align-items: baseline; width: 100%; }
+
+  /* ─────────────────────────────────────────── */
+  /* OPTION 01 — TRAJAN ROMAN CAPS WORDMARK     */
+  /* ─────────────────────────────────────────── */
+  .logo-01 {
+    text-align: center;
+  }
+  .logo-01 .word {
+    font-family: 'Cinzel', serif;
+    font-weight: 500;
+    font-size: 56px;
+    letter-spacing: 0.32em;
+    line-height: 1;
+    color: var(--ink);
+    margin-bottom: 14px;
+    padding-left: 0.32em;
+  }
+  .logo-01 .rule {
+    width: 60%;
+    height: 1px;
+    background: var(--ink);
+    margin: 0 auto 14px;
+    opacity: 0.8;
+  }
+  .logo-01 .tag {
+    font-family: 'Cinzel', serif;
+    font-weight: 400;
+    font-size: 10px;
+    letter-spacing: 0.5em;
+    color: var(--muted);
+    padding-left: 0.5em;
+  }
+
+  /* ─────────────────────────────────────────── */
+  /* OPTION 02 — INITIAL P WITH ORNAMENT        */
+  /* ─────────────────────────────────────────── */
+  .logo-02 {
+    text-align: center;
+  }
+  .logo-02 .initial {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 400;
+    font-size: 200px;
+    line-height: 0.85;
+    color: var(--ink);
+    margin: 0;
+    letter-spacing: -0.02em;
+    font-style: italic;
+  }
+  .logo-02 .name {
+    font-family: 'Cinzel', serif;
+    font-weight: 500;
+    font-size: 14px;
+    letter-spacing: 0.42em;
+    color: var(--ink);
+    margin-top: 18px;
+    padding-left: 0.42em;
+  }
+  .logo-02 .since {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 12px;
+    letter-spacing: 0.05em;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+
+  /* ─────────────────────────────────────────── */
+  /* OPTION 03 — CIRCULAR SEAL / MEDALLION      */
+  /* ─────────────────────────────────────────── */
+  .seal {
+    width: 280px;
+    height: 280px;
+    position: relative;
+  }
+  .seal svg { width: 100%; height: 100%; }
+
+  /* ─────────────────────────────────────────── */
+  /* OPTION 04 — DIDONE WORDMARK W/ FLEUR DOT   */
+  /* ─────────────────────────────────────────── */
+  .logo-04 {
+    text-align: center;
+  }
+  .logo-04 .word {
+    font-family: 'Playfair Display', serif;
+    font-weight: 500;
+    font-size: 86px;
+    line-height: 1;
+    letter-spacing: -0.005em;
+    color: var(--ink);
+    margin: 0;
+  }
+  .logo-04 .word .accent {
+    color: var(--brass);
+  }
+  .logo-04 .sub {
+    margin-top: 18px;
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    font-family: 'Cinzel', serif;
+    font-weight: 400;
+    font-size: 11px;
+    letter-spacing: 0.42em;
+    color: var(--muted);
+    padding-left: 0.42em;
+  }
+  .logo-04 .sub::before,
+  .logo-04 .sub::after {
+    content: '';
+    width: 30px; height: 1px; background: var(--muted); opacity: 0.5;
+  }
+
+  /* ─────────────────────────────────────────── */
+  /* OPTION 05 — INTERLOCKED PC MONOGRAM        */
+  /* ─────────────────────────────────────────── */
+  .mono {
+    width: 240px;
+    height: 240px;
+    position: relative;
+  }
+  .mono svg { width: 100%; height: 100%; }
+  .logo-05 .name {
+    font-family: 'Cinzel', serif;
+    font-weight: 500;
+    font-size: 13px;
+    letter-spacing: 0.42em;
+    color: var(--ink);
+    margin-top: 22px;
+    padding-left: 0.42em;
+    text-align: center;
+  }
+  .logo-05-wrap { display: flex; flex-direction: column; align-items: center; }
+
+  /* ─────────────────────────────────────────── */
+  /* OPTION 06 — ITALIANA WORDMARK (signature)  */
+  /* ─────────────────────────────────────────── */
+  .logo-06 {
+    text-align: center;
+  }
+  .logo-06 .word {
+    font-family: 'Italiana', serif;
+    font-size: 92px;
+    line-height: 1;
+    color: var(--ivory);
+    margin: 0;
+    letter-spacing: 0.02em;
+  }
+  .logo-06 .word .dot {
+    color: var(--brass);
+  }
+  .logo-06 .sub {
+    margin-top: 14px;
+    font-family: 'Cinzel', serif;
+    font-weight: 400;
+    font-size: 10px;
+    letter-spacing: 0.6em;
+    color: rgba(245,241,232,0.55);
+    padding-left: 0.6em;
+  }
+
+  /* Section divider */
+  .section-label {
+    grid-column: 1 / -1;
+    font-size: 11px;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: 24px 0 -8px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--line);
+  }
+  .section-label:first-child { margin-top: 0; }
+
+  .footnote {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 56px 60px;
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.65;
+  }
+  .footnote strong { color: var(--ink); }
+  @media (max-width: 820px) { .footnote { padding: 0 24px 60px; } }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="eyebrow">PaduaCo · Logo Explorations</div>
+  <h1>Six directions for a <em>quiet</em>, classical mark.</h1>
+  <p class="lede">
+    Reference: Italian houses that don't announce themselves — Brunello Cucinelli, Bottega Veneta, Loro Piana. Restraint, classical typography, and one small detail that signals craft. Each option below is a starting point; we'll refine the one you like and produce final files.
+  </p>
+</header>
+
+<main>
+
+  <div class="section-label">Wordmarks</div>
+
+  <!-- 01 — TRAJAN ROMAN -->
+  <article class="card">
+    <div class="stage">
+      <div class="logo-01">
+        <div class="word">PADUA&nbsp;CO</div>
+        <div class="rule"></div>
+        <div class="tag">SINCE&nbsp;MMXI</div>
+      </div>
+    </div>
+    <div class="meta">
+      <div class="meta-inner">
+        <span class="name">01 · Trajan Roman</span>
+        <span class="num">01 / 06</span>
+      </div>
+      <p>Inscriptional Roman caps with a hairline rule and an MMXI date. The "we've been here" treatment.</p>
+    </div>
+  </article>
+
+  <!-- 02 — INITIAL P -->
+  <article class="card">
+    <div class="stage">
+      <div class="logo-02">
+        <div class="initial">P</div>
+        <div class="name">PADUA&nbsp;CO</div>
+        <div class="since">est. 2011</div>
+      </div>
+    </div>
+    <div class="meta">
+      <div class="meta-inner">
+        <span class="name">02 · Italic Initial</span>
+        <span class="num">02 / 06</span>
+      </div>
+      <p>A single italic Garamond P as a quiet centerpiece. Reads as a personal mark — a tailor's stamp.</p>
+    </div>
+  </article>
+
+  <div class="section-label">Marks & Seals</div>
+
+  <!-- 03 — CIRCULAR SEAL -->
+  <article class="card">
+    <div class="stage">
+      <div class="seal">
+        <svg viewBox="0 0 300 300" aria-label="Seal">
+          <!-- Outer circle -->
+          <circle cx="150" cy="150" r="142" fill="none" stroke="#0E0E0E" stroke-width="1.5"/>
+          <!-- Inner thin circle -->
+          <circle cx="150" cy="150" r="118" fill="none" stroke="#0E0E0E" stroke-width="0.6"/>
+          <!-- Curved text top: PADUA · CO -->
+          <defs>
+            <path id="arcTop" d="M 30 150 A 120 120 0 0 1 270 150" fill="none"/>
+            <path id="arcBot" d="M 38 158 A 112 112 0 0 0 262 158" fill="none"/>
+          </defs>
+          <text font-family="Cinzel" font-size="18" letter-spacing="6" fill="#0E0E0E">
+            <textPath href="#arcTop" startOffset="50%" text-anchor="middle">
+              P A D U A &#160; C O M P A N Y
+            </textPath>
+          </text>
+          <text font-family="Cinzel" font-size="11" letter-spacing="5" fill="#6B6354">
+            <textPath href="#arcBot" startOffset="50%" text-anchor="middle">
+              M M X I &#160;&#160; I T A L I A N &#160; C R A F T
+            </textPath>
+          </text>
+          <!-- Center P -->
+          <text x="150" y="172" font-family="Cormorant Garamond" font-style="italic" font-weight="500" font-size="100" text-anchor="middle" fill="#0E0E0E">P</text>
+          <!-- ornament dots -->
+          <circle cx="60" cy="150" r="2" fill="#8E7438"/>
+          <circle cx="240" cy="150" r="2" fill="#8E7438"/>
+        </svg>
+      </div>
+    </div>
+    <div class="meta">
+      <div class="meta-inner">
+        <span class="name">03 · Wax Seal</span>
+        <span class="num">03 / 06</span>
+      </div>
+      <p>A circular medallion. Reads as heritage and ceremony — works as an avatar, watermark, or stamp.</p>
+    </div>
+  </article>
+
+  <!-- 04 — DIDONE -->
+  <article class="card">
+    <div class="stage">
+      <div class="logo-04">
+        <div class="word">Padua<span class="accent">.</span>Co</div>
+        <div class="sub">italian&nbsp;craft</div>
+      </div>
+    </div>
+    <div class="meta">
+      <div class="meta-inner">
+        <span class="name">04 · Didone with Brass Dot</span>
+        <span class="num">04 / 06</span>
+      </div>
+      <p>High-contrast Italian serif (Bodoni family). The brass dot is the only loud thing — the rest is composed.</p>
+    </div>
+  </article>
+
+  <div class="section-label">Monograms</div>
+
+  <!-- 05 — INTERLOCKED PC -->
+  <article class="card">
+    <div class="stage">
+      <div class="logo-05-wrap">
+        <div class="mono">
+          <svg viewBox="0 0 240 240" aria-label="PC monogram">
+            <!-- C as open arc behind -->
+            <path d="M 200 70
+                     A 80 80 0 1 0 200 170"
+                  fill="none" stroke="#0E0E0E" stroke-width="14" stroke-linecap="square"/>
+            <!-- P as vertical + bowl -->
+            <line x1="105" y1="40" x2="105" y2="210" stroke="#0E0E0E" stroke-width="14"/>
+            <path d="M 105 50
+                     L 158 50
+                     A 35 35 0 0 1 158 120
+                     L 105 120"
+                  fill="none" stroke="#0E0E0E" stroke-width="14" stroke-linejoin="miter"/>
+            <!-- brass dot -->
+            <circle cx="180" cy="200" r="6" fill="#8E7438"/>
+          </svg>
+        </div>
+        <div class="name">PADUA&nbsp;CO</div>
+      </div>
+    </div>
+    <div class="meta">
+      <div class="meta-inner">
+        <span class="name">05 · PC Monogram</span>
+        <span class="num">05 / 06</span>
+      </div>
+      <p>Interlocked P and C as a custom mark. Versatile lockup — strong on its own, also pairs with the wordmark.</p>
+    </div>
+  </article>
+
+  <!-- 06 — ITALIANA DARK -->
+  <article class="card">
+    <div class="stage dark">
+      <div class="logo-06">
+        <div class="word">PADUA<span class="dot">·</span>CO</div>
+        <div class="sub">EST·MMXI</div>
+      </div>
+    </div>
+    <div class="meta">
+      <div class="meta-inner">
+        <span class="name">06 · Italiana on Ink</span>
+        <span class="num">06 / 06</span>
+      </div>
+      <p>Italiana display serif on deep black. The brass middle-dot replaces "&" or punctuation — modern, restrained.</p>
+    </div>
+  </article>
+
+</main>
+
+<div class="footnote">
+  <p><strong>How to read these.</strong> Each option uses a different typographic strategy — Roman inscriptional caps (01), italic initial (02), classical seal (03), high-contrast Italian serif (04), interlocked monogram (05), or display Italianate caps on black (06). All are restrained on purpose. Color is intentionally limited to ink, ivory, and a single brass accent — none of them shout.</p>
+  <p><strong>Next.</strong> Tell me the one (or two) you want to develop. We'll then refine the type, the spacing, and produce a complete asset pack — black/white/ivory variants, square avatar, horizontal lockup, and SVG.</p>
+</div>
+
+</body>
+</html>
