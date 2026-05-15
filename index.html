@@ -635,6 +635,113 @@
     letter-spacing: 0.06em;
     text-transform: uppercase;
   }
+
+/* ─────────── ABOUT ─────────── */
+.about {
+  padding: 100px 56px;
+  background: var(--paper);
+}
+.about-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+.about h2 { font-size: clamp(28px, 3vw, 42px); font-weight: 800; margin: 0 0 20px; letter-spacing: -0.02em; }
+.about .sub { font-size: 17px; color: var(--gray); max-width: 680px; line-height: 1.7; margin: 0 0 56px; }
+.about-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+}
+.about-card {
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 32px 28px;
+}
+.about-card h3 { font-size: 18px; font-weight: 700; margin: 0 0 12px; color: var(--navy); }
+.about-card p { font-size: 15px; color: var(--gray); line-height: 1.65; margin: 0; }
+@media (max-width: 820px) {
+  .about { padding: 70px 24px; }
+  .about-grid { grid-template-columns: 1fr; }
+}
+
+/* ─────────── RESOURCES ─────────── */
+.resources {
+  padding: 100px 56px;
+  background: var(--cream);
+}
+.resources-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+.resources h2 { font-size: clamp(28px, 3vw, 42px); font-weight: 800; margin: 0 0 20px; letter-spacing: -0.02em; }
+.resources .sub { font-size: 17px; color: var(--gray); max-width: 680px; line-height: 1.7; margin: 0 0 56px; }
+.resources-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+}
+.resource-card {
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 28px 24px;
+  display: block;
+  text-decoration: none;
+  transition: transform .2s, box-shadow .2s;
+}
+.resource-card:hover { transform: translateY(-3px); box-shadow: 0 12px 32px -8px rgba(17,23,63,0.12); }
+.resource-tag {
+  display: inline-block;
+  background: var(--navy);
+  color: white;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  padding: 4px 10px;
+  border-radius: 999px;
+  margin-bottom: 14px;
+}
+.resource-card h3 { font-size: 18px; font-weight: 700; margin: 0 0 10px; color: var(--navy); }
+.resource-card p { font-size: 14px; color: var(--gray); line-height: 1.6; margin: 0 0 16px; }
+.resource-link { font-size: 13px; font-weight: 600; color: var(--navy); letter-spacing: 0.04em; }
+@media (max-width: 820px) {
+  .resources { padding: 70px 24px; }
+  .resources-grid { grid-template-columns: 1fr; }
+}
+
+/* ─────────── PADUACO ─────────── */
+.paduaco-section {
+  padding: 100px 56px;
+  background: var(--navy);
+  color: white;
+}
+.paduaco-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+.paduaco-section .kicker { color: var(--gold); letter-spacing: 0.22em; font-size: 11px; text-transform: uppercase; font-weight: 600; margin-bottom: 18px; }
+.paduaco-section h2 { font-size: clamp(28px, 3vw, 42px); font-weight: 800; margin: 0 0 20px; letter-spacing: -0.02em; color: white; }
+.paduaco-section .sub { font-size: 17px; color: rgba(255,255,255,0.7); max-width: 680px; line-height: 1.7; margin: 0 0 56px; }
+.paduaco-columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 56px;
+  align-items: start;
+}
+.paduaco-text h3 { font-size: 20px; font-weight: 700; color: white; margin: 0 0 12px; }
+.paduaco-text p { font-size: 15px; color: rgba(255,255,255,0.75); line-height: 1.7; margin: 0 0 28px; }
+.paduaco-text .btn-primary { display: inline-flex; align-items: center; gap: 8px; background: var(--gold); color: var(--navy-deep); padding: 14px 28px; border-radius: 999px; font-size: 14px; font-weight: 700; letter-spacing: 0.05em; text-decoration: none; transition: transform .2s, box-shadow .2s; margin-top: 8px; }
+.paduaco-text .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 30px -8px rgba(200,162,75,0.4); }
+.value-item { display: flex; gap: 20px; align-items: flex-start; padding: 24px 0; border-bottom: 1px solid rgba(255,255,255,0.1); }
+.value-item:first-child { border-top: 1px solid rgba(255,255,255,0.1); }
+.value-num { font-size: 28px; font-weight: 800; color: var(--gold); min-width: 48px; line-height: 1; }
+.value-item strong { display: block; font-size: 16px; font-weight: 700; color: white; margin-bottom: 6px; }
+.value-item p { font-size: 14px; color: rgba(255,255,255,0.65); line-height: 1.6; margin: 0; }
+@media (max-width: 820px) {
+  .paduaco-section { padding: 70px 24px; }
+  .paduaco-columns { grid-template-columns: 1fr; gap: 40px; }
+}
 </style>
 </head>
 <body>
@@ -650,9 +757,9 @@
   </a>
   <ul>
     <li><a href="#top" class="active">Home</a></li>
-    <li><a href="About Page.html">About</a></li>
-    <li><a href="Resources Page.html">Resources</a></li>
-    <li><a href="#">PaduaCo</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#resources">Resources</a></li>
+    <li><a href="#paduaco">PaduaCo</a></li>
   </ul>
   <a href="#consult" class="cta">Get Clarity</a>
 </nav>
@@ -790,6 +897,105 @@
   </div>
 </section>
 
+<!-- ABOUT -->
+<section class="about" id="about" data-screen-label="05 About">
+  <div class="about-inner">
+    <div class="kicker">About Us</div>
+    <h2>Who We Are</h2>
+    <p class="sub">1 Percent Consulting — the consulting arm of PaduaCo — was founded by a former Federal HR professional with over 10 years of experience inside the federal government.</p>
+    <div class="about-grid">
+      <div class="about-card">
+        <h3>Our Mission</h3>
+        <p>We help federal employees understand their retirement benefits clearly and confidently — so they can make decisions that actually serve their future.</p>
+      </div>
+      <div class="about-card">
+        <h3>Our Approach</h3>
+        <p>No sales pitch, no pressure — just straight answers from someone who has been inside the system and knows how it works.</p>
+      </div>
+      <div class="about-card">
+        <h3>Who We Serve</h3>
+        <p>We work exclusively with federal employees navigating FERS, FEHB, TSP, and other federal retirement programs.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RESOURCES -->
+<section class="resources" id="resources" data-screen-label="06 Resources">
+  <div class="resources-inner">
+    <div class="kicker">Resources</div>
+    <h2>Federal Retirement Resources</h2>
+    <p class="sub">Trusted, official sources to help you understand your federal benefits. We link only to government and authoritative sites.</p>
+    <div class="resources-grid">
+      <a class="resource-card" href="https://www.opm.gov/retirement-services/" target="_blank" rel="noopener">
+        <div class="resource-tag">OPM</div>
+        <h3>OPM Retirement Services</h3>
+        <p>The official source for FERS, CSRS, and federal retirement planning from the Office of Personnel Management.</p>
+        <span class="resource-link">Visit OPM.gov &rarr;</span>
+      </a>
+      <a class="resource-card" href="https://www.tsp.gov/" target="_blank" rel="noopener">
+        <div class="resource-tag">TSP</div>
+        <h3>Thrift Savings Plan</h3>
+        <p>Everything you need to know about your TSP — contributions, investment funds, withdrawals, and retirement income options.</p>
+        <span class="resource-link">Visit TSP.gov &rarr;</span>
+      </a>
+      <a class="resource-card" href="https://www.opm.gov/healthcare-insurance/healthcare/" target="_blank" rel="noopener">
+        <div class="resource-tag">FEHB</div>
+        <h3>Federal Health Benefits</h3>
+        <p>Understand your FEHB options, how to keep coverage into retirement, and how it coordinates with Medicare.</p>
+        <span class="resource-link">Visit OPM FEHB &rarr;</span>
+      </a>
+      <a class="resource-card" href="https://www.ssa.gov/" target="_blank" rel="noopener">
+        <div class="resource-tag">SSA</div>
+        <h3>Social Security Administration</h3>
+        <p>Learn how Social Security interacts with your federal pension and how WEP/GPO provisions may affect your benefits.</p>
+        <span class="resource-link">Visit SSA.gov &rarr;</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- PADUACO -->
+<section class="paduaco-section" id="paduaco" data-screen-label="07 PaduaCo">
+  <div class="paduaco-inner">
+    <div class="kicker">PaduaCo</div>
+    <h2>The PaduaCo Family</h2>
+    <p class="sub">1 Percent Consulting is proud to be the consulting arm of PaduaCo — a company built on the belief that federal employees deserve clear, honest guidance.</p>
+    <div class="paduaco-columns">
+      <div class="paduaco-text">
+        <h3>Built for Federal Employees</h3>
+        <p>PaduaCo was created specifically to serve the federal workforce. We understand the unique complexities of federal retirement — FERS, TSP, FEHB, and the decisions that come with them.</p>
+        <h3>Honest. Independent. Yours.</h3>
+        <p>We are not affiliated with, endorsed by, or connected to any government agency. We are an independent consulting firm dedicated to helping you get clarity on your retirement benefits.</p>
+        <a href="#consult" class="btn-primary">Schedule Your Free Consultation &rarr;</a>
+      </div>
+      <div class="paduaco-values">
+        <div class="value-item">
+          <span class="value-num">01</span>
+          <div>
+            <strong>Clarity</strong>
+            <p>We translate complex benefit rules into plain language you can act on.</p>
+          </div>
+        </div>
+        <div class="value-item">
+          <span class="value-num">02</span>
+          <div>
+            <strong>Integrity</strong>
+            <p>We give you the full picture — not just what sounds good, but what is true.</p>
+          </div>
+        </div>
+        <div class="value-item">
+          <span class="value-num">03</span>
+          <div>
+            <strong>Service</strong>
+            <p>Your retirement security is our mission. We measure success by your confidence.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ───── FOOTER ───── -->
 <footer>
   <div class="foot-top">
@@ -801,7 +1007,7 @@
       </div>
     </a>
     <div class="links">
-      <a href="About Page.html">About</a>
+      <a href="#about">About</a>
       <a href="#questions">FAQ</a>
       <a href="#consult">Contact</a>
     </div>
