@@ -407,7 +407,14 @@
   #hubspot-form-container .hs-fieldtype-phonenumber .input { display: flex; gap: 10px; }
   #hubspot-form-container .hs-form .hs-richtext { font-size: 12px; color: var(--gray); margin: 10px 0; }
 
-  /* ─────────── COMMON QUESTIONS (pillar cards) ─────────── */
+  @media (max-width: 820px) {
+.lead { padding: 60px 20px; }
+.lead-inner { grid-template-columns: 1fr; gap: 40px; }
+.lead p.lede { max-width: 100%; }
+.consult-wrap { padding: 28px 20px; }
+}
+
+/* ─────────── COMMON QUESTIONS (pillar cards) ─────────── */
   .faq {
     padding: 100px 56px;
     background: linear-gradient(180deg, var(--paper) 0%, #EFEFEA 100%);
@@ -655,7 +662,19 @@
     <li><a href="PaduaCo.html">PaduaCo</a></li>
   </ul>
   <a href="#consult" class="cta">Get Clarity</a>
+<button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" onclick="toggleMobileMenu()">
+<span></span><span></span><span></span>
+</button>
 </nav>
+
+<!-- ───── MOBILE MENU ───── -->
+<div class="mobile-menu" id="mobileMenu">
+<a href="#top" onclick="closeMobileMenu()">Home</a>
+<a href="About.html" onclick="closeMobileMenu()">About</a>
+<a href="resources.html" onclick="closeMobileMenu()">Resources</a>
+<a href="PaduaCo.html" onclick="closeMobileMenu()">PaduaCo</a>
+<a href="#consult" class="m-cta" onclick="closeMobileMenu()">Get Clarity</a>
+</div>
 
 <!-- ───── HERO ───── -->
 <section class="hero" id="top" data-screen-label="01 Hero">
@@ -1044,5 +1063,21 @@
   setTimeout(function() { var tt = document.getElementById('bw-tooltip'); if (tt) tt.style.opacity = '0'; }, 7000);
 </script>
 
+<script>
+function toggleMobileMenu() {
+  const menu = document.getElementById('mobileMenu');
+  const toggle = document.getElementById('navToggle');
+  menu.classList.toggle('is-open');
+  toggle.classList.toggle('is-open');
+  document.body.style.overflow = menu.classList.contains('is-open') ? 'hidden' : '';
+}
+function closeMobileMenu() {
+  const menu = document.getElementById('mobileMenu');
+  const toggle = document.getElementById('navToggle');
+  menu.classList.remove('is-open');
+  toggle.classList.remove('is-open');
+  document.body.style.overflow = '';
+}
+</script>
 </body>
 </html>
