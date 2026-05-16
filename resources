@@ -571,7 +571,7 @@
 
 <!-- ───── NAV ───── -->
 <nav class="nav">
-  <a href="Landing Page.html" class="brand">
+  <a href="index.html" class="brand">
     <img src="assets/1perc-white.png" alt="1 Percent Consulting">
     <div>
       ONE PERCENT
@@ -579,12 +579,12 @@
     </div>
   </a>
   <ul>
-    <li><a href="Landing Page.html">Home</a></li>
-    <li><a href="About Page.html">About</a></li>
+    <li><a href="index.html">Home</a></li>
+    <li><a href="About.html">About</a></li>
     <li><a href="#" class="active">Resources</a></li>
-    <li><a href="#">PaduaCo</a></li>
+    <li><a href="PaduaCo.html">PaduaCo</a></li>
   </ul>
-  <a href="Landing Page.html#consult" class="cta">Get Clarity</a>
+  <a href="index.html#consult" class="cta">Get Clarity</a>
 </nav>
 
 <!-- ───── HERO ───── -->
@@ -665,7 +665,7 @@
       </div>
     </a>
 
-    <a class="res-card" href="Landing Page.html#consult">
+    <a class="res-card" href="index.html#consult">
       <span class="res-tag" style="color: var(--gold); border-color: rgba(200,162,75,0.45);">Personal Help</span>
       <h3>Talk to a Pro</h3>
       <p class="desc">Have a question these handbooks don't answer? Book a free consultation with a former federal HR professional.</p>
@@ -772,7 +772,7 @@
 <!-- ───── FOOTER ───── -->
 <footer>
   <div class="foot-top">
-    <a href="Landing Page.html" class="brand-foot">
+    <a href="index.html" class="brand-foot">
       <img src="assets/1perc-white.png" alt="1 Percent Consulting">
       <div>
         ONE PERCENT CONSULTING
@@ -780,10 +780,10 @@
       </div>
     </a>
     <div class="links">
-      <a href="Landing Page.html">Home</a>
-      <a href="About Page.html">About</a>
+      <a href="index.html">Home</a>
+      <a href="About.html">About</a>
       <a href="#">Resources</a>
-      <a href="#">PaduaCo</a>
+      <a href="PaduaCo.html">PaduaCo</a>
     </div>
   </div>
 
