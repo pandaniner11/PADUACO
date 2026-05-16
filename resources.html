@@ -585,7 +585,19 @@
     <li><a href="PaduaCo.html">PaduaCo</a></li>
   </ul>
   <a href="index.html#consult" class="cta">Get Clarity</a>
+<button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" onclick="toggleMobileMenu()">
+<span></span><span></span><span></span>
+</button>
 </nav>
+
+<!-- ───── MOBILE MENU ───── -->
+<div class="mobile-menu" id="mobileMenu">
+<a href="index.html" onclick="closeMobileMenu()">Home</a>
+<a href="About.html" onclick="closeMobileMenu()">About</a>
+<a href="#" onclick="closeMobileMenu()">Resources</a>
+<a href="PaduaCo.html" onclick="closeMobileMenu()">PaduaCo</a>
+<a href="index.html#consult" class="m-cta" onclick="closeMobileMenu()">Get Clarity</a>
+</div>
 
 <!-- ───── HERO ───── -->
 <section class="hero" data-screen-label="01 Hero">
@@ -841,6 +853,22 @@
 
 <script id="legal-yr-script">
   document.querySelectorAll('.legal-yr').forEach(el => el.textContent = new Date().getFullYear());
+</script>
+<script>
+function toggleMobileMenu() {
+  var menu = document.getElementById('mobileMenu');
+  var toggle = document.getElementById('navToggle');
+  menu.classList.toggle('is-open');
+  toggle.classList.toggle('is-open');
+  document.body.style.overflow = menu.classList.contains('is-open') ? 'hidden' : '';
+}
+function closeMobileMenu() {
+  var menu = document.getElementById('mobileMenu');
+  var toggle = document.getElementById('navToggle');
+  menu.classList.remove('is-open');
+  toggle.classList.remove('is-open');
+  document.body.style.overflow = '';
+}
 </script>
 </body>
 </html>
