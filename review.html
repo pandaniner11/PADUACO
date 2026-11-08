@@ -23,40 +23,30 @@
 html{scroll-behavior:smooth}
 body{font-family:var(--sans);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;background:var(--cream-bg);color:var(--ink)}
 
-/* ===== HERO ===== */
-.hero{position:relative;min-height:100vh;display:flex;flex-direction:column;overflow:hidden}
-.hero-img{position:absolute;inset:0;z-index:0}
-.hero-img img{width:100%;height:100%;object-fit:cover;object-position:center 40%}
-.hero-img::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(6,21,37,.35) 0%,rgba(6,21,37,.55) 50%,rgba(6,21,37,.88) 100%)}
+/* ===== BACKGROUND (same as main page hero) ===== */
+.bg{position:fixed;inset:0;z-index:0;background:url('/assets/hero-review.jpg') center/cover no-repeat}
+.bg::after{content:"";position:absolute;inset:0;background:linear-gradient(135deg,rgba(10,26,46,.92) 0%,rgba(10,26,46,.78) 40%,rgba(10,26,46,.5) 100%)}
+.page{position:relative;z-index:1;min-height:100vh;min-height:100dvh;display:flex;flex-direction:column}
 
 /* nav */
-.nav{position:relative;z-index:10;display:flex;align-items:center;justify-content:space-between;padding:22px 28px;max-width:1200px;width:100%;margin:0 auto}
-.brand{font-family:var(--serif);font-weight:700;letter-spacing:.16em;font-size:16px;color:rgba(255,255,255,.9);text-decoration:none}
-.step-pill{font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.55);font-weight:600;background:rgba(255,255,255,.08);padding:7px 16px;border-radius:980px;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
-
-/* hero content */
-.hero-body{position:relative;z-index:10;flex:1;display:flex;flex-direction:column;justify-content:flex-end;padding:0 28px 60px;max-width:1200px;width:100%;margin:0 auto}
-.hero-headline{font-family:var(--serif);font-weight:400;font-size:clamp(36px,6.5vw,72px);line-height:1.06;letter-spacing:-.02em;color:#fff;margin-bottom:14px;max-width:16ch}
-.hero-sub{font-family:var(--serif);font-style:italic;font-weight:400;font-size:clamp(17px,2vw,24px);line-height:1.4;color:rgba(255,255,255,.72);max-width:44ch;margin-bottom:28px}
-.hero-cta{display:inline-flex;align-items:center;gap:10px;background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.22);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);font-size:15px;font-weight:600;padding:15px 28px;border-radius:980px;cursor:pointer;transition:background .2s,transform .15s;text-decoration:none}
-.hero-cta:hover{background:rgba(255,255,255,.2)}
-.hero-cta:active{transform:scale(.98)}
-.hero-cta .arr{font-family:var(--serif);font-style:italic;font-size:22px;line-height:1;transition:transform .2s}.hero-cta:hover .arr{transform:translateX(3px)}
-
-/* progress */
-.progress-wrap{position:relative;z-index:10;background:rgba(6,21,37,.5);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
-.bar{height:3px;background:rgba(255,255,255,.12);max-width:100%}
-.bar i{display:block;height:100%;width:25%;background:var(--gold);transition:width .45s cubic-bezier(.22,.7,.2,1)}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:22px 28px;max-width:1200px;width:100%;margin:0 auto}
+.step-pill{font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.7);font-weight:600;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);padding:7px 16px;border-radius:980px;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
 
 /* ===== FORM SECTION ===== */
-.form-section{background:var(--navy-deep);padding:60px 16px 80px}
-.form-wrap{max-width:620px;margin:0 auto}
+.form-section{flex:1;display:flex;align-items:center;justify-content:center;padding:20px 16px 60px}
+.form-wrap{width:100%;max-width:560px}
 
-/* card */
-.card{background:#fff;color:var(--ink);border-radius:20px;padding:clamp(28px,5vw,44px);box-shadow:0 40px 80px -30px rgba(0,0,0,.35),0 0 0 1px rgba(0,0,0,.04)}
-.kick{font-size:11px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--gold)}
-h2{font-family:var(--serif);font-weight:600;letter-spacing:-.02em;line-height:1.08;font-size:clamp(28px,5.5vw,38px);margin:10px 0 6px;color:var(--ink)}
-.sub{font-family:var(--serif);font-style:italic;font-size:clamp(16px,1.8vw,19px);color:var(--muted);margin-bottom:26px;line-height:1.4}
+/* glass card */
+.card{position:relative;overflow:hidden;color:#fff;border-radius:24px;padding:clamp(28px,5vw,44px);
+  background:linear-gradient(145deg,rgba(255,255,255,.16),rgba(255,255,255,.06));
+  border:1px solid rgba(255,255,255,.22);
+  backdrop-filter:blur(22px) saturate(140%);-webkit-backdrop-filter:blur(22px) saturate(140%);
+  box-shadow:0 40px 80px -30px rgba(0,0,0,.55),inset 0 1px 0 rgba(255,255,255,.25)}
+.bar{position:absolute;top:0;left:0;right:0;height:3px;background:rgba(255,255,255,.1)}
+.bar i{display:block;height:100%;width:25%;background:var(--gold-hover);transition:width .45s cubic-bezier(.22,.7,.2,1)}
+.kick{font-size:11px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--gold-hover)}
+h2{font-family:var(--serif);font-weight:600;letter-spacing:-.02em;line-height:1.08;font-size:clamp(30px,5.5vw,40px);margin:10px 0 6px;color:#fff}
+.sub{font-family:var(--serif);font-style:italic;font-size:clamp(16px,1.8vw,19px);color:rgba(255,255,255,.72);margin-bottom:26px;line-height:1.4}
 
 /* steps */
 .step{display:none}.step.on{display:block;animation:rise .4s cubic-bezier(.22,.7,.2,1)}
@@ -64,81 +54,57 @@ h2{font-family:var(--serif);font-weight:600;letter-spacing:-.02em;line-height:1.
 
 /* form fields */
 .row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-@media(max-width:520px){.row{grid-template-columns:1fr}}
+@media(max-width:520px){.row{grid-template-columns:1fr;gap:0}}
 label.f{display:block;margin-bottom:16px}
-label.f span{display:block;font-size:13px;font-weight:600;margin-bottom:7px;color:var(--ink)}
-input[type=text],input[type=email],input[type=tel],input[type=number]{width:100%;font:inherit;font-size:16px;padding:15px 16px;border:1.5px solid var(--line);border-radius:12px;background:#FAFAF8;color:var(--ink);outline:none;transition:border .2s,box-shadow .2s}
-input:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(176,141,87,.18);background:#fff}
-.bad input{border-color:var(--err)}
-.msg{display:none;color:var(--err);font-size:12.5px;margin-top:5px}.bad .msg{display:block}
+label.f span{display:block;font-size:13px;font-weight:600;margin-bottom:7px;color:rgba(255,255,255,.88)}
+input[type=text],input[type=email],input[type=tel],input[type=number]{width:100%;font:inherit;font-size:16px;padding:15px 16px;border:1px solid rgba(255,255,255,.22);border-radius:12px;background:rgba(255,255,255,.08);color:#fff;outline:none;transition:border .2s,box-shadow .2s,background .2s}
+input::placeholder{color:rgba(255,255,255,.4)}
+input:focus{border-color:var(--gold-hover);box-shadow:0 0 0 3px rgba(201,168,106,.25);background:rgba(255,255,255,.14)}
+.bad input{border-color:#FF8A80}
+.msg{display:none;color:#FFB4AB;font-size:12.5px;margin-top:5px;font-style:normal}.bad .msg{display:block}
 
 /* radio options */
 .opts{display:grid;gap:10px;margin-bottom:16px}
-.opt{display:flex;align-items:center;gap:14px;padding:16px 18px;border:1.5px solid var(--line);border-radius:14px;background:#FAFAF8;cursor:pointer;font-size:16px;font-weight:600;transition:border .2s,box-shadow .2s}
-.opt input{accent-color:var(--gold);width:18px;height:18px;flex:none}
-.opt:hover{border-color:rgba(176,141,87,.35)}
-.opt:has(input:checked){border-color:var(--gold);box-shadow:0 0 0 3px rgba(176,141,87,.18);background:#fff}
-.group-msg{display:none;color:var(--err);font-size:12.5px;margin:-4px 0 12px}.bad>.group-msg{display:block}
+.opt{display:flex;align-items:center;gap:14px;padding:16px 18px;border:1px solid rgba(255,255,255,.22);border-radius:14px;background:rgba(255,255,255,.08);color:#fff;cursor:pointer;font-size:16px;font-weight:600;transition:border .2s,box-shadow .2s,background .2s}
+.opt input{accent-color:var(--gold-hover);width:18px;height:18px;flex:none}
+.opt:hover{background:rgba(255,255,255,.12)}
+.opt:has(input:checked){border-color:var(--gold-hover);box-shadow:0 0 0 3px rgba(201,168,106,.25);background:rgba(255,255,255,.16)}
+.group-msg{display:none;color:#FFB4AB;font-size:12.5px;margin:-4px 0 12px;font-style:normal}.bad>.group-msg{display:block}
 #otherWrap{display:none}
 
 /* actions */
 .actions{display:flex;gap:10px;margin-top:12px}
 button{font:inherit;cursor:pointer;border:none}
-.btn{flex:1;display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:56px;border-radius:980px;font-size:16px;font-weight:700;background:var(--navy);color:var(--cream);transition:transform .15s,background .2s}
-.btn:hover{background:#0F2540}.btn:active{transform:scale(.985)}.btn[disabled]{opacity:.6;cursor:wait}
-.btn .arr{font-family:var(--serif);font-style:italic;font-size:22px;line-height:1;transition:transform .2s}.btn:hover .arr{transform:translateX(3px)}
-.back{flex:0 0 auto;padding:0 22px;min-height:56px;border-radius:980px;background:transparent;border:1.5px solid var(--line);color:var(--ink);font-weight:600;transition:background .15s}
-.back:hover{background:rgba(0,0,0,.03)}
-.fine{font-size:12.5px;color:var(--muted);margin-top:16px;line-height:1.6}
+.btn{flex:1;display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:56px;border-radius:980px;font-size:16px;font-weight:700;background:#B59410;color:#fff;transition:transform .15s,background .2s}
+.btn:hover{background:#9a7a4a}.btn:active{transform:scale(.985)}.btn[disabled]{opacity:.6;cursor:wait}
+.btn .arr{font-size:18px;line-height:1;transition:transform .2s}.btn:hover .arr{transform:translateX(3px)}
+.back{flex:0 0 auto;padding:0 22px;min-height:56px;border-radius:980px;background:transparent;border:1px solid rgba(255,255,255,.3);color:#fff;font-weight:600;transition:background .15s}
+.back:hover{background:rgba(255,255,255,.08)}
+.fine{font-size:12.5px;color:rgba(255,255,255,.55);margin-top:16px;line-height:1.6}
 
 /* done state */
 .done{text-align:center}
-.done .check{width:60px;height:60px;border-radius:50%;background:var(--gold);display:grid;place-items:center;margin:0 auto 14px}
-.done h2{font-size:clamp(28px,6vw,42px)}
+.done .check{width:60px;height:60px;border-radius:50%;background:#B59410;display:grid;place-items:center;margin:0 auto 14px}
 .done .sub{margin-bottom:24px}
-.done .btn{background:var(--gold);color:#fff;text-decoration:none}.done .btn:hover{background:var(--gold-hover)}
+.done .btn{text-decoration:none}
 
-/* ===== TRUST BAR ===== */
-.trust{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 22px;margin-top:28px;font-size:12.5px;font-weight:600;color:rgba(255,255,255,.45);letter-spacing:.02em}
-.trust span{display:inline-flex;align-items:center;gap:6px}
-.trust svg{flex:none}
-
-/* ===== RESPONSIVE ===== */
-@media(max-width:680px){
-  .hero-body{padding:0 20px 40px}
-  .nav{padding:18px 20px}
-  .form-section{padding:40px 12px 60px}
-}
+@media(max-width:680px){.nav{padding:18px 20px}.form-section{padding:8px 16px 40px}}
 </style>
 </head>
 <body>
 
-<!-- ===== HERO ===== -->
-<section class="hero" id="heroSection">
-  <div class="hero-img">
-    <img src="/assets/hero-review.jpg" alt="Tropical sunset with coffee" width="1920" height="1080">
-  </div>
-
+<div class="bg" aria-hidden="true"></div>
+<div class="page">
   <nav class="nav">
     <a href="/" style="display:flex;align-items:center;"><img src="assets/logo-white.png" alt="Padua Co" style="height:32px;width:auto;"></a>
     <span class="step-pill" id="stepPill">Step 1 of 4</span>
   </nav>
 
-  <div class="hero-body">
-    <h1 class="hero-headline">Your retirement,<br>reviewed for free.</h1>
-    <p class="hero-sub">Answer four quick questions and a federal retirement specialist will review your FERS, TSP, and timeline — no cost, no pitch.</p>
-    <a class="hero-cta" href="#form">Start my review <span class="arr">→</span></a>
-  </div>
-
-  <div class="progress-wrap">
-    <div class="bar"><i id="barFill"></i></div>
-  </div>
-</section>
-
 <!-- ===== FORM ===== -->
 <section class="form-section" id="form">
   <div class="form-wrap">
     <form class="card" id="quiz" novalidate>
+      <div class="bar"><i id="barFill"></i></div>
       <!-- STEP 1: Contact -->
       <section class="step on" data-step="1">
         <div class="kick">Free Federal Retirement Review</div>
@@ -193,7 +159,7 @@ button{font:inherit;cursor:pointer;border:none}
         <div class="check"><svg width="28" height="28" viewBox="0 0 20 20" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5 8.5 15 16 5"/></svg></div>
         <h2>You're all set.</h2>
         <p class="sub">Thank you. A member of our team will reach out within one business day to schedule your review.</p>
-        <a class="btn" href="/" style="text-decoration:none;background:var(--gold);color:#fff">Back to home <span class="arr">→</span></a>
+        <a class="btn" href="/">Back to home <span class="arr">→</span></a>
       </section>
 
       <div class="actions" id="actions">
@@ -203,13 +169,9 @@ button{font:inherit;cursor:pointer;border:none}
       <p class="fine" id="fine">Your information stays private and is only used to prepare your review.</p>
     </form>
 
-    <div class="trust" id="trustBar">
-      <span><svg width="12" height="12" viewBox="0 0 20 20" fill="none" stroke="#B08D57" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5 8.5 15 16 5"/></svg>Free</span>
-      <span><svg width="12" height="12" viewBox="0 0 20 20" fill="none" stroke="#B08D57" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5 8.5 15 16 5"/></svg>No obligations</span>
-      <span><svg width="12" height="12" viewBox="0 0 20 20" fill="none" stroke="#B08D57" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5 8.5 15 16 5"/></svg>30-minute call</span>
-    </div>
   </div>
 </section>
+</div>
 
 <script>
 /* ===== CONFIG: fill these in from HubSpot ===== */
@@ -313,14 +275,9 @@ function show(n){
   document.getElementById('backBtn').hidden = n === 1 || n > 4;
   document.getElementById('actions').hidden = n > 4;
   document.getElementById('fine').hidden = n > 4;
-  document.getElementById('trustBar').style.display = n > 4 ? 'none' : '';
   document.getElementById('nextBtn').innerHTML = n === 4 ? 'Submit <span class="arr">→</span>' : 'Continue <span class="arr">→</span>';
-  /* Collapse hero after step 1 */
-  document.getElementById('heroSection').style.minHeight = n > 1 ? '0' : '';
-  document.getElementById('heroSection').style.maxHeight = n > 1 ? '0' : '';
-  document.getElementById('heroSection').style.overflow = n > 1 ? 'hidden' : '';
-  if (n > 1) document.getElementById('form').scrollIntoView({behavior:'smooth'});
-  else window.scrollTo({top:0, behavior:'smooth'});
+  window.scrollTo({top:0, behavior:'smooth'});
+  const first = steps.find(x => x.classList.contains('on'))?.querySelector('input'); if (first && n > 1 && n <= 4 && matchMedia('(min-width:681px)').matches) first.focus({preventScroll:true});
 }
 
 f.addEventListener('submit', async e => {
