@@ -18,400 +18,486 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&display=swap" rel="stylesheet">
-<script src="https://assets.calendly.com/assets/external/widget.js" async></script>
-<style>
-  html,body{margin:0;padding:0;background:#0A1A2E;scroll-behavior:smooth;}
-  body{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Helvetica Neue",Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;color:#fff;}
-  *{box-sizing:border-box;}
-  a{color:inherit;text-decoration:none;}
-  @keyframes lp-pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.55;transform:scale(1.25)}}
-  @keyframes lp-rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
-  details > summary{list-style:none;cursor:pointer;}
-  details > summary::-webkit-details-marker{display:none;}
-  details .plus{transition:transform .25s cubic-bezier(.22,.7,.2,1);}
-  details[open] .plus{transform:rotate(45deg);}
-  details .body{max-height:0;overflow:hidden;transition:max-height .3s cubic-bezier(.22,.7,.2,1),opacity .25s;opacity:0;}
-  details[open] .body{max-height:240px;opacity:1;}
-</style>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&display=swap" rel="stylesheet">
 
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
-body{font-family:'Cormorant Garamond',Georgia,serif;background:#0A1A2E;color:#fff;overflow-x:hidden}
+body{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Helvetica Neue",Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;color:#1a1a1a;background:#fff;overflow-x:hidden}
+
+/* ── Typography ── */
+.serif{font-family:'Cormorant Garamond',Georgia,'Times New Roman',serif}
+.label{font-size:11px;font-weight:800;letter-spacing:.22em;text-transform:uppercase}
+.section-pad{padding:clamp(56px,10vh,112px) clamp(20px,5vw,48px)}
+
+/* ── Buttons ── */
+.btn-primary{
+  display:inline-flex;align-items:center;gap:12px;
+  background:#B08D57;color:#fff;
+  font-weight:700;font-size:clamp(14px,1.4vw,16px);letter-spacing:.04em;
+  padding:clamp(14px,1.6vh,18px) clamp(26px,3vw,36px);
+  border-radius:6px;text-decoration:none;
+  transition:background .2s,transform .15s;
+  box-shadow:0 4px 16px -4px rgba(176,141,87,.4);
+}
+.btn-primary:hover{background:#9a7a4a;transform:translateY(-1px)}
+.btn-outline{
+  display:inline-flex;align-items:center;gap:10px;
+  background:transparent;color:#fff;
+  font-weight:700;font-size:clamp(14px,1.4vw,16px);letter-spacing:.04em;
+  padding:clamp(13px,1.5vh,17px) clamp(24px,2.8vw,34px);
+  border-radius:6px;border:2px solid rgba(255,255,255,.5);
+  text-decoration:none;transition:background .2s,border-color .2s;
+}
+.btn-outline:hover{background:rgba(255,255,255,.1);border-color:#fff}
+
+/* ── FAQ accordion ── */
+details>summary{list-style:none;cursor:pointer}
+details>summary::-webkit-details-marker{display:none}
+details .chevron{transition:transform .25s cubic-bezier(.22,.7,.2,1)}
+details[open] .chevron{transform:rotate(180deg)}
+details .body{max-height:0;overflow:hidden;transition:max-height .35s cubic-bezier(.22,.7,.2,1),opacity .25s;opacity:0}
+details[open] .body{max-height:300px;opacity:1}
+
+/* ── Animations ── */
+@keyframes fade-up{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+.fade-up{animation:fade-up .7s ease-out both}
+
+/* ── Responsive ── */
+@media(max-width:768px){
+  .hero-buttons{flex-direction:column;width:100%}
+  .hero-buttons a{width:100%;justify-content:center}
+  .services-grid{grid-template-columns:1fr!important}
+  .showcase-row{flex-direction:column!important}
+  .showcase-row.reverse{flex-direction:column!important}
+  .showcase-img,.showcase-text{width:100%!important;max-width:100%!important}
+  .reviews-cols{grid-template-columns:1fr!important}
+  .how-grid{grid-template-columns:1fr!important}
+}
 </style>
 </head>
 <body>
 
-
-<!-- ===== Sticky top CTA banner ===== -->
-<a href="/review.html" style="position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:center;gap:14px;padding:11px 18px;background:#B08D57;color:#0A1A2E;font-size:13px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;border-bottom:1px solid rgba(244,239,226,.25);">
-  <span style="display:inline-flex;align-items:center;gap:8px;">
-    <span style="width:8px;height:8px;border-radius:50%;background:#0A1A2E;display:inline-block;animation:lp-pulse 1.8s ease-in-out infinite;"></span>
-    Limited slots this month
-  </span>
-  <span style="opacity:.45;font-weight:600;">·</span>
-  <span style="text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:1.5px;text-decoration-color:rgba(10,26,46,.4);">
-    Claim your free review
-  </span>
-  <span style="font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;font-weight:700;font-size:18px;line-height:1;">→</span>
-</a>
-
-<!-- ============================================================ -->
-<!-- PART 1 · HERO                                                -->
-<!-- ============================================================ -->
-<section style="min-height:calc(100vh - 43px);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:clamp(28px,5vh,56px) clamp(16px,4vw,32px);background:#0A1A2E;color:#fff;text-align:center;gap:clamp(18px,2.6vh,28px);">
-
-  <div style="display:inline-flex;align-items:center;gap:10px;padding:6px 14px;border-radius:980px;background:rgba(244,239,226,.05);border:1px solid rgba(244,239,226,.18);font-size:10.5px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:#F4EFE2;">
-    <span style="width:5px;height:5px;border-radius:50%;background:#B08D57;display:inline-block;"></span>
-    Federal Retirement Review · 2026
-  </div>
-
-  <h1 style="font-family:'Cormorant Garamond',Georgia,serif;font-weight:600;letter-spacing:-.025em;line-height:1.02;font-size:clamp(34px,5.8vw,72px);margin:0;color:#fff;text-wrap:balance;max-width:18ch;">
-    Can you <em style="font-style:italic;color:#F4EFE2;font-weight:600;">afford</em> to retire after 30 years of Service?
-  </h1>
-
-  <p style="font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;font-weight:500;font-size:clamp(16px,1.8vw,22px);line-height:1.4;color:rgba(255,255,255,.78);margin:0;max-width:46ch;text-wrap:pretty;">
-    A 30-minute call can be the difference between <span style="color:#F4EFE2;">doubt</span> or <span style="color:#F4EFE2;">clarity</span>.
-  </p>
-
-  <!-- Video placeholder -->
-  <div style="width:100%;max-width:760px;aspect-ratio:16/9;border-radius:clamp(12px,1.6vw,20px);overflow:hidden;background:repeating-linear-gradient(45deg,#0C2C50 0,#0C2C50 14px,#102A4A 14px,#102A4A 28px);border:1px solid rgba(244,239,226,.18);box-shadow:0 40px 80px -40px rgba(0,0,0,.85),0 0 0 1px rgba(244,239,226,.04);position:relative;">
-    <div style="position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(10,26,46,.15) 0%,rgba(6,18,31,.7) 100%);"></div>
-    <button style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:clamp(56px,7vw,88px);height:clamp(56px,7vw,88px);border-radius:50%;background:#F4EFE2;border:none;cursor:pointer;display:grid;place-items:center;box-shadow:0 24px 50px -16px rgba(0,0,0,.6),0 0 0 10px rgba(244,239,226,.07);">
-      <svg width="28" height="28" viewBox="0 0 24 24" fill="#0A1A2E" style="margin-left:4px;"><path d="M8 5v14l11-7z"/></svg>
-    </button>
-    <div style="position:absolute;left:16px;bottom:14px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:rgba(244,239,226,.6);">
-      [ founder intro · 4 min ]
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- NAV BAR                                                        -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<nav style="position:absolute;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:20px clamp(20px,5vw,48px);">
+  <div style="display:flex;align-items:center;gap:10px;">
+    <div style="width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#B08D57 0%,#C9A86A 60%,#8a6d3f 100%);display:grid;place-items:center;">
+      <span class="serif" style="font-style:italic;font-weight:600;color:#fff;font-size:16px;line-height:1;">P</span>
     </div>
+    <span style="font-weight:700;font-size:14px;letter-spacing:.14em;color:rgba(255,255,255,.95);text-transform:uppercase;">Padua&nbsp;Co</span>
   </div>
+  <a href="/review.html" class="btn-primary" style="font-size:13px;padding:10px 22px;box-shadow:none;">
+    Start Your Review
+    <span style="font-size:16px;line-height:1;">→</span>
+  </a>
+</nav>
 
-  <div style="display:flex;flex-direction:column;align-items:center;gap:12px;">
-    <a href="/review.html" style="display:inline-flex;align-items:center;gap:12px;background:#F4EFE2;color:#0A1A2E;font-weight:700;font-size:clamp(15px,1.5vw,17px);padding:clamp(14px,1.8vh,18px) clamp(22px,2.6vw,30px);border-radius:980px;box-shadow:0 24px 50px -20px rgba(244,239,226,.45),0 0 0 1px rgba(244,239,226,.18);">
-      Get my clarity call
-      <span style="font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;font-weight:600;font-size:22px;line-height:1;">→</span>
-    </a>
-    <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:6px 18px;font-size:11.5px;font-weight:600;color:rgba(255,255,255,.55);letter-spacing:.03em;">
-      <span style="display:inline-flex;align-items:center;gap:5px;"><svg width="11" height="11" viewBox="0 0 20 20" fill="none" stroke="#B08D57" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5 8.5 15 16 5"/></svg>Free</span>
-      <span style="display:inline-flex;align-items:center;gap:5px;"><svg width="11" height="11" viewBox="0 0 20 20" fill="none" stroke="#B08D57" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5 8.5 15 16 5"/></svg>30 minutes</span>
-      <span style="display:inline-flex;align-items:center;gap:5px;"><svg width="11" height="11" viewBox="0 0 20 20" fill="none" stroke="#B08D57" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5 8.5 15 16 5"/></svg>No obligation</span>
-      <span style="display:inline-flex;align-items:center;gap:5px;"><svg width="11" height="11" viewBox="0 0 20 20" fill="none" stroke="#B08D57" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5 8.5 15 16 5"/></svg>For federal employees 55+</span>
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- HERO · Full-bleed image with gradient overlay                  -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<section style="position:relative;min-height:100vh;display:flex;align-items:center;overflow:hidden;">
+  <!-- Background image -->
+  <div style="position:absolute;inset:0;background:url('assets/hero-review.jpg') center/cover no-repeat;"></div>
+  <!-- Gradient overlay -->
+  <div style="position:absolute;inset:0;background:linear-gradient(135deg,rgba(10,26,46,.92) 0%,rgba(10,26,46,.78) 40%,rgba(10,26,46,.5) 100%);"></div>
+
+  <div style="position:relative;z-index:1;width:100%;max-width:720px;padding:clamp(100px,14vh,160px) clamp(20px,5vw,48px) clamp(60px,8vh,100px);color:#fff;" class="fade-up">
+    <div class="label" style="color:#B08D57;margin-bottom:16px;">Federal Retirement Review · 2026</div>
+
+    <h1 class="serif" style="font-weight:600;letter-spacing:-.025em;line-height:1.06;font-size:clamp(36px,5.6vw,68px);color:#fff;text-wrap:balance;">
+      Can you <em style="font-style:italic;color:#F4EFE2;">afford</em> to retire after 30&nbsp;years of&nbsp;Service?
+    </h1>
+
+    <p class="serif" style="font-style:italic;font-weight:400;font-size:clamp(18px,2vw,24px);line-height:1.45;color:rgba(255,255,255,.8);margin-top:20px;max-width:44ch;">
+      A 30-minute call can be the difference between <span style="color:#F4EFE2;">doubt</span> or <span style="color:#F4EFE2;">clarity</span>.
+    </p>
+
+    <div class="hero-buttons" style="display:flex;gap:14px;margin-top:clamp(28px,3.5vh,40px);flex-wrap:wrap;">
+      <a href="/review.html" class="btn-primary">
+        Get My Free Review
+        <span style="font-size:18px;line-height:1;">→</span>
+      </a>
+      <a href="#how-it-works" class="btn-outline">
+        How It Works
+      </a>
     </div>
-  </div>
 
-</section>
-
-<!-- ============================================================ -->
-<!-- PART 2 · REVIEWS                                             -->
-<!-- ============================================================ -->
-<section style="background:#FFFFFF;color:#0A1A2E;padding:clamp(48px,8vh,96px) clamp(16px,4vw,40px);display:flex;flex-direction:column;align-items:center;gap:clamp(20px,3vh,32px);text-align:center;">
-
-  <div style="display:flex;flex-direction:column;align-items:center;gap:10px;">
-    <div style="display:inline-flex;gap:3px;">
-      <span style="display:inline-flex;width:26px;height:26px;background:#00B67A;border-radius:3px;align-items:center;justify-content:center;"><svg width="16" height="16" viewBox="0 0 24 24" fill="#fff"><path d="M12 2l2.9 6.1 6.6.9-4.8 4.6 1.2 6.6L12 17.8 6.1 20.2l1.2-6.6L2.5 9l6.6-.9z"/></svg></span>
-      <span style="display:inline-flex;width:26px;height:26px;background:#00B67A;border-radius:3px;align-items:center;justify-content:center;"><svg width="16" height="16" viewBox="0 0 24 24" fill="#fff"><path d="M12 2l2.9 6.1 6.6.9-4.8 4.6 1.2 6.6L12 17.8 6.1 20.2l1.2-6.6L2.5 9l6.6-.9z"/></svg></span>
-      <span style="display:inline-flex;width:26px;height:26px;background:#00B67A;border-radius:3px;align-items:center;justify-content:center;"><svg width="16" height="16" viewBox="0 0 24 24" fill="#fff"><path d="M12 2l2.9 6.1 6.6.9-4.8 4.6 1.2 6.6L12 17.8 6.1 20.2l1.2-6.6L2.5 9l6.6-.9z"/></svg></span>
-      <span style="display:inline-flex;width:26px;height:26px;background:#00B67A;border-radius:3px;align-items:center;justify-content:center;"><svg width="16" height="16" viewBox="0 0 24 24" fill="#fff"><path d="M12 2l2.9 6.1 6.6.9-4.8 4.6 1.2 6.6L12 17.8 6.1 20.2l1.2-6.6L2.5 9l6.6-.9z"/></svg></span>
-      <span style="display:inline-flex;width:26px;height:26px;background:#00B67A;border-radius:3px;align-items:center;justify-content:center;"><svg width="16" height="16" viewBox="0 0 24 24" fill="#fff"><path d="M12 2l2.9 6.1 6.6.9-4.8 4.6 1.2 6.6L12 17.8 6.1 20.2l1.2-6.6L2.5 9l6.6-.9z"/></svg></span>
-    </div>
-    <div style="font-size:13px;color:#3C4858;font-weight:600;">
-      <b style="color:#0A1A2E;font-weight:800;">Excellent</b> on
-      <span style="display:inline-flex;align-items:center;gap:5px;vertical-align:middle;">
-        <span style="display:inline-flex;width:14px;height:14px;background:#00B67A;border-radius:2px;align-items:center;justify-content:center;"><svg width="10" height="10" viewBox="0 0 24 24" fill="#fff"><path d="M12 2l2.9 6.1 6.6.9-4.8 4.6 1.2 6.6L12 17.8 6.1 20.2l1.2-6.6L2.5 9l6.6-.9z"/></svg></span>
-        <b style="color:#0A1A2E;font-weight:800;">Trustpilot</b>
+    <div style="display:flex;flex-wrap:wrap;gap:6px 22px;margin-top:22px;font-size:12.5px;font-weight:600;color:rgba(255,255,255,.6);letter-spacing:.02em;">
+      <span style="display:inline-flex;align-items:center;gap:6px;">
+        <svg width="12" height="12" viewBox="0 0 20 20" fill="none" stroke="#B08D57" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5 8.5 15 16 5"/></svg>
+        Free
+      </span>
+      <span style="display:inline-flex;align-items:center;gap:6px;">
+        <svg width="12" height="12" viewBox="0 0 20 20" fill="none" stroke="#B08D57" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5 8.5 15 16 5"/></svg>
+        30 minutes
+      </span>
+      <span style="display:inline-flex;align-items:center;gap:6px;">
+        <svg width="12" height="12" viewBox="0 0 20 20" fill="none" stroke="#B08D57" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5 8.5 15 16 5"/></svg>
+        No obligation
+      </span>
+      <span style="display:inline-flex;align-items:center;gap:6px;">
+        <svg width="12" height="12" viewBox="0 0 20 20" fill="none" stroke="#B08D57" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5 8.5 15 16 5"/></svg>
+        For federal employees 55+
       </span>
     </div>
   </div>
-
-  <div>
-    <div style="font-size:11px;font-weight:800;letter-spacing:.24em;text-transform:uppercase;color:#B08D57;">What people are saying</div>
-    <h2 style="font-family:'Cormorant Garamond',Georgia,serif;font-weight:600;letter-spacing:-.025em;line-height:1.05;font-size:clamp(30px,4.4vw,52px);margin:10px 0 0;color:#0A1A2E;text-wrap:balance;max-width:22ch;">
-      Federal employees, in their <em style="font-style:italic;background:linear-gradient(transparent 65%,#F4EFE2 65%);padding:0 6px;">own words</em>.
-    </h2>
-  </div>
-
-  <div id="reviews-grid" style="width:100%;max-width:1100px;display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:clamp(16px,2vw,24px);text-align:left;">
-
-    <article style="background:#FFFFFF;border:1px solid rgba(10,26,46,.12);border-radius:14px;padding:clamp(20px,2vw,26px);box-shadow:0 24px 48px -24px rgba(10,26,46,.18);display:flex;flex-direction:column;gap:14px;">
-      <header style="display:flex;align-items:center;gap:12px;">
-        <div style="width:44px;height:44px;border-radius:50%;background:#F4EFE2;color:#0A1A2E;display:grid;place-items:center;font-weight:700;font-size:15px;flex:none;">GA</div>
-        <div style="flex:1;min-width:0;">
-          <div style="font-size:14.5px;font-weight:700;color:#0A1A2E;line-height:1.2;">Gerardo Andujar</div>
-          <div style="font-size:12px;color:#7A8595;font-weight:500;margin-top:3px;display:flex;align-items:center;gap:6px;">
-            <span style="display:inline-flex;width:14px;height:10px;border-radius:1px;background:linear-gradient(to bottom,#B22234 0 33%,#fff 33% 66%,#B22234 66% 100%);"></span>
-            US · 1 review
-          </div>
-        </div>
-      </header>
-      <div style="display:inline-flex;gap:2px;">
-        <span style="display:inline-flex;width:20px;height:20px;background:#00B67A;border-radius:2px;align-items:center;justify-content:center;"><svg width="13" height="13" viewBox="0 0 24 24" fill="#fff"><path d="M12 2l2.9 6.1 6.6.9-4.8 4.6 1.2 6.6L12 17.8 6.1 20.2l1.2-6.6L2.5 9l6.6-.9z"/></svg></span>
-        <span style="display:inline-flex;width:20px;height:20px;background:#00B67A;border-radius:2px;align-items:center;justify-content:center;"><svg width="13" height="13" viewBox="0 0 24 24" fill="#fff"><path d="M12 2l2.9 6.1 6.6.9-4.8 4.6 1.2 6.6L12 17.8 6.1 20.2l1.2-6.6L2.5 9l6.6-.9z"/></svg></span>
-        <span style="display:inline-flex;width:20px;height:20px;background:#00B67A;border-radius:2px;align-items:center;justify-content:center;"><svg width="13" height="13" viewBox="0 0 24 24" fill="#fff"><path d="M12 2l2.9 6.1 6.6.9-4.8 4.6 1.2 6.6L12 17.8 6.1 20.2l1.2-6.6L2.5 9l6.6-.9z"/></svg></span>
-        <span style="display:inline-flex;width:20px;height:20px;background:#00B67A;border-radius:2px;align-items:center;justify-content:center;"><svg width="13" height="13" viewBox="0 0 24 24" fill="#fff"><path d="M12 2l2.9 6.1 6.6.9-4.8 4.6 1.2 6.6L12 17.8 6.1 20.2l1.2-6.6L2.5 9l6.6-.9z"/></svg></span>
-        <span style="display:inline-flex;width:20px;height:20px;background:#00B67A;border-radius:2px;align-items:center;justify-content:center;"><svg width="13" height="13" viewBox="0 0 24 24" fill="#fff"><path d="M12 2l2.9 6.1 6.6.9-4.8 4.6 1.2 6.6L12 17.8 6.1 20.2l1.2-6.6L2.5 9l6.6-.9z"/></svg></span>
-      </div>
-      <h3 style="font-size:17px;font-weight:700;color:#0A1A2E;line-height:1.3;margin:0;">Services and Orientation.</h3>
-      <p style="margin:0;font-size:14px;line-height:1.55;color:#3C4858;">Services, professional and knowledge are great.</p>
-      <footer style="margin-top:auto;display:flex;align-items:center;gap:10px;font-size:11.5px;color:#7A8595;font-weight:500;flex-wrap:wrap;">
-        <span>June 13, 2026</span>
-        <span style="padding:3px 9px;border-radius:6px;background:#F4F5F7;color:#3C4858;font-weight:600;">Unprompted review</span>
-      </footer>
-    </article>
-
-    <article style="background:#FFFFFF;border:1px solid rgba(10,26,46,.12);border-radius:14px;padding:clamp(20px,2vw,26px);box-shadow:0 24px 48px -24px rgba(10,26,46,.18);display:flex;flex-direction:column;gap:14px;">
-      <header style="display:flex;align-items:center;gap:12px;">
-        <div style="width:44px;height:44px;border-radius:50%;background:#F4EFE2;color:#0A1A2E;display:grid;place-items:center;font-weight:700;font-size:15px;flex:none;">SG</div>
-        <div style="flex:1;min-width:0;">
-          <div style="font-size:14.5px;font-weight:700;color:#0A1A2E;line-height:1.2;">Sebastian Gallo Giraldo</div>
-          <div style="font-size:12px;color:#7A8595;font-weight:500;margin-top:3px;display:flex;align-items:center;gap:6px;">
-            <span style="display:inline-flex;width:14px;height:10px;border-radius:1px;background:linear-gradient(to bottom,#B22234 0 33%,#fff 33% 66%,#B22234 66% 100%);"></span>
-            US · 1 review
-          </div>
-        </div>
-      </header>
-      <div style="display:inline-flex;gap:2px;">
-        <span style="display:inline-flex;width:20px;height:20px;background:#00B67A;border-radius:2px;align-items:center;justify-content:center;"><svg width="13" height="13" viewBox="0 0 24 24" fill="#fff"><path d="M12 2l2.9 6.1 6.6.9-4.8 4.6 1.2 6.6L12 17.8 6.1 20.2l1.2-6.6L2.5 9l6.6-.9z"/></svg></span>
-        <span style="display:inline-flex;width:20px;height:20px;background:#00B67A;border-radius:2px;align-items:center;justify-content:center;"><svg width="13" height="13" viewBox="0 0 24 24" fill="#fff"><path d="M12 2l2.9 6.1 6.6.9-4.8 4.6 1.2 6.6L12 17.8 6.1 20.2l1.2-6.6L2.5 9l6.6-.9z"/></svg></span>
-        <span style="display:inline-flex;width:20px;height:20px;background:#00B67A;border-radius:2px;align-items:center;justify-content:center;"><svg width="13" height="13" viewBox="0 0 24 24" fill="#fff"><path d="M12 2l2.9 6.1 6.6.9-4.8 4.6 1.2 6.6L12 17.8 6.1 20.2l1.2-6.6L2.5 9l6.6-.9z"/></svg></span>
-        <span style="display:inline-flex;width:20px;height:20px;background:#00B67A;border-radius:2px;align-items:center;justify-content:center;"><svg width="13" height="13" viewBox="0 0 24 24" fill="#fff"><path d="M12 2l2.9 6.1 6.6.9-4.8 4.6 1.2 6.6L12 17.8 6.1 20.2l1.2-6.6L2.5 9l6.6-.9z"/></svg></span>
-        <span style="display:inline-flex;width:20px;height:20px;background:#00B67A;border-radius:2px;align-items:center;justify-content:center;"><svg width="13" height="13" viewBox="0 0 24 24" fill="#fff"><path d="M12 2l2.9 6.1 6.6.9-4.8 4.6 1.2 6.6L12 17.8 6.1 20.2l1.2-6.6L2.5 9l6.6-.9z"/></svg></span>
-      </div>
-      <h3 style="font-size:17px;font-weight:700;color:#0A1A2E;line-height:1.3;margin:0;">Very good work — contribute on both parts.</h3>
-      <p style="margin:0;font-size:14px;line-height:1.55;color:#3C4858;">Very good work — contribute on both parts, and clarity working through every question or need at the time of submitting.</p>
-      <footer style="margin-top:auto;display:flex;align-items:center;gap:10px;font-size:11.5px;color:#7A8595;font-weight:500;flex-wrap:wrap;">
-        <span>June 10, 2026</span>
-        <span style="padding:3px 9px;border-radius:6px;background:#F4F5F7;color:#3C4858;font-weight:600;">Unprompted review</span>
-      </footer>
-    </article>
-
-  </div>
-
-  <a href="https://www.trustpilot.com/review/paduaco.com" style="display:inline-flex;align-items:center;gap:8px;font-size:12.5px;font-weight:700;color:#0A1A2E;letter-spacing:.02em;border-bottom:1.5px solid #0A1A2E;padding-bottom:2px;">
-    Read all reviews on Trustpilot
-    <span style="font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;font-weight:600;font-size:16px;line-height:1;">→</span>
-  </a>
-
-  <!-- bottom CTA strip (navy on white) -->
-  <div style="width:100%;max-width:780px;background:#0A1A2E;color:#fff;border-radius:18px;padding:clamp(24px,3vh,32px) clamp(20px,4vw,32px);display:flex;flex-direction:column;align-items:center;gap:14px;margin-top:clamp(12px,2vh,20px);">
-    <a href="/review.html" style="display:inline-flex;align-items:center;gap:12px;background:#F4EFE2;color:#0A1A2E;font-weight:700;font-size:clamp(15px,1.5vw,17px);padding:clamp(13px,1.6vh,16px) clamp(22px,2.6vw,30px);border-radius:980px;box-shadow:0 24px 50px -20px rgba(244,239,226,.45);">
-      Get my clarity call
-      <span style="font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;font-weight:600;font-size:22px;line-height:1;">→</span>
-    </a>
-  </div>
-
 </section>
 
-<!-- ============================================================ -->
-<!-- PART 3 · WHAT YOU GET                                        -->
-<!-- ============================================================ -->
-<section style="background:#0A1A2E;color:#fff;padding:clamp(48px,8vh,96px) clamp(16px,4vw,40px);display:flex;flex-direction:column;align-items:center;gap:clamp(22px,3vh,36px);text-align:center;">
-
-  <div>
-    <div style="font-size:11px;font-weight:800;letter-spacing:.24em;text-transform:uppercase;color:#B08D57;">What we do when you come in</div>
-    <h2 style="font-family:'Cormorant Garamond',Georgia,serif;font-weight:600;letter-spacing:-.025em;line-height:1.05;font-size:clamp(28px,4.2vw,48px);margin:8px 0 0;color:#fff;text-wrap:balance;max-width:24ch;">
-      Three numbers, one <em style="font-style:italic;color:#F4EFE2;font-weight:600;">honest</em> picture.
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- INTRO · Dark navy, OPM-style two-column text                   -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<section style="background:#0A1A2E;color:#fff;" class="section-pad">
+  <div style="max-width:1100px;margin:0 auto;">
+    <div class="label" style="color:#B08D57;margin-bottom:12px;">Your Federal Retirement Review</div>
+    <h2 class="serif" style="font-weight:600;letter-spacing:-.02em;line-height:1.08;font-size:clamp(28px,4vw,48px);color:#fff;max-width:20ch;margin-bottom:clamp(24px,3vh,36px);">
+      Taking the guesswork out of your retirement.
     </h2>
-  </div>
-
-  <div style="width:100%;max-width:1280px;display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:clamp(14px,1.6vw,22px);align-items:start;">
-
-    <article style="display:flex;flex-direction:column;border-radius:14px;overflow:hidden;background:#F4EFE2;color:#0A1A2E;box-shadow:0 30px 60px -28px rgba(0,0,0,.65),0 0 0 1px rgba(244,239,226,.15);">
-      <header style="padding:clamp(16px,1.6vw,20px) clamp(18px,1.8vw,22px) clamp(10px,1vw,14px);">
-        <div style="display:flex;align-items:center;gap:10px;">
-          <span style="font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;font-weight:600;font-size:clamp(24px,2.2vw,30px);line-height:1;">01</span>
-          <span style="flex:1;height:1px;background:rgba(10,26,46,.18);"></span>
-          <span style="font-size:10px;font-weight:800;letter-spacing:.22em;text-transform:uppercase;color:rgba(10,26,46,.55);">Income</span>
-        </div>
-        <h3 style="font-family:'Cormorant Garamond',Georgia,serif;font-weight:600;letter-spacing:-.018em;line-height:1.18;font-size:clamp(15.5px,1.4vw,18.5px);margin:10px 0 0;color:#0A1A2E;text-align:left;text-wrap:balance;">
-          Compare your <em style="font-style:italic;">take-home pay</em> today vs your <em style="font-style:italic;">retirement</em> calculation.
-        </h3>
-      </header>
-      <div style="background:#fff;">
-        <img src="assets/aid-01-income-crop.jpg" alt="Income comparison aid" style="width:100%;height:auto;display:block;"/>
-      </div>
-    </article>
-
-    <article style="display:flex;flex-direction:column;border-radius:14px;overflow:hidden;background:#F4EFE2;color:#0A1A2E;box-shadow:0 30px 60px -28px rgba(0,0,0,.65),0 0 0 1px rgba(244,239,226,.15);">
-      <header style="padding:clamp(16px,1.6vw,20px) clamp(18px,1.8vw,22px) clamp(10px,1vw,14px);">
-        <div style="display:flex;align-items:center;gap:10px;">
-          <span style="font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;font-weight:600;font-size:clamp(24px,2.2vw,30px);line-height:1;">02</span>
-          <span style="flex:1;height:1px;background:rgba(10,26,46,.18);"></span>
-          <span style="font-size:10px;font-weight:800;letter-spacing:.22em;text-transform:uppercase;color:rgba(10,26,46,.55);">Costs</span>
-        </div>
-        <h3 style="font-family:'Cormorant Garamond',Georgia,serif;font-weight:600;letter-spacing:-.018em;line-height:1.18;font-size:clamp(15.5px,1.4vw,18.5px);margin:10px 0 0;color:#0A1A2E;text-align:left;text-wrap:balance;">
-          What <em style="font-style:italic;">FEHB</em>, <em style="font-style:italic;">FEGLI</em> and <em style="font-style:italic;">taxes</em> will actually look like.
-        </h3>
-      </header>
-      <div style="background:#fff;">
-        <img src="assets/aid-02-costs-crop.jpg" alt="Carry-on costs aid" style="width:100%;height:auto;display:block;"/>
-      </div>
-    </article>
-
-    <article style="display:flex;flex-direction:column;border-radius:14px;overflow:hidden;background:#F4EFE2;color:#0A1A2E;box-shadow:0 30px 60px -28px rgba(0,0,0,.65),0 0 0 1px rgba(244,239,226,.15);position:relative;">
-      <div style="position:absolute;top:14px;right:14px;z-index:2;font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;font-weight:600;font-size:11px;color:#fff;background:#0A1A2E;padding:4px 10px;border-radius:980px;letter-spacing:.06em;box-shadow:0 6px 14px -6px rgba(0,0,0,.4);">Most asked</div>
-      <header style="padding:clamp(16px,1.6vw,20px) clamp(18px,1.8vw,22px) clamp(10px,1vw,14px);">
-        <div style="display:flex;align-items:center;gap:10px;">
-          <span style="font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;font-weight:600;font-size:clamp(24px,2.2vw,30px);line-height:1;">03</span>
-          <span style="flex:1;height:1px;background:rgba(10,26,46,.18);"></span>
-          <span style="font-size:10px;font-weight:800;letter-spacing:.22em;text-transform:uppercase;color:rgba(10,26,46,.55);">TSP</span>
-        </div>
-        <h3 style="font-family:'Cormorant Garamond',Georgia,serif;font-weight:600;letter-spacing:-.018em;line-height:1.18;font-size:clamp(15.5px,1.4vw,18.5px);margin:10px 0 0;color:#0A1A2E;text-align:left;text-wrap:balance;">
-          How much you can really <em style="font-style:italic;">get out of your TSP</em>.
-        </h3>
-      </header>
-      <div style="background:#fff;">
-        <img src="assets/aid-03-tsp-crop.jpg" alt="TSP balance aid" style="width:100%;height:auto;display:block;"/>
-      </div>
-    </article>
-
-  </div>
-
-  <div style="font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;font-weight:500;font-size:clamp(15px,1.6vw,20px);line-height:1.35;color:rgba(255,255,255,.85);max-width:42ch;text-align:center;">
-    All three — for free — in <span style="color:#F4EFE2;">one 30-minute call</span>.
-  </div>
-  <a href="/review.html" style="display:inline-flex;align-items:center;gap:12px;background:#F4EFE2;color:#0A1A2E;font-weight:700;font-size:clamp(15px,1.5vw,17px);padding:clamp(13px,1.6vh,16px) clamp(22px,2.6vw,30px);border-radius:980px;box-shadow:0 24px 50px -20px rgba(244,239,226,.45);">
-    Get my clarity call
-    <span style="font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;font-weight:600;font-size:22px;line-height:1;">→</span>
-  </a>
-
-</section>
-
-<!-- ============================================================ -->
-<!-- PART 4 · BOOK (CALENDLY)                                     -->
-<!-- ============================================================ -->
-<section id="book" style="background:#FFFFFF;color:#0A1A2E;padding:clamp(48px,8vh,96px) clamp(14px,3vw,32px);display:flex;flex-direction:column;align-items:center;gap:clamp(16px,2.4vh,24px);">
-
-  <div style="text-align:center;">
-    <div style="font-size:11px;font-weight:800;letter-spacing:.24em;text-transform:uppercase;color:#B08D57;">Pick a time</div>
-    <h2 style="font-family:'Cormorant Garamond',Georgia,serif;font-weight:600;letter-spacing:-.025em;line-height:1.05;font-size:clamp(28px,4.2vw,48px);margin:8px 0 0;color:#0A1A2E;text-wrap:balance;max-width:24ch;">
-      Book your free <em style="font-style:italic;background:linear-gradient(transparent 65%,#F4EFE2 65%);padding:0 6px;">Federal Retirement Review</em>.
-    </h2>
-    <div style="margin-top:10px;display:inline-flex;flex-wrap:wrap;justify-content:center;gap:6px 18px;font-size:12px;font-weight:600;color:#3C4858;letter-spacing:.04em;">
-      <span style="display:inline-flex;align-items:center;gap:5px;"><svg width="11" height="11" viewBox="0 0 20 20" fill="none" stroke="#B08D57" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5 8.5 15 16 5"/></svg>45 minutes</span>
-      <span style="display:inline-flex;align-items:center;gap:5px;"><svg width="11" height="11" viewBox="0 0 20 20" fill="none" stroke="#B08D57" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5 8.5 15 16 5"/></svg>Free · No obligation</span>
-      <span style="display:inline-flex;align-items:center;gap:5px;"><svg width="11" height="11" viewBox="0 0 20 20" fill="none" stroke="#B08D57" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5 8.5 15 16 5"/></svg>With a Federal HR pro</span>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,3vw,48px);font-size:16px;line-height:1.7;color:rgba(255,255,255,.75);" class="reviews-cols">
+      <p>Most federal employees spend decades building their career — then face retirement with unanswered questions about their FERS annuity, TSP withdrawals, and how their benefits actually work together.</p>
+      <p>The Federal Retirement Review gives you 30 minutes with a Federal HR professional who reads SF-50s and processes retirements for a living. No products, no pitches — just clarity on the numbers that matter most.</p>
     </div>
   </div>
-
-  <div style="width:100%;max-width:1100px;border-radius:14px;overflow:hidden;border:1px solid rgba(10,26,46,.12);box-shadow:0 24px 50px -28px rgba(10,26,46,.2);background:#fff;">
-    <div class="calendly-inline-widget" data-url="https://calendly.com/p1consulting/45?hide_gdpr_banner=1&background_color=ffffff&text_color=0a1a2e&primary_color=b08d57" style="min-width:320px;width:100%;height:720px;"></div>
-  </div>
-
-  <div style="font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;font-weight:500;font-size:clamp(14px,1.4vw,17px);line-height:1.4;color:#3C4858;text-align:center;max-width:48ch;">
-    Can't see a time that works? <a href="mailto:p1consulting@outlook.com" style="color:#0A1A2E;border-bottom:1px solid rgba(10,26,46,.4);">Email us</a> and we'll find one.
-  </div>
-
 </section>
 
-<!-- ============================================================ -->
-<!-- PART 5 · FAQ                                                 -->
-<!-- ============================================================ -->
-<section style="background:#0A1A2E;color:#fff;padding:clamp(48px,8vh,96px) clamp(16px,4vw,32px);display:flex;flex-direction:column;align-items:center;gap:clamp(22px,3vh,32px);">
-
-  <div style="text-align:center;">
-    <div style="font-size:11px;font-weight:800;letter-spacing:.24em;text-transform:uppercase;color:#B08D57;">Questions</div>
-    <h2 style="font-family:'Cormorant Garamond',Georgia,serif;font-weight:600;letter-spacing:-.025em;line-height:1.05;font-size:clamp(28px,4.2vw,48px);margin:8px 0 0;color:#fff;text-wrap:balance;max-width:22ch;">
-      Frequently <em style="font-style:italic;color:#F4EFE2;font-weight:600;">asked</em>.
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- HOW IT WORKS · Light cream, 3-column icon grid                 -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<section id="how-it-works" style="background:#F2F0EB;color:#0A1A2E;" class="section-pad">
+  <div style="max-width:1100px;margin:0 auto;text-align:center;">
+    <div class="label" style="color:#B08D57;margin-bottom:12px;">How it works</div>
+    <h2 class="serif" style="font-weight:600;letter-spacing:-.02em;line-height:1.08;font-size:clamp(28px,4vw,48px);color:#0A1A2E;margin-bottom:clamp(36px,5vh,56px);">
+      A simpler path to clarity.
     </h2>
+
+    <div class="how-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(24px,3vw,40px);text-align:center;">
+
+      <div style="display:flex;flex-direction:column;align-items:center;gap:16px;">
+        <div style="width:64px;height:64px;border-radius:50%;background:#0A1A2E;display:grid;place-items:center;">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#B08D57" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+        </div>
+        <h3 class="serif" style="font-weight:600;font-size:clamp(20px,2vw,24px);letter-spacing:-.01em;">Answer a few questions</h3>
+        <p style="font-size:15px;line-height:1.6;color:#3C4858;max-width:32ch;">Tell us about your service, age, and TSP — takes under 2 minutes.</p>
+      </div>
+
+      <div style="display:flex;flex-direction:column;align-items:center;gap:16px;">
+        <div style="width:64px;height:64px;border-radius:50%;background:#0A1A2E;display:grid;place-items:center;">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#B08D57" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+        </div>
+        <h3 class="serif" style="font-weight:600;font-size:clamp(20px,2vw,24px);letter-spacing:-.01em;">We match you with HR</h3>
+        <p style="font-size:15px;line-height:1.6;color:#3C4858;max-width:32ch;">A Federal HR professional who processes retirements — not an advisor, not a salesperson.</p>
+      </div>
+
+      <div style="display:flex;flex-direction:column;align-items:center;gap:16px;">
+        <div style="width:64px;height:64px;border-radius:50%;background:#0A1A2E;display:grid;place-items:center;">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#B08D57" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+        </div>
+        <h3 class="serif" style="font-weight:600;font-size:clamp(20px,2vw,24px);letter-spacing:-.01em;">Get your numbers in 30 min</h3>
+        <p style="font-size:15px;line-height:1.6;color:#3C4858;max-width:32ch;">Income comparison, benefit costs, TSP strategy — all three, for free, in one call.</p>
+      </div>
+
+    </div>
+
+    <a href="/review.html" class="btn-primary" style="margin-top:clamp(36px,5vh,48px);">
+      Start Your Free Review
+      <span style="font-size:18px;line-height:1;">→</span>
+    </a>
   </div>
-
-  <div style="width:100%;max-width:740px;display:flex;flex-direction:column;">
-
-    <details style="border-top:1px solid rgba(255,255,255,.14);">
-      <summary style="display:flex;justify-content:space-between;align-items:flex-start;gap:18px;padding:18px 4px;">
-        <span style="font-family:'Cormorant Garamond',Georgia,serif;font-size:clamp(17px,1.7vw,21px);font-weight:600;color:#fff;line-height:1.3;letter-spacing:-.005em;">What exactly is the Federal Retirement Review?</span>
-        <span class="plus" style="flex:none;font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;color:#F4EFE2;font-size:22px;line-height:1;font-weight:500;">+</span>
-      </summary>
-      <div class="body"><p style="margin:0 0 14px;font-size:14.5px;line-height:1.6;color:rgba(255,255,255,.78);max-width:60ch;">A 30–45 minute call with a Federal HR professional. We map your TSP, FEHB, FEGLI and tax picture against your retirement date — and flag the costly mistakes before they happen. No products are sold on the call.</p></div>
-    </details>
-
-    <details style="border-top:1px solid rgba(255,255,255,.14);">
-      <summary style="display:flex;justify-content:space-between;align-items:flex-start;gap:18px;padding:18px 4px;">
-        <span style="font-family:'Cormorant Garamond',Georgia,serif;font-size:clamp(17px,1.7vw,21px);font-weight:600;color:#fff;line-height:1.3;letter-spacing:-.005em;">Is this really free?</span>
-        <span class="plus" style="flex:none;font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;color:#F4EFE2;font-size:22px;line-height:1;font-weight:500;">+</span>
-      </summary>
-      <div class="body"><p style="margin:0 0 14px;font-size:14.5px;line-height:1.6;color:rgba(255,255,255,.78);max-width:60ch;">Yes. The review is free and there's no obligation. We make our living elsewhere — this is the work we'd want our own family to have access to, and it's how we meet most of the people we eventually help in deeper ways.</p></div>
-    </details>
-
-    <details style="border-top:1px solid rgba(255,255,255,.14);">
-      <summary style="display:flex;justify-content:space-between;align-items:flex-start;gap:18px;padding:18px 4px;">
-        <span style="font-family:'Cormorant Garamond',Georgia,serif;font-size:clamp(17px,1.7vw,21px);font-weight:600;color:#fff;line-height:1.3;letter-spacing:-.005em;">Do I have to be 55 or have $200K in my TSP?</span>
-        <span class="plus" style="flex:none;font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;color:#F4EFE2;font-size:22px;line-height:1;font-weight:500;">+</span>
-      </summary>
-      <div class="body"><p style="margin:0 0 14px;font-size:14.5px;line-height:1.6;color:rgba(255,255,255,.78);max-width:60ch;">Those are the markers for the full review call. If you're younger or earlier in your career, we'll still send you the Common Mistakes guide and the intro video — the moves you make in your 40s compound the most.</p></div>
-    </details>
-
-    <details style="border-top:1px solid rgba(255,255,255,.14);">
-      <summary style="display:flex;justify-content:space-between;align-items:flex-start;gap:18px;padding:18px 4px;">
-        <span style="font-family:'Cormorant Garamond',Georgia,serif;font-size:clamp(17px,1.7vw,21px);font-weight:600;color:#fff;line-height:1.3;letter-spacing:-.005em;">Will you try to sell me something?</span>
-        <span class="plus" style="flex:none;font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;color:#F4EFE2;font-size:22px;line-height:1;font-weight:500;">+</span>
-      </summary>
-      <div class="body"><p style="margin:0 0 14px;font-size:14.5px;line-height:1.6;color:rgba(255,255,255,.78);max-width:60ch;">No. We don't sell investments, annuities, or insurance on the call. If after the review you want help implementing something, we can point you to vetted, fee-only people — but that's your choice, not the pitch.</p></div>
-    </details>
-
-    <details style="border-top:1px solid rgba(255,255,255,.14);">
-      <summary style="display:flex;justify-content:space-between;align-items:flex-start;gap:18px;padding:18px 4px;">
-        <span style="font-family:'Cormorant Garamond',Georgia,serif;font-size:clamp(17px,1.7vw,21px);font-weight:600;color:#fff;line-height:1.3;letter-spacing:-.005em;">What should I bring to the call?</span>
-        <span class="plus" style="flex:none;font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;color:#F4EFE2;font-size:22px;line-height:1;font-weight:500;">+</span>
-      </summary>
-      <div class="body"><p style="margin:0 0 14px;font-size:14.5px;line-height:1.6;color:rgba(255,255,255,.78);max-width:60ch;">Your most recent SF-50 and TSP balance if you have them handy. If you don't — come anyway. We can still map the big picture from what you remember.</p></div>
-    </details>
-
-    <details style="border-top:1px solid rgba(255,255,255,.14);border-bottom:1px solid rgba(255,255,255,.14);">
-      <summary style="display:flex;justify-content:space-between;align-items:flex-start;gap:18px;padding:18px 4px;">
-        <span style="font-family:'Cormorant Garamond',Georgia,serif;font-size:clamp(17px,1.7vw,21px);font-weight:600;color:#fff;line-height:1.3;letter-spacing:-.005em;">Who reviews me?</span>
-        <span class="plus" style="flex:none;font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;color:#F4EFE2;font-size:22px;line-height:1;font-weight:500;">+</span>
-      </summary>
-      <div class="body"><p style="margin:0 0 14px;font-size:14.5px;line-height:1.6;color:rgba(255,255,255,.78);max-width:60ch;">A Federal HR professional — someone who reads SF-50s and processes retirements for a living. Not an advisor, not a salesperson. Real HR.</p></div>
-    </details>
-
-  </div>
-
-  <div style="font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;font-weight:500;font-size:clamp(15px,1.5vw,18px);line-height:1.4;color:rgba(255,255,255,.85);text-align:center;max-width:42ch;">
-    Still have a question? Bring it to the <span style="color:#F4EFE2;">call</span>.
-  </div>
-  <a href="/review.html" style="display:inline-flex;align-items:center;gap:12px;background:#F4EFE2;color:#0A1A2E;font-weight:700;font-size:clamp(15px,1.5vw,17px);padding:clamp(13px,1.6vh,16px) clamp(22px,2.6vw,30px);border-radius:980px;box-shadow:0 24px 50px -20px rgba(244,239,226,.45);">
-    Get my clarity call
-    <span style="font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;font-weight:600;font-size:22px;line-height:1;">→</span>
-  </a>
-
 </section>
 
-<!-- ============================================================ -->
-<!-- PART 6 · FOOTER                                              -->
-<!-- ============================================================ -->
-<footer style="background:#06121F;color:rgba(255,255,255,.55);padding:clamp(40px,5vh,56px) clamp(16px,4vw,32px) clamp(28px,3vh,36px);text-align:center;border-top:1px solid rgba(244,239,226,.1);">
-  <div style="max-width:760px;margin:0 auto;display:flex;flex-direction:column;align-items:center;gap:18px;">
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- SHOWCASE · Alternating image + text rows (OPM feature style)   -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+
+<!-- Showcase 1: Income -->
+<section style="background:#fff;color:#0A1A2E;" class="section-pad">
+  <div class="showcase-row" style="max-width:1100px;margin:0 auto;display:flex;align-items:center;gap:clamp(32px,5vw,72px);">
+    <div class="showcase-img" style="flex:1;min-width:0;max-width:520px;">
+      <div style="border-radius:12px;overflow:hidden;box-shadow:0 24px 48px -16px rgba(10,26,46,.15);border:1px solid rgba(10,26,46,.08);">
+        <img src="assets/aid-01-income-crop.jpg" alt="Income comparison breakdown" style="width:100%;height:auto;display:block;">
+      </div>
+    </div>
+    <div class="showcase-text" style="flex:1;min-width:0;max-width:460px;">
+      <div class="label" style="color:#B08D57;margin-bottom:10px;">01 · Income</div>
+      <h3 class="serif" style="font-weight:600;letter-spacing:-.02em;line-height:1.12;font-size:clamp(24px,3vw,36px);color:#0A1A2E;">
+        Compare your <em style="font-style:italic;">take-home pay</em> today vs your retirement&nbsp;calculation.
+      </h3>
+      <p style="margin-top:16px;font-size:15.5px;line-height:1.65;color:#3C4858;">See exactly how your federal paycheck translates to retirement income — your FERS annuity, Social Security estimate, and TSP withdrawals side by side.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Showcase 2: Costs -->
+<section style="background:#F2F0EB;color:#0A1A2E;" class="section-pad">
+  <div class="showcase-row reverse" style="max-width:1100px;margin:0 auto;display:flex;flex-direction:row-reverse;align-items:center;gap:clamp(32px,5vw,72px);">
+    <div class="showcase-img" style="flex:1;min-width:0;max-width:520px;">
+      <div style="border-radius:12px;overflow:hidden;box-shadow:0 24px 48px -16px rgba(10,26,46,.15);border:1px solid rgba(10,26,46,.08);">
+        <img src="assets/aid-02-costs-crop.jpg" alt="FEHB and FEGLI costs breakdown" style="width:100%;height:auto;display:block;">
+      </div>
+    </div>
+    <div class="showcase-text" style="flex:1;min-width:0;max-width:460px;">
+      <div class="label" style="color:#B08D57;margin-bottom:10px;">02 · Costs</div>
+      <h3 class="serif" style="font-weight:600;letter-spacing:-.02em;line-height:1.12;font-size:clamp(24px,3vw,36px);color:#0A1A2E;">
+        What <em style="font-style:italic;">FEHB</em>, <em style="font-style:italic;">FEGLI</em> and <em style="font-style:italic;">taxes</em> will actually look&nbsp;like.
+      </h3>
+      <p style="margin-top:16px;font-size:15.5px;line-height:1.65;color:#3C4858;">Your health insurance and life insurance premiums change at retirement. We show you the real numbers — not estimates — so there are no surprises on your first check.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Showcase 3: TSP -->
+<section style="background:#fff;color:#0A1A2E;" class="section-pad">
+  <div class="showcase-row" style="max-width:1100px;margin:0 auto;display:flex;align-items:center;gap:clamp(32px,5vw,72px);">
+    <div class="showcase-img" style="flex:1;min-width:0;max-width:520px;">
+      <div style="border-radius:12px;overflow:hidden;box-shadow:0 24px 48px -16px rgba(10,26,46,.15);border:1px solid rgba(10,26,46,.08);position:relative;">
+        <div style="position:absolute;top:14px;right:14px;z-index:2;font-size:11px;font-weight:700;color:#fff;background:#0A1A2E;padding:5px 12px;border-radius:4px;letter-spacing:.04em;">Most asked</div>
+        <img src="assets/aid-03-tsp-crop.jpg" alt="TSP balance strategy" style="width:100%;height:auto;display:block;">
+      </div>
+    </div>
+    <div class="showcase-text" style="flex:1;min-width:0;max-width:460px;">
+      <div class="label" style="color:#B08D57;margin-bottom:10px;">03 · TSP</div>
+      <h3 class="serif" style="font-weight:600;letter-spacing:-.02em;line-height:1.12;font-size:clamp(24px,3vw,36px);color:#0A1A2E;">
+        How much you can really <em style="font-style:italic;">get out of your&nbsp;TSP</em>.
+      </h3>
+      <p style="margin-top:16px;font-size:15.5px;line-height:1.65;color:#3C4858;">Lump-sum, monthly payments, or Roth ladder? We map the withdrawal strategies that protect your balance and minimize taxes over 20+ years of retirement.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- CTA BAND                                                       -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<section style="background:#0A1A2E;color:#fff;padding:clamp(48px,7vh,80px) clamp(20px,5vw,48px);text-align:center;">
+  <div style="max-width:700px;margin:0 auto;">
+    <h2 class="serif" style="font-weight:600;letter-spacing:-.02em;line-height:1.08;font-size:clamp(28px,4vw,44px);color:#fff;margin-bottom:12px;">
+      Three numbers, one <em style="font-style:italic;color:#F4EFE2;">honest</em> picture.
+    </h2>
+    <p class="serif" style="font-style:italic;font-weight:400;font-size:clamp(17px,1.8vw,22px);line-height:1.45;color:rgba(255,255,255,.75);margin-bottom:clamp(24px,3vh,32px);">
+      All three — for free — in one 30-minute call.
+    </p>
+    <a href="/review.html" class="btn-primary" style="background:#F4EFE2;color:#0A1A2E;">
+      Get My Free Review
+      <span style="font-size:18px;line-height:1;">→</span>
+    </a>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- REVIEWS · Light cream background                               -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<section style="background:#F2F0EB;color:#0A1A2E;" class="section-pad">
+  <div style="max-width:1100px;margin:0 auto;">
+
+    <div style="text-align:center;margin-bottom:clamp(32px,4vh,48px);">
+      <div style="display:inline-flex;gap:3px;margin-bottom:12px;">
+        <span style="display:inline-flex;width:26px;height:26px;background:#00B67A;border-radius:3px;align-items:center;justify-content:center;"><svg width="16" height="16" viewBox="0 0 24 24" fill="#fff"><path d="M12 2l2.9 6.1 6.6.9-4.8 4.6 1.2 6.6L12 17.8 6.1 20.2l1.2-6.6L2.5 9l6.6-.9z"/></svg></span>
+        <span style="display:inline-flex;width:26px;height:26px;background:#00B67A;border-radius:3px;align-items:center;justify-content:center;"><svg width="16" height="16" viewBox="0 0 24 24" fill="#fff"><path d="M12 2l2.9 6.1 6.6.9-4.8 4.6 1.2 6.6L12 17.8 6.1 20.2l1.2-6.6L2.5 9l6.6-.9z"/></svg></span>
+        <span style="display:inline-flex;width:26px;height:26px;background:#00B67A;border-radius:3px;align-items:center;justify-content:center;"><svg width="16" height="16" viewBox="0 0 24 24" fill="#fff"><path d="M12 2l2.9 6.1 6.6.9-4.8 4.6 1.2 6.6L12 17.8 6.1 20.2l1.2-6.6L2.5 9l6.6-.9z"/></svg></span>
+        <span style="display:inline-flex;width:26px;height:26px;background:#00B67A;border-radius:3px;align-items:center;justify-content:center;"><svg width="16" height="16" viewBox="0 0 24 24" fill="#fff"><path d="M12 2l2.9 6.1 6.6.9-4.8 4.6 1.2 6.6L12 17.8 6.1 20.2l1.2-6.6L2.5 9l6.6-.9z"/></svg></span>
+        <span style="display:inline-flex;width:26px;height:26px;background:#00B67A;border-radius:3px;align-items:center;justify-content:center;"><svg width="16" height="16" viewBox="0 0 24 24" fill="#fff"><path d="M12 2l2.9 6.1 6.6.9-4.8 4.6 1.2 6.6L12 17.8 6.1 20.2l1.2-6.6L2.5 9l6.6-.9z"/></svg></span>
+      </div>
+      <div style="font-size:13px;color:#3C4858;font-weight:600;">
+        <b style="color:#0A1A2E;font-weight:800;">Excellent</b> on
+        <span style="display:inline-flex;align-items:center;gap:5px;vertical-align:middle;">
+          <span style="display:inline-flex;width:14px;height:14px;background:#00B67A;border-radius:2px;align-items:center;justify-content:center;"><svg width="10" height="10" viewBox="0 0 24 24" fill="#fff"><path d="M12 2l2.9 6.1 6.6.9-4.8 4.6 1.2 6.6L12 17.8 6.1 20.2l1.2-6.6L2.5 9l6.6-.9z"/></svg></span>
+          <b style="color:#0A1A2E;font-weight:800;">Trustpilot</b>
+        </span>
+      </div>
+
+      <div class="label" style="color:#B08D57;margin-top:20px;">What people are saying</div>
+      <h2 class="serif" style="font-weight:600;letter-spacing:-.02em;line-height:1.08;font-size:clamp(28px,4vw,48px);color:#0A1A2E;margin-top:8px;">
+        Federal employees, in their <em style="font-style:italic;">own&nbsp;words</em>.
+      </h2>
+    </div>
+
+    <div class="reviews-cols" style="display:grid;grid-template-columns:repeat(2,1fr);gap:clamp(16px,2vw,24px);">
+
+      <!-- Review 1 -->
+      <article style="background:#fff;border:1px solid rgba(10,26,46,.08);border-radius:10px;padding:clamp(22px,2.4vw,30px);display:flex;flex-direction:column;gap:14px;">
+        <header style="display:flex;align-items:center;gap:12px;">
+          <div style="width:44px;height:44px;border-radius:50%;background:#0A1A2E;color:#F4EFE2;display:grid;place-items:center;font-weight:700;font-size:14px;flex:none;">GA</div>
+          <div style="flex:1;min-width:0;">
+            <div style="font-size:14.5px;font-weight:700;color:#0A1A2E;line-height:1.2;">Gerardo Andujar</div>
+            <div style="font-size:12px;color:#7A8595;font-weight:500;margin-top:3px;">US · 1 review</div>
+          </div>
+        </header>
+        <div style="display:inline-flex;gap:2px;">
+          <span style="display:inline-flex;width:20px;height:20px;background:#00B67A;border-radius:2px;align-items:center;justify-content:center;"><svg width="13" height="13" viewBox="0 0 24 24" fill="#fff"><path d="M12 2l2.9 6.1 6.6.9-4.8 4.6 1.2 6.6L12 17.8 6.1 20.2l1.2-6.6L2.5 9l6.6-.9z"/></svg></span>
+          <span style="display:inline-flex;width:20px;height:20px;background:#00B67A;border-radius:2px;align-items:center;justify-content:center;"><svg width="13" height="13" viewBox="0 0 24 24" fill="#fff"><path d="M12 2l2.9 6.1 6.6.9-4.8 4.6 1.2 6.6L12 17.8 6.1 20.2l1.2-6.6L2.5 9l6.6-.9z"/></svg></span>
+          <span style="display:inline-flex;width:20px;height:20px;background:#00B67A;border-radius:2px;align-items:center;justify-content:center;"><svg width="13" height="13" viewBox="0 0 24 24" fill="#fff"><path d="M12 2l2.9 6.1 6.6.9-4.8 4.6 1.2 6.6L12 17.8 6.1 20.2l1.2-6.6L2.5 9l6.6-.9z"/></svg></span>
+          <span style="display:inline-flex;width:20px;height:20px;background:#00B67A;border-radius:2px;align-items:center;justify-content:center;"><svg width="13" height="13" viewBox="0 0 24 24" fill="#fff"><path d="M12 2l2.9 6.1 6.6.9-4.8 4.6 1.2 6.6L12 17.8 6.1 20.2l1.2-6.6L2.5 9l6.6-.9z"/></svg></span>
+          <span style="display:inline-flex;width:20px;height:20px;background:#00B67A;border-radius:2px;align-items:center;justify-content:center;"><svg width="13" height="13" viewBox="0 0 24 24" fill="#fff"><path d="M12 2l2.9 6.1 6.6.9-4.8 4.6 1.2 6.6L12 17.8 6.1 20.2l1.2-6.6L2.5 9l6.6-.9z"/></svg></span>
+        </div>
+        <h3 style="font-size:17px;font-weight:700;color:#0A1A2E;line-height:1.3;">Services and Orientation.</h3>
+        <p style="font-size:14.5px;line-height:1.6;color:#3C4858;">Services, professional and knowledge are great.</p>
+        <footer style="margin-top:auto;display:flex;align-items:center;gap:10px;font-size:11.5px;color:#7A8595;font-weight:500;flex-wrap:wrap;">
+          <span>June 13, 2026</span>
+          <span style="padding:3px 9px;border-radius:4px;background:#F2F0EB;color:#3C4858;font-weight:600;">Unprompted review</span>
+        </footer>
+      </article>
+
+      <!-- Review 2 -->
+      <article style="background:#fff;border:1px solid rgba(10,26,46,.08);border-radius:10px;padding:clamp(22px,2.4vw,30px);display:flex;flex-direction:column;gap:14px;">
+        <header style="display:flex;align-items:center;gap:12px;">
+          <div style="width:44px;height:44px;border-radius:50%;background:#0A1A2E;color:#F4EFE2;display:grid;place-items:center;font-weight:700;font-size:14px;flex:none;">SG</div>
+          <div style="flex:1;min-width:0;">
+            <div style="font-size:14.5px;font-weight:700;color:#0A1A2E;line-height:1.2;">Sebastian Gallo Giraldo</div>
+            <div style="font-size:12px;color:#7A8595;font-weight:500;margin-top:3px;">US · 1 review</div>
+          </div>
+        </header>
+        <div style="display:inline-flex;gap:2px;">
+          <span style="display:inline-flex;width:20px;height:20px;background:#00B67A;border-radius:2px;align-items:center;justify-content:center;"><svg width="13" height="13" viewBox="0 0 24 24" fill="#fff"><path d="M12 2l2.9 6.1 6.6.9-4.8 4.6 1.2 6.6L12 17.8 6.1 20.2l1.2-6.6L2.5 9l6.6-.9z"/></svg></span>
+          <span style="display:inline-flex;width:20px;height:20px;background:#00B67A;border-radius:2px;align-items:center;justify-content:center;"><svg width="13" height="13" viewBox="0 0 24 24" fill="#fff"><path d="M12 2l2.9 6.1 6.6.9-4.8 4.6 1.2 6.6L12 17.8 6.1 20.2l1.2-6.6L2.5 9l6.6-.9z"/></svg></span>
+          <span style="display:inline-flex;width:20px;height:20px;background:#00B67A;border-radius:2px;align-items:center;justify-content:center;"><svg width="13" height="13" viewBox="0 0 24 24" fill="#fff"><path d="M12 2l2.9 6.1 6.6.9-4.8 4.6 1.2 6.6L12 17.8 6.1 20.2l1.2-6.6L2.5 9l6.6-.9z"/></svg></span>
+          <span style="display:inline-flex;width:20px;height:20px;background:#00B67A;border-radius:2px;align-items:center;justify-content:center;"><svg width="13" height="13" viewBox="0 0 24 24" fill="#fff"><path d="M12 2l2.9 6.1 6.6.9-4.8 4.6 1.2 6.6L12 17.8 6.1 20.2l1.2-6.6L2.5 9l6.6-.9z"/></svg></span>
+          <span style="display:inline-flex;width:20px;height:20px;background:#00B67A;border-radius:2px;align-items:center;justify-content:center;"><svg width="13" height="13" viewBox="0 0 24 24" fill="#fff"><path d="M12 2l2.9 6.1 6.6.9-4.8 4.6 1.2 6.6L12 17.8 6.1 20.2l1.2-6.6L2.5 9l6.6-.9z"/></svg></span>
+        </div>
+        <h3 style="font-size:17px;font-weight:700;color:#0A1A2E;line-height:1.3;">Very good work — contribute on both parts.</h3>
+        <p style="font-size:14.5px;line-height:1.6;color:#3C4858;">Very good work — contribute on both parts, and clarity working through every question or need at the time of submitting.</p>
+        <footer style="margin-top:auto;display:flex;align-items:center;gap:10px;font-size:11.5px;color:#7A8595;font-weight:500;flex-wrap:wrap;">
+          <span>June 10, 2026</span>
+          <span style="padding:3px 9px;border-radius:4px;background:#F2F0EB;color:#3C4858;font-weight:600;">Unprompted review</span>
+        </footer>
+      </article>
+
+    </div>
+
+    <div style="text-align:center;margin-top:clamp(20px,3vh,32px);">
+      <a href="https://www.trustpilot.com/review/paduaco.com" style="display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:700;color:#0A1A2E;letter-spacing:.02em;border-bottom:1.5px solid #0A1A2E;padding-bottom:2px;text-decoration:none;">
+        Read all reviews on Trustpilot
+        <span style="font-size:16px;line-height:1;">→</span>
+      </a>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- FAQ · Dark navy                                                -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<section style="background:#0A1A2E;color:#fff;" class="section-pad">
+  <div style="max-width:740px;margin:0 auto;">
+
+    <div style="text-align:center;margin-bottom:clamp(28px,4vh,44px);">
+      <div class="label" style="color:#B08D57;">Questions</div>
+      <h2 class="serif" style="font-weight:600;letter-spacing:-.02em;line-height:1.08;font-size:clamp(28px,4vw,48px);color:#fff;margin-top:8px;">
+        Frequently <em style="font-style:italic;color:#F4EFE2;">asked</em>.
+      </h2>
+    </div>
+
+    <div style="display:flex;flex-direction:column;">
+
+      <details style="border-top:1px solid rgba(255,255,255,.14);">
+        <summary style="display:flex;justify-content:space-between;align-items:flex-start;gap:18px;padding:20px 4px;">
+          <span class="serif" style="font-size:clamp(17px,1.7vw,21px);font-weight:600;color:#fff;line-height:1.3;">What exactly is the Federal Retirement Review?</span>
+          <span class="chevron" style="flex:none;font-size:18px;color:#B08D57;line-height:1;margin-top:4px;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+          </span>
+        </summary>
+        <div class="body"><p style="margin:0 0 18px;padding:0 4px;font-size:15px;line-height:1.65;color:rgba(255,255,255,.75);max-width:60ch;">A 30–45 minute call with a Federal HR professional. We map your TSP, FEHB, FEGLI and tax picture against your retirement date — and flag the costly mistakes before they happen. No products are sold on the call.</p></div>
+      </details>
+
+      <details style="border-top:1px solid rgba(255,255,255,.14);">
+        <summary style="display:flex;justify-content:space-between;align-items:flex-start;gap:18px;padding:20px 4px;">
+          <span class="serif" style="font-size:clamp(17px,1.7vw,21px);font-weight:600;color:#fff;line-height:1.3;">Is this really free?</span>
+          <span class="chevron" style="flex:none;font-size:18px;color:#B08D57;line-height:1;margin-top:4px;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+          </span>
+        </summary>
+        <div class="body"><p style="margin:0 0 18px;padding:0 4px;font-size:15px;line-height:1.65;color:rgba(255,255,255,.75);max-width:60ch;">Yes. The review is free and there's no obligation. We make our living elsewhere — this is the work we'd want our own family to have access to, and it's how we meet most of the people we eventually help in deeper ways.</p></div>
+      </details>
+
+      <details style="border-top:1px solid rgba(255,255,255,.14);">
+        <summary style="display:flex;justify-content:space-between;align-items:flex-start;gap:18px;padding:20px 4px;">
+          <span class="serif" style="font-size:clamp(17px,1.7vw,21px);font-weight:600;color:#fff;line-height:1.3;">Do I have to be 55 or have $200K in my TSP?</span>
+          <span class="chevron" style="flex:none;font-size:18px;color:#B08D57;line-height:1;margin-top:4px;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+          </span>
+        </summary>
+        <div class="body"><p style="margin:0 0 18px;padding:0 4px;font-size:15px;line-height:1.65;color:rgba(255,255,255,.75);max-width:60ch;">Those are the markers for the full review call. If you're younger or earlier in your career, we'll still send you the Common Mistakes guide and the intro video — the moves you make in your 40s compound the most.</p></div>
+      </details>
+
+      <details style="border-top:1px solid rgba(255,255,255,.14);">
+        <summary style="display:flex;justify-content:space-between;align-items:flex-start;gap:18px;padding:20px 4px;">
+          <span class="serif" style="font-size:clamp(17px,1.7vw,21px);font-weight:600;color:#fff;line-height:1.3;">Will you try to sell me something?</span>
+          <span class="chevron" style="flex:none;font-size:18px;color:#B08D57;line-height:1;margin-top:4px;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+          </span>
+        </summary>
+        <div class="body"><p style="margin:0 0 18px;padding:0 4px;font-size:15px;line-height:1.65;color:rgba(255,255,255,.75);max-width:60ch;">No. We don't sell investments, annuities, or insurance on the call. If after the review you want help implementing something, we can point you to vetted, fee-only people — but that's your choice, not the pitch.</p></div>
+      </details>
+
+      <details style="border-top:1px solid rgba(255,255,255,.14);">
+        <summary style="display:flex;justify-content:space-between;align-items:flex-start;gap:18px;padding:20px 4px;">
+          <span class="serif" style="font-size:clamp(17px,1.7vw,21px);font-weight:600;color:#fff;line-height:1.3;">What should I bring to the call?</span>
+          <span class="chevron" style="flex:none;font-size:18px;color:#B08D57;line-height:1;margin-top:4px;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+          </span>
+        </summary>
+        <div class="body"><p style="margin:0 0 18px;padding:0 4px;font-size:15px;line-height:1.65;color:rgba(255,255,255,.75);max-width:60ch;">Your most recent SF-50 and TSP balance if you have them handy. If you don't — come anyway. We can still map the big picture from what you remember.</p></div>
+      </details>
+
+      <details style="border-top:1px solid rgba(255,255,255,.14);border-bottom:1px solid rgba(255,255,255,.14);">
+        <summary style="display:flex;justify-content:space-between;align-items:flex-start;gap:18px;padding:20px 4px;">
+          <span class="serif" style="font-size:clamp(17px,1.7vw,21px);font-weight:600;color:#fff;line-height:1.3;">Who reviews me?</span>
+          <span class="chevron" style="flex:none;font-size:18px;color:#B08D57;line-height:1;margin-top:4px;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+          </span>
+        </summary>
+        <div class="body"><p style="margin:0 0 18px;padding:0 4px;font-size:15px;line-height:1.65;color:rgba(255,255,255,.75);max-width:60ch;">A Federal HR professional — someone who reads SF-50s and processes retirements for a living. Not an advisor, not a salesperson. Real HR.</p></div>
+      </details>
+
+    </div>
+
+    <div style="text-align:center;margin-top:clamp(32px,4vh,44px);">
+      <p class="serif" style="font-style:italic;font-weight:400;font-size:clamp(16px,1.6vw,20px);line-height:1.45;color:rgba(255,255,255,.75);margin-bottom:20px;">
+        Still have a question? Bring it to the <span style="color:#F4EFE2;">call</span>.
+      </p>
+      <a href="/review.html" class="btn-primary" style="background:#F4EFE2;color:#0A1A2E;">
+        Get My Free Review
+        <span style="font-size:18px;line-height:1;">→</span>
+      </a>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- FOOTER                                                         -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<footer style="background:#06121F;color:rgba(255,255,255,.55);padding:clamp(40px,5vh,56px) clamp(20px,5vw,48px) clamp(28px,3vh,36px);border-top:1px solid rgba(244,239,226,.08);">
+  <div style="max-width:1100px;margin:0 auto;display:flex;flex-direction:column;align-items:center;gap:20px;text-align:center;">
 
     <div style="display:inline-flex;align-items:center;gap:10px;">
       <div style="width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,#B08D57 0%,#C9A86A 60%,#8a6d3f 100%);display:grid;place-items:center;">
-        <span style="font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;font-weight:600;color:#0A1A2E;font-size:14px;line-height:1;">P</span>
+        <span class="serif" style="font-style:italic;font-weight:600;color:#fff;font-size:14px;line-height:1;">P</span>
       </div>
-      <b style="font-family:'Cormorant Garamond',Georgia,serif;font-size:15px;letter-spacing:.14em;font-weight:700;color:rgba(255,255,255,.85);">PADUA&nbsp;CO</b>
+      <b style="font-size:14px;letter-spacing:.14em;font-weight:700;color:rgba(255,255,255,.85);text-transform:uppercase;">Padua&nbsp;Co</b>
     </div>
 
     <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:14px 26px;font-size:12px;font-weight:600;letter-spacing:.06em;">
-      <a href="#" style="color:rgba(255,255,255,.7);">Privacy</a>
-      <a href="#" style="color:rgba(255,255,255,.7);">Terms</a>
-      <a href="https://paduaco.com" style="color:rgba(255,255,255,.7);">paduaco.com</a>
-      <a href="mailto:p1consulting@outlook.com" style="color:rgba(255,255,255,.7);">p1consulting@outlook.com</a>
+      <a href="#" style="color:rgba(255,255,255,.7);text-decoration:none;">Privacy</a>
+      <a href="#" style="color:rgba(255,255,255,.7);text-decoration:none;">Terms</a>
+      <a href="https://paduaco.com" style="color:rgba(255,255,255,.7);text-decoration:none;">paduaco.com</a>
+      <a href="mailto:p1consulting@outlook.com" style="color:rgba(255,255,255,.7);text-decoration:none;">p1consulting@outlook.com</a>
     </div>
 
-    <a href="https://www.trustpilot.com/evaluate/paduaco.com" style="display:inline-flex;align-items:center;gap:9px;padding:9px 14px;border-radius:980px;background:rgba(0,182,122,.12);border:1px solid rgba(0,182,122,.4);color:#fff;font-size:12px;font-weight:700;letter-spacing:.04em;">
+    <a href="https://www.trustpilot.com/evaluate/paduaco.com" style="display:inline-flex;align-items:center;gap:9px;padding:9px 16px;border-radius:6px;background:rgba(0,182,122,.1);border:1px solid rgba(0,182,122,.35);color:#fff;font-size:12px;font-weight:700;letter-spacing:.04em;text-decoration:none;">
       <span style="display:inline-flex;width:16px;height:16px;background:#00B67A;border-radius:2px;align-items:center;justify-content:center;">
         <svg width="11" height="11" viewBox="0 0 24 24" fill="#fff"><path d="M12 2l2.9 6.1 6.6.9-4.8 4.6 1.2 6.6L12 17.8 6.1 20.2l1.2-6.6L2.5 9l6.6-.9z"/></svg>
       </span>
       Leave us a review on Trustpilot
-      <span style="font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;font-weight:600;font-size:15px;line-height:1;color:#F4EFE2;">→</span>
+      <span style="font-size:15px;line-height:1;color:#F4EFE2;">→</span>
     </a>
 
-    <div style="width:60px;height:1px;background:rgba(244,239,226,.18);"></div>
+    <div style="width:60px;height:1px;background:rgba(244,239,226,.15);"></div>
 
-    <p style="margin:0;font-size:11.5px;line-height:1.65;color:rgba(255,255,255,.4);max-width:64ch;text-wrap:pretty;">
+    <p style="font-size:11.5px;line-height:1.65;color:rgba(255,255,255,.38);max-width:64ch;">
       Padua Co is independent and is not affiliated with, endorsed by, or sponsored by the U.S. Office of Personnel Management, the Thrift Savings Plan, or any federal agency. The Federal Retirement Review is educational only — not legal, tax, or investment advice.
     </p>
 
-    <div style="font-size:11px;font-weight:600;letter-spacing:.08em;color:rgba(255,255,255,.45);">
+    <div style="font-size:11px;font-weight:600;letter-spacing:.08em;color:rgba(255,255,255,.4);">
       © 2026 Padua Co · One Percent Consulting · All rights reserved
     </div>
 
