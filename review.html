@@ -161,8 +161,9 @@ button{font:inherit;cursor:pointer;border:none}
         <div class="check"><svg width="28" height="28" viewBox="0 0 20 20" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5 8.5 15 16 5"/></svg></div>
         <h2>You're all set.</h2>
         <p class="sub">Thank you. A member of our team will reach out within one business day to schedule your review.</p>
-        <p class="fine" style="margin:-8px 0 20px">Reference number: <strong id="refOut" style="color:#fff;letter-spacing:.06em"></strong><br>Taking you back to the home page…</p>
-        <a class="btn" href="/">Back to home <span class="arr">→</span></a>
+        <p class="fine" style="margin:-8px 0 20px">Reference number: <strong id="refOut" style="color:#fff;letter-spacing:.06em"></strong></p>
+        <a class="btn" href="/assets/retirement-checklist.pdf" download>Download your free retirement checklist <span class="arr">↓</span></a>
+        <p style="margin-top:16px"><a href="/" style="color:rgba(255,255,255,.7)">Back to home</a></p>
       </section>
 
       <div class="actions" id="actions">
@@ -326,7 +327,6 @@ f.addEventListener('submit', async e => {
     gtag('event', 'funnel_completed');
     document.getElementById('refOut').textContent = ref;
     btn.disabled = false;
-    setTimeout(() => { location.href = '/'; }, 6000);
   }
   show(step + 1);
 });
