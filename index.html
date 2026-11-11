@@ -132,8 +132,8 @@ details[open] .body{max-height:300px;opacity:1}
 <section style="background:#002147;color:#fff;padding:clamp(32px,5vh,48px) clamp(20px,5vw,48px);border-top:1px solid rgba(176,141,87,.25);border-bottom:1px solid rgba(176,141,87,.25);">
   <div class="proof-grid" style="max-width:1100px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(20px,3vw,40px);text-align:center;">
     <div style="display:flex;flex-direction:column;align-items:center;gap:12px;">
-      <div style="width:64px;height:64px;border-radius:50%;background:rgba(255,255,255,.06);border:1.5px solid #B59410;display:grid;place-items:center;"><span class="serif" style="font-size:24px;font-weight:700;color:#B59410;letter-spacing:-.02em;">+10</span></div>
-      <h3 class="serif" style="font-weight:600;font-size:clamp(17px,1.7vw,20px);letter-spacing:-.01em;margin:0;">Years of Experience</h3>
+      <div style="width:64px;height:64px;border-radius:50%;background:rgba(255,255,255,.06);border:1.5px solid #B59410;display:grid;place-items:center;"><span class="serif" style="font-size:19px;font-weight:700;color:#B59410;letter-spacing:-.02em;">2014</span></div>
+      <h3 class="serif" style="font-weight:600;font-size:clamp(17px,1.7vw,20px);letter-spacing:-.01em;margin:0;">Serving Clients Since</h3>
     </div>
     <div style="display:flex;flex-direction:column;align-items:center;gap:12px;">
       <div style="width:64px;height:64px;border-radius:50%;background:rgba(255,255,255,.06);border:1.5px solid #B59410;display:grid;place-items:center;"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#B59410" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="M9 13l2 2 4-4"/></svg></div>
@@ -149,6 +149,46 @@ details[open] .body{max-height:300px;opacity:1}
     </div>
   </div>
 </section>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- TSP TICKER · Thin black bar, live prices from /api/tsp (tsp.gov) -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<style>
+#tsp-ticker{background:#000;color:#fff;border-bottom:1px solid #222;font-family:Inter,system-ui,sans-serif;display:flex;align-items:center;gap:8px;padding:8px clamp(12px,3vw,24px);min-height:58px}
+#tsp-ticker .tt-label{font-size:13px;font-weight:700;white-space:nowrap;padding-right:12px;border-right:1px solid #333;line-height:1.2}
+#tsp-ticker .tt-label small{display:block;font-size:10px;font-weight:500;color:#8a8f98}
+#tsp-ticker .tt-track{flex:1;overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 24px,#000 calc(100% - 24px),transparent);mask-image:linear-gradient(90deg,transparent,#000 24px,#000 calc(100% - 24px),transparent)}
+#tsp-ticker .tt-belt{display:flex;gap:28px;width:max-content;padding-right:28px}
+#tsp-ticker .tt-belt.run{animation:tt-scroll var(--tt-dur,60s) linear infinite}
+#tsp-ticker:hover .tt-belt{animation-play-state:paused}
+@keyframes tt-scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@media(prefers-reduced-motion:reduce){#tsp-ticker .tt-belt.run{animation:none}#tsp-ticker .tt-track{overflow-x:auto}}
+#tsp-ticker .tt-item{display:flex;align-items:center;gap:10px;white-space:nowrap}
+#tsp-ticker .tt-name{font-size:12px;font-weight:600;color:#7fb2ff}
+#tsp-ticker .tt-price{font-size:13px;font-weight:700}
+#tsp-ticker .tt-chg{font-size:11px;font-weight:600}
+#tsp-ticker .up{color:#22c55e}#tsp-ticker .down{color:#ef4444}#tsp-ticker .flat{color:#8a8f98}
+#tsp-ticker .tt-msg{font-size:12px;color:#8a8f98}
+</style>
+<div id="tsp-ticker" aria-label="TSP fund share prices">
+  <div class="tt-label">TSP Funds<small id="tt-asof">Loading…</small></div>
+  <div class="tt-track" id="tt-track"><span class="tt-msg">Loading prices…</span></div>
+</div>
+<script>
+(function(){
+  function spark(s,cls){var w=56,h=22,mn=Math.min.apply(null,s),mx=Math.max.apply(null,s),r=(mx-mn)||1;
+    var p=s.map(function(v,i){return (i*w/(s.length-1)).toFixed(1)+','+(h-2-(v-mn)/r*(h-4)).toFixed(1)}).join(' ');
+    var c=cls=='up'?'#22c55e':cls=='down'?'#ef4444':'#8a8f98';
+    return '<svg width="'+w+'" height="'+h+'" viewBox="0 0 '+w+' '+h+'" aria-hidden="true"><polyline fill="none" stroke="'+c+'" stroke-width="1.5" points="'+p+'"/></svg>';}
+  fetch('/api/tsp').then(function(r){if(!r.ok)throw 0;return r.json()}).then(function(d){
+    var t=document.getElementById('tt-track');
+    var items=d.funds.map(function(f){var cls=f.change>0?'up':f.change<0?'down':'flat',sg=f.change>0?'+':'';
+      return '<div class="tt-item"><div><div class="tt-name">'+f.name+'</div><div class="tt-price">$'+f.price.toFixed(4)+'</div><div class="tt-chg '+cls+'">'+sg+f.change.toFixed(4)+' '+sg+f.pct.toFixed(2)+'%</div></div>'+spark(f.series,cls)+'</div>';}).join('');
+    t.innerHTML='<div class="tt-belt run" style="--tt-dur:'+(d.funds.length*4)+'s">'+items+'<span aria-hidden="true" style="display:contents">'+items+'</span></div>';
+    var p=d.asOf.split('-');document.getElementById('tt-asof').textContent='As of '+p[1]+'/'+p[2]+'/'+p[0];
+  }).catch(function(){document.getElementById('tsp-ticker').style.display='none';});
+})();
+</script>
 
 <!-- ═══════════════════════════════════════════════════════════════ -->
 <!-- HOW IT WORKS · Light cream, 3-column icon grid                 -->
