@@ -125,7 +125,7 @@ main{display:block}
 .cue-line{display:block;width:2.4rem;height:1px;background:var(--line)}
 
 /* --- outro: return button + legal disclaimer --- */
-.outro{margin:7rem 0 0}
+.outro{margin:3rem 0 0}
 .return{
   display:inline-flex;align-items:center;gap:12px;
   font-family:var(--f-body);
@@ -326,6 +326,15 @@ main{display:block}
   transform-origin:top center;
 }
 
+/* On a phone the outro cannot share the screen with the fixed lettering
+   and the map, so there the fixed layers step aside for it. On wide
+   screens all three sit together. */
+.live .display,
+.live .gauge{transition:opacity .55s ease}
+.live.ending .display,
+.live.ending .gauge{opacity:0}
+.live.ending .art.ready{opacity:0}
+
 /* --- story column --- */
 .live .story{
   max-width:none;
@@ -355,16 +364,10 @@ main{display:block}
   padding-bottom:3vh;
 }
 .live .outro{
-  padding:22vh 0 18vh;
-  max-width:min(62ch,44vw);
+  padding:0;
+  margin:2.4rem 0 0;
+  max-width:none;
 }
-/* --- endgame: retire the fixed layers so the outro is never covered --- */
-.live .display,
-.live .gauge{transition:opacity .55s ease}
-.live.ending .display,
-.live.ending .gauge{opacity:0}
-.live.ending .art.ready{opacity:0}
-
 .live .cue{transition:opacity .6s ease}
 .live.moved .cue{opacity:0}
 .live .cue-line{position:relative;overflow:hidden}
@@ -528,6 +531,9 @@ main{display:block}
   .live .beat--wheel{min-height:300vh}
   .live .beat--rings{min-height:240vh}
   .live .beat--tall{min-height:250vh}
+  /* final beat matches the viewport so the whole outro is still on
+     screen when the page bottoms out */
+  .live .beat:last-child{min-height:100vh;padding-bottom:0}
   .live .mra-list,
   .live .route-list{left:0;right:0;width:100%}
   .live .mra-item{font-size:.82rem;letter-spacing:.08em}
@@ -856,9 +862,21 @@ main{display:block}
       .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
   }
 
+  function outroHtml(){
+    var h = '<div class="outro">';
+    h += '<a class="return" href="' + esc(CONTENT.site.returnHref) + '">' +
+         'Return to ' + esc(CONTENT.site.name) +
+         ' <span aria-hidden="true">&rarr;</span></a>';
+    /* legal strings are trusted first-party markup, intentionally not escaped */
+    h += '<div class="legal">';
+    (CONTENT.legal || []).forEach(function (p) { h += '<p>' + p + '</p>'; });
+    h += '</div></div>';
+    return h;
+  }
+
   function build(){
-    var h = '';
-    CONTENT.chapters.forEach(function (ch) {
+    var h = '', lastCh = CONTENT.chapters.length - 1;
+    CONTENT.chapters.forEach(function (ch, ci) {
 
       /* Wheel chapter. The <ol> is a real list of real buttons, so with
          JS off it reads as a plain birth-year -> MRA table. */
@@ -914,6 +932,7 @@ main{display:block}
         if (!ch.pin && i === 0) h += '<h2 class="chapter-label">' + esc(ch.label) + '</h2>';
         if (b.key) h += '<h3 class="sr-only">' + esc(b.key) + '</h3>';
         (b.lines || []).forEach(function (p) { h += '<p>' + esc(p) + '</p>'; });
+        var isLast = (ci === lastCh && i === ch.beats.length - 1);
         if (b.steps) {
           h += '<ol class="steps">';
           b.steps.forEach(function (st) { h += '<li>' + esc(st) + '</li>'; });
@@ -924,20 +943,12 @@ main{display:block}
                (b.cta.external ? ' target="_blank" rel="noopener"' : '') + '>' +
                esc(b.cta.label) + ' <span aria-hidden="true">&rarr;</span></a></p>';
         }
+        if (isLast) h += outroHtml();
         h += '</div></div>';
       });
       h += '</section>';
     });
 
-    h += '<footer class="outro">';
-    h += '<a class="return" href="' + esc(CONTENT.site.returnHref) + '">' +
-         'Return to ' + esc(CONTENT.site.name) +
-         ' <span aria-hidden="true">&rarr;</span></a>';
-    /* legal strings are trusted first-party markup, intentionally not escaped */
-    h += '<div class="legal">';
-    (CONTENT.legal || []).forEach(function (p) { h += '<p>' + p + '</p>'; });
-    h += '</div>';
-    h += '</footer>';
     return h;
   }
 
@@ -978,7 +989,6 @@ main{display:block}
         art      = document.getElementById('art'),
         artInner = document.getElementById('artInner'),
         bar      = document.getElementById('bar'),
-        outro    = story.querySelector('.outro'),
         wheelList  = document.getElementById('mraList'),
         wheelStage = document.getElementById('mra-stage'),
         wheelItems = wheelList ? Array.prototype.slice.call(wheelList.querySelectorAll('.mra-item')) : [],
@@ -1365,13 +1375,12 @@ main{display:block}
       btn.addEventListener('focus', function () { stageGoTo(ringStage, i, routeN); });
     });
 
-    /* ---------------- endgame ---------------- */
-    /* The display word, artwork and gauge are position:fixed. The outro is not,
-       so without this it scrolls up underneath them. Reverses on scroll up. */
     function endingCheck(){
-      if (!outro) return;
-      var top = outro.getBoundingClientRect().top;
-      document.body.classList.toggle('ending', top < window.innerHeight * 0.72);
+      var el = story.querySelector('.outro');
+      if (!el) return;
+      var on = window.innerWidth < 900 &&
+               el.getBoundingClientRect().top < window.innerHeight * 0.55;
+      document.body.classList.toggle('ending', on);
     }
 
     /* ---------------- paint ---------------- */
