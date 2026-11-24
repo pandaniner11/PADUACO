@@ -181,6 +181,31 @@ main{display:block}
 .mra-val{color:var(--mute)}
 .mra-item:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
 
+.route-list{list-style:none;margin:2rem 0 0;padding:0}
+.route-list li{margin:0 0 .35rem}
+.route-item{
+  display:flex;flex-wrap:wrap;gap:.2rem .9rem;align-items:baseline;
+  width:100%;text-align:left;background:none;border:0;margin:0;
+  padding:.4rem 0;color:var(--ink);font-family:var(--f-body);
+  font-size:1rem;cursor:pointer;
+}
+.route-n{
+  color:var(--gold);font-family:var(--f-mono);
+  font-size:.8rem;letter-spacing:.14em;
+}
+.route-item:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+
+.cta-wrap{margin:1.6rem 0 0}
+.cta{
+  display:inline-flex;align-items:center;gap:10px;
+  font-family:var(--f-body);font-size:.92rem;font-weight:500;
+  color:var(--gold);text-decoration:none;
+  padding:.8rem 1.4rem;border:1px solid var(--gold);border-radius:6px;
+  transition:background-color .3s ease,color .3s ease;
+}
+.cta:hover{background:var(--gold);color:#0d0d0c}
+.cta:focus-visible{outline:2px solid var(--gold);outline-offset:4px}
+
 .display-cap{display:none}
 
 /* ===================================================================
@@ -377,6 +402,39 @@ main{display:block}
 .live .mra-item[aria-current="true"] .mra-year{color:var(--gold)}
 .live .beat--wheel{min-height:340vh}
 
+/* ---- Qualifying routes: three overlapping circles ---- */
+.live .route-list{
+  position:fixed;
+  top:var(--veil-h);
+  right:clamp(2rem,4vw,4.5rem);
+  width:min(44vw,640px);
+  height:calc(100vh - var(--veil-h) - 6vh);
+  margin:0;z-index:1;
+  opacity:0;pointer-events:none;
+  transition:opacity .55s ease;
+}
+.live.rings-on .route-list{opacity:1;pointer-events:auto}
+.live.rings-on .art.ready{opacity:0}
+.live .route-list li{position:absolute;left:50%;top:50%;margin:0;will-change:transform}
+.live .route-item{
+  display:flex;align-items:center;justify-content:center;
+  width:var(--ring-d,200px);height:var(--ring-d,200px);
+  padding:0;border:1px solid var(--line);border-radius:50%;
+  transform-origin:50% 50%;
+  will-change:transform,opacity;
+}
+.live .route-item .route-text{
+  position:absolute;width:1px;height:1px;padding:0;margin:-1px;
+  overflow:hidden;clip-path:inset(50%);white-space:nowrap;
+}
+.live .route-item .route-n{
+  font-size:clamp(.85rem,1.2vw,1.05rem);letter-spacing:.16em;
+  color:var(--mute);
+}
+.live .route-item[aria-current="true"]{border-color:var(--gold)}
+.live .route-item[aria-current="true"] .route-n{color:var(--gold)}
+.live .beat--rings{min-height:260vh}
+
 /* "Your MRA is" caption above the big answer */
 .live .display-cap{
   display:block;position:fixed;
@@ -387,7 +445,8 @@ main{display:block}
   opacity:0;transition:opacity .4s ease;
   z-index:4;pointer-events:none;
 }
-.live.wheel-on .display-cap{opacity:1}
+.live.wheel-on .display-cap,
+.live.rings-on .display-cap{opacity:1}
 
 /* ===================================================================
    4. ARTWORK STROKES
@@ -448,7 +507,9 @@ main{display:block}
   }
   .live .beat{min-height:112vh}
   .live .beat--wheel{min-height:300vh}
-  .live .mra-list{left:0;right:0;width:100%}
+  .live .beat--rings{min-height:240vh}
+  .live .mra-list,
+  .live .route-list{left:0;right:0;width:100%}
   .live .mra-item{font-size:.82rem;letter-spacing:.08em}
   .live .gauge{top:18vh;bottom:18vh}
   .live .outro{max-width:none}
@@ -646,6 +707,43 @@ main{display:block}
         ]
       },
 
+      /* --- START YOUR PROCESS ----------------------------------- */
+      {
+        id: 'process',
+        label: 'Start your process',
+        beats: [
+          { word: '3 months before retirement',
+            key: '3 months before retirement',
+            lines: ['Start your process.'] }
+        ]
+      },
+
+      /* --- QUALIFYING ROUTES -----------------------------------
+         Three overlapping circles turning as one cluster; the route
+         at the focal point comes forward and fills the lettering. */
+      {
+        id: 'qualify',
+        rings: true,
+        label: 'How to qualify for voluntary retirement',
+        routes: [
+          { n: '#1', text: 'MRA + 30 years of service' },
+          { n: '#2', text: '60 years old + 20 years of service' },
+          { n: '#3', text: '62 years old + 5 years of service' }
+        ]
+      },
+
+      /* --- MRA + 10 -------------------------------------------- */
+      {
+        id: 'mra10',
+        label: 'There is also MRA + 10',
+        beats: [
+          { word: 'MRA + 10', key: 'MRA + 10',
+            lines: ['You can also leave with MRA + 10.'],
+            cta: { label: "If you're interested, fill out the questionnaire",
+                   href: '/review' } }
+        ]
+      },
+
       /* --- LEFTOVER TEMPLATE BEATS (not yet written) ------------ */
       {
         id: 'themes',
@@ -743,6 +841,22 @@ main{display:block}
         return;
       }
 
+      if (ch.rings) {
+        h += '<section class="chapter chapter--rings" id="' + esc(ch.id) + '">';
+        h += '<div class="beat beat--rings" id="ring-stage" data-word="">';
+        h += '<div class="copy"><h2 class="chapter-label">' + esc(ch.label) + '</h2></div>';
+        h += '<ol class="route-list" id="routeList">';
+        ch.routes.forEach(function (r, i) {
+          h += '<li><button type="button" class="route-item" data-i="' + i +
+               '" data-val="' + esc(r.text) + '" data-n="' + esc(r.n) + '">' +
+               '<span class="route-n">' + esc(r.n) + '</span>' +
+               '<span class="route-text">' + esc(r.text) + '</span>' +
+               '</button></li>';
+        });
+        h += '</ol></div></section>';
+        return;
+      }
+
       h += '<section class="chapter' + (ch.pin ? ' chapter--open' : '') + '" id="' + esc(ch.id) + '">';
       if (ch.pin) {
         h += '<h2 class="sr-only">' + esc(ch.label) + '</h2>';
@@ -759,6 +873,10 @@ main{display:block}
         if (!ch.pin && i === 0) h += '<h2 class="chapter-label">' + esc(ch.label) + '</h2>';
         if (b.key) h += '<h3 class="sr-only">' + esc(b.key) + '</h3>';
         (b.lines || []).forEach(function (p) { h += '<p>' + esc(p) + '</p>'; });
+        if (b.cta) {
+          h += '<p class="cta-wrap"><a class="cta" href="' + esc(b.cta.href) + '">' +
+               esc(b.cta.label) + ' <span aria-hidden="true">&rarr;</span></a></p>';
+        }
         h += '</div></div>';
       });
       h += '</section>';
@@ -819,6 +937,12 @@ main{display:block}
         wheelItems = wheelList ? Array.prototype.slice.call(wheelList.querySelectorAll('.mra-item')) : [],
         wheelN     = wheelItems.length,
         wheelAct   = -1,
+        stageCap   = document.getElementById('displayCap'),
+        routeList  = document.getElementById('routeList'),
+        ringStage  = document.getElementById('ring-stage'),
+        routeItems = routeList ? Array.prototype.slice.call(routeList.querySelectorAll('.route-item')) : [],
+        routeN     = routeItems.length,
+        routeAct   = -1,
         fitCache   = {},
         rootStyle= document.documentElement.style;
 
@@ -1003,6 +1127,50 @@ main{display:block}
       wheelList.style.height = Math.round(vh - top) + 'px';
     }
 
+    function stageProgress(stage){
+      var r = stage.getBoundingClientRect(),
+          vh = window.innerHeight,
+          span = r.height - vh * 0.55;
+      if (span <= 0) return -1;
+      var pr = (vh * 0.55 - r.top) / span;
+      if (pr < 0 || pr > 1.06) return -1;
+      return clamp(pr, 0, 1);
+    }
+
+    /* The copy is sticky; on the way in it has not latched yet and sits
+       low on screen. Hold the stage back until it has. */
+    function stageCopyStuck(stage){
+      var el = stage.querySelector('.copy');
+      if (!el) return true;
+      var want = parseFloat(window.getComputedStyle(el).top) || 0;
+      return el.getBoundingClientRect().top <= want + 2;
+    }
+
+    /* A stage owns the display slot while it is on. */
+    function setStageWord(val, cap){
+      if (cap != null && stageCap) stageCap.textContent = cap;
+      wOut.textContent = val;
+      wIn.textContent  = '';
+      wOut.style.fontSize = fitPx(val) + 'px';
+      wOut.style.opacity = '1'; wOut.style.filter = 'none';
+      wIn.style.opacity  = '0'; wIn.style.filter  = 'none';
+      display.classList.remove('morphing');
+    }
+
+    /* Clicking or focusing an item scrolls it to the focal point, so
+       scroll position stays the single source of truth. */
+    function stageGoTo(stage, i, n){
+      if (!stage || n < 2) return;
+      var r = stage.getBoundingClientRect(),
+          vh = window.innerHeight,
+          y = window.pageYOffset || document.documentElement.scrollTop,
+          span = r.height - vh * 0.55;
+      if (span <= 0) return;
+      var target = (r.top + y) - vh * 0.55 + (i / (n - 1)) * span;
+      try { window.scrollTo({ top: target, behavior: reduced ? 'auto' : 'smooth' }); }
+      catch (e) { window.scrollTo(0, target); }
+    }
+
     function wheelRadii(){
       var w = wheelList.clientWidth,
           h = wheelList.clientHeight,
@@ -1020,30 +1188,9 @@ main{display:block}
       return { rx: rx, ry: ry };
     }
 
-    /* 0..1 across the wheel section, or -1 when it is off screen */
-    function wheelProgress(){
-      var r = wheelStage.getBoundingClientRect(),
-          vh = window.innerHeight,
-          span = r.height - vh * 0.55;
-      if (span <= 0) return -1;
-      var p = (vh * 0.55 - r.top) / span;
-      if (p < -0.06 || p > 1.06) return -1;
-      return clamp(p, 0, 1);
-    }
-
-    /* The copy is sticky; on the way into the section it has not latched
-       yet and sits low on screen. Hold the wheel back until it has, or
-       the two overlap on entry. */
-    function copyStuck(){
-      var el = wheelStage.querySelector('.copy');
-      if (!el) return true;
-      var want = parseFloat(window.getComputedStyle(el).top) || 0;
-      return el.getBoundingClientRect().top <= want + 2;
-    }
-
     function paintWheel(){
       if (!wheelN || !wheelStage) return false;
-      var p = wheelProgress(), on = p >= 0 && copyStuck();
+      var p = stageProgress(wheelStage), on = p >= 0 && stageCopyStuck(wheelStage);
       document.body.classList.toggle('wheel-on', on);
       if (!on) { wheelAct = -1; return false; }
 
@@ -1094,33 +1241,66 @@ main{display:block}
 
       if (act !== wheelAct) {
         wheelAct = act;
-        var val = wheelItems[act].getAttribute('data-val') || '';
-        wOut.textContent = val;
-        wIn.textContent  = '';
-        wOut.style.fontSize = fitPx(val) + 'px';
-        wOut.style.opacity = '1'; wOut.style.filter = 'none';
-        wIn.style.opacity  = '0'; wIn.style.filter  = 'none';
-        display.classList.remove('morphing');
+        setStageWord(wheelItems[act].getAttribute('data-val') || '', 'Your MRA is');
       }
       return true;
     }
 
-    /* clicking or focusing a year scrolls it to the focal point, so
-       scroll position stays the single source of truth */
-    function wheelGoTo(i){
-      if (!wheelStage || wheelN < 2) return;
-      var r = wheelStage.getBoundingClientRect(),
-          vh = window.innerHeight,
-          y = window.pageYOffset || document.documentElement.scrollTop,
-          span = r.height - vh * 0.55;
-      if (span <= 0) return;
-      var target = (r.top + y) - vh * 0.55 + (i / (wheelN - 1)) * span;
-      try { window.scrollTo({ top: target, behavior: reduced ? 'auto' : 'smooth' }); }
-      catch (e) { window.scrollTo(0, target); }
+    /* ---------------- qualifying routes ----------------
+       Three overlapping circles turning as one cluster. The route at
+       the focal point comes forward, goes gold and fills the lettering. */
+    function paintRings(){
+      if (!routeN || !ringStage) return false;
+      var p = stageProgress(ringStage), on = p >= 0 && stageCopyStuck(ringStage);
+      document.body.classList.toggle('rings-on', on);
+      if (!on) { routeAct = -1; return false; }
+
+      var narrow = window.innerWidth < 900,
+          w = routeList.clientWidth,
+          h = routeList.clientHeight,
+          R = Math.max(80, Math.min(w, h) * 0.5),
+          grow = 0.88 + 0.18 * p,               /* the cluster grows as you go */
+          ringD = R * 0.86 * grow,
+          orbit = R * 0.40 * grow,
+          focal = narrow ? -Math.PI / 2 : Math.PI,
+          step = (Math.PI * 2) / routeN,
+          off  = -(p * (routeN - 1)) * step,
+          act  = Math.round(p * (routeN - 1));
+
+      routeList.style.setProperty('--ring-d', ringD.toFixed(1) + 'px');
+
+      for (var i = 0; i < routeN; i++) {
+        var rel = i * step + off,
+            dAng = Math.abs(Math.atan2(Math.sin(rel), Math.cos(rel))),
+            th = focal + rel,
+            x = Math.cos(th) * orbit,
+            y = Math.sin(th) * orbit,
+            near = 1 - dAng / Math.PI,
+            sc = 0.72 + 0.55 * near * near,
+            op = 0.30 + 0.70 * Math.pow(near, 1.8);
+        routeItems[i].parentNode.style.transform =
+          'translate(' + x.toFixed(1) + 'px,' + y.toFixed(1) + 'px)';
+        routeItems[i].parentNode.style.zIndex = (i === act) ? '2' : '1';
+        routeItems[i].style.transform = 'translate(-50%,-50%) scale(' + sc.toFixed(3) + ')';
+        routeItems[i].style.opacity = op.toFixed(3);
+        routeItems[i].setAttribute('aria-current', i === act ? 'true' : 'false');
+      }
+
+      if (act !== routeAct) {
+        routeAct = act;
+        setStageWord(routeItems[act].getAttribute('data-val') || '',
+                     routeItems[act].getAttribute('data-n') || '');
+      }
+      return true;
     }
+
     wheelItems.forEach(function (btn, i) {
-      btn.addEventListener('click', function () { wheelGoTo(i); });
-      btn.addEventListener('focus', function () { wheelGoTo(i); });
+      btn.addEventListener('click', function () { stageGoTo(wheelStage, i, wheelN); });
+      btn.addEventListener('focus', function () { stageGoTo(wheelStage, i, wheelN); });
+    });
+    routeItems.forEach(function (btn, i) {
+      btn.addEventListener('click', function () { stageGoTo(ringStage, i, routeN); });
+      btn.addEventListener('focus', function () { stageGoTo(ringStage, i, routeN); });
     });
 
     /* ---------------- endgame ---------------- */
@@ -1134,9 +1314,10 @@ main{display:block}
 
     /* ---------------- paint ---------------- */
     function paint(t){
-      var wheelOn = paintWheel();
+      var wheelOn = paintWheel(),
+          ringsOn = paintRings();
 
-      if (!wheelOn) {
+      if (!wheelOn && !ringsOn) {
         var i = Math.min(Math.floor(t), lastI),
             a = words[i],
             b = words[Math.min(i + 1, lastI)],
