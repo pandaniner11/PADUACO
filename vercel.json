@@ -29,7 +29,7 @@
       ]
     },
     {
-      "source": "/(review|disclaimer|fehb|fegli|tsp|fsafeds|fedvip)",
+      "source": "/(review|fers|disclaimer|fehb|fegli|tsp|fsafeds|fedvip)",
       "headers": [
         {
           "key": "Cache-Control",
