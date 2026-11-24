@@ -998,6 +998,16 @@ main{display:block}
 
     function clamp(v, a, b) { return v < a ? a : (v > b ? b : v); }
 
+    /* Display lettering uses three fixed sizes, not a size per phrase.
+       Each word takes the largest tier it fits on one line at. */
+    var TIERS = [1, 0.68, 0.42];
+    function tierPx(natW, availW, basePx){
+      for (var t = 0; t < TIERS.length; t++) {
+        if (natW * TIERS[t] <= availW) return Math.max(14, Math.round(basePx * TIERS[t]));
+      }
+      return Math.max(14, Math.round(basePx * TIERS[TIERS.length - 1]));
+    }
+
     /* ---------------- measurement ---------------- */
     function measure(){
       var vh = window.innerHeight,
@@ -1012,8 +1022,8 @@ main{display:block}
         if (triggers[i] <= triggers[i - 1]) triggers[i] = triggers[i - 1] + 1;
       }
 
-      /* Auto-fit: every display word is forced onto ONE line, scaled down
-         only as far as it needs to go to fit the column. */
+      /* Every display word is forced onto ONE line, at whichever of the
+         three tiers it fits. */
       var basePx = parseFloat(window.getComputedStyle(measureEl).fontSize) || 64,
           availW = display.clientWidth || 1,
           maxH = 0;
@@ -1022,9 +1032,7 @@ main{display:block}
       for (var j = 0; j < words.length; j++) {
         measureEl.style.fontSize = basePx + 'px';
         measureEl.textContent = words[j] || '';
-        var natW = measureEl.scrollWidth,
-            k = (natW > availW && natW > 0) ? Math.max(availW / natW, 0.3) : 1,
-            px = Math.max(14, Math.floor(basePx * k));
+        var px = tierPx(measureEl.scrollWidth, availW, basePx);
         fontPx.push(px);
         measureEl.style.fontSize = px + 'px';
         if (words[j]) maxH = Math.max(maxH, measureEl.offsetHeight);
@@ -1153,9 +1161,7 @@ main{display:block}
           availW = display.clientWidth || 1;
       measureEl.style.fontSize = basePx + 'px';
       measureEl.textContent = text;
-      var natW = measureEl.scrollWidth,
-          k = (natW > availW && natW > 0) ? Math.max(availW / natW, 0.3) : 1,
-          px = Math.max(14, Math.floor(basePx * k));
+      var px = tierPx(measureEl.scrollWidth, availW, basePx);
       measureEl.textContent = '';
       measureEl.style.fontSize = '';
       fitCache[text] = px;
