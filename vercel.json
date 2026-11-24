@@ -29,7 +29,7 @@
       ]
     },
     {
-      "source": "/(review|fehb|fegli|tsp|fsafeds|dental-vision)",
+      "source": "/(review|disclaimer|fehb|fegli|tsp|fsafeds|dental-vision)",
       "headers": [
         {
           "key": "Cache-Control",
