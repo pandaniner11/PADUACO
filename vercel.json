@@ -29,7 +29,7 @@
       ]
     },
     {
-      "source": "/(review|disclaimer|fehb|fegli|tsp|fsafeds|dental-vision)",
+      "source": "/(review|disclaimer|fehb|fegli|tsp|fsafeds|fedvip)",
       "headers": [
         {
           "key": "Cache-Control",
@@ -69,6 +69,13 @@
           "value": "camera=(), microphone=(), geolocation=(), payment=()"
         }
       ]
+    }
+  ],
+  "redirects": [
+    {
+      "source": "/dental-vision",
+      "destination": "/fedvip",
+      "permanent": true
     }
   ]
 }
