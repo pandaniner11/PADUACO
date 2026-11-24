@@ -1378,8 +1378,12 @@ main{display:block}
     function endingCheck(){
       var el = story.querySelector('.outro');
       if (!el) return;
-      var on = window.innerWidth < 900 &&
-               el.getBoundingClientRect().top < window.innerHeight * 0.55;
+      /* Width is the wrong test: a short desktop window cannot pin the
+         outro either. Go by whether it actually pinned. */
+      var copy = el.parentNode;
+      while (copy && copy.className.indexOf && copy.className.indexOf('copy') === -1) copy = copy.parentNode;
+      var pinned = copy && window.getComputedStyle(copy).position === 'sticky';
+      var on = !pinned && el.getBoundingClientRect().top < window.innerHeight * 0.55;
       document.body.classList.toggle('ending', on);
     }
 
