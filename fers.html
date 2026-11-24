@@ -491,8 +491,9 @@ main{display:block}
   letter-spacing:0.16em;
   fill:var(--mute);
   stroke:none;
-  text-anchor:middle;
+  text-anchor:start;
 }
+#art-svg text.label--key{fill:var(--gold)}
 #art-svg .fade{opacity:0}
 #art-svg .dot{fill:var(--gold);stroke:none}
 
@@ -576,76 +577,84 @@ main{display:block}
   <div class="art-inner" id="artInner">
     <svg id="art-svg" viewBox="0 0 800 800" xmlns="http://www.w3.org/2000/svg" role="presentation" focusable="false">
 
-      <!-- 1. FRAME -->
-      <g data-layer="frame">
-        <path d="M90 700 H710"/>
-        <path d="M90 700 V682"/>
-        <path d="M214 700 V682"/>
-        <path d="M338 700 V682"/>
-        <path d="M462 700 V682"/>
-        <path d="M586 700 V682"/>
-        <path d="M710 700 V682"/>
-        <path d="M96 150 H150"/><path d="M96 150 V204"/>
-        <path d="M704 150 H650"/><path d="M704 150 V204"/>
-        <path d="M96 752 H150"/><path d="M96 752 V698"/>
-        <path d="M704 752 H650"/><path d="M704 752 V698"/>
-        <path class="fade dash" data-ignore="true" d="M90 440 H710"/>
+      <!-- 1. AXIS - 3 months before -->
+      <g data-layer="axis">
+        <path d="M290 70 V750"/>
+        <path d="M96 60 H150"/><path d="M96 60 V114"/>
+        <path d="M704 60 H650"/><path d="M704 60 V114"/>
+        <path d="M96 760 H150"/><path d="M96 760 V706"/>
+        <path d="M704 760 H650"/><path d="M704 760 V706"/>
+        <circle cx="290" cy="110" r="11"/>
+        <path d="M301 110 H336"/>
+        <text class="fade label" data-ignore="true" x="350" y="116">3 MONTHS BEFORE</text>
       </g>
 
-      <!-- 2. ELEMENTS -->
-      <g data-layer="elements">
-        <circle cx="200" cy="560" r="38"/>
-        <circle cx="400" cy="560" r="38"/>
-        <circle cx="600" cy="560" r="38"/>
-        <path d="M200 598 V700"/>
-        <path d="M400 598 V700"/>
-        <path d="M600 598 V700"/>
-        <text class="fade label" data-ignore="true" x="200" y="736">01</text>
-        <text class="fade label" data-ignore="true" x="400" y="736">02</text>
-        <text class="fade label" data-ignore="true" x="600" y="736">03</text>
+      <!-- 2. HR CONTACT - 1 month before -->
+      <g data-layer="hr">
+        <circle cx="290" cy="180" r="11"/>
+        <path d="M301 180 H336"/>
+        <text class="fade label" data-ignore="true" x="350" y="186">1 MONTH BEFORE</text>
       </g>
 
-      <!-- 3. LINKS -->
-      <g data-layer="links" class="l-gold">
-        <path d="M238 560 C280 486 320 486 362 560"/>
-        <path d="M438 560 C480 486 520 486 562 560"/>
-        <path d="M186 594 C282 676 518 676 614 594"/>
+      <!-- 3. EXIT PROCESS - 2 weeks before -->
+      <g data-layer="exit">
+        <circle cx="290" cy="250" r="11"/>
+        <path d="M301 250 H336"/>
+        <text class="fade label" data-ignore="true" x="350" y="256">2 WEEKS BEFORE</text>
       </g>
 
-      <!-- 4. GROWTH -->
-      <g data-layer="growth">
-        <path d="M400 522 V346"/>
-        <path d="M372 330 L228 530"/>
-        <path d="M428 330 L572 530"/>
+      <!-- 4. RETIREMENT DAY -->
+      <g data-layer="day" class="l-gold">
+        <circle cx="290" cy="330" r="22"/>
+        <circle cx="290" cy="330" r="7" class="dot"/>
+        <path d="M312 330 H336"/>
+        <path class="fade dash" data-ignore="true" d="M110 330 H264"/>
+        <path class="fade dash" data-ignore="true" d="M556 330 H690"/>
+        <text class="fade label label--key" data-ignore="true" x="350" y="336">RETIREMENT DAY</text>
       </g>
 
-      <!-- 5. SYSTEM -->
-      <g data-layer="system">
-        <circle cx="400" cy="440" r="300"/>
-        <path d="M400 140 V156"/>
-        <path d="M550 180.2 L542 194"/>
-        <path d="M659.8 290 L646 298"/>
-        <path d="M700 440 H684"/>
-        <path d="M659.8 590 L646 582"/>
-        <path d="M550 699.8 L542 686"/>
-        <path d="M400 740 V724"/>
-        <path d="M250 699.8 L258 686"/>
-        <path d="M140.2 590 L154 582"/>
-        <path d="M100 440 H116"/>
-        <path d="M140.2 290 L154 298"/>
-        <path d="M250 180.2 L258 194"/>
-        <path d="M612.1 227.9 L634.8 205.2"/>
-        <path d="M612.1 652.1 L634.8 674.8"/>
-        <path d="M187.9 652.1 L165.2 674.8"/>
-        <path d="M187.9 227.9 L165.2 205.2"/>
-        <path class="fade dash" data-ignore="true" d="M110 300 H690"/>
+      <!-- 5. ANNUAL LEAVE - month 1 -->
+      <g data-layer="leave">
+        <circle cx="290" cy="420" r="11"/>
+        <path d="M301 420 H336"/>
+        <text class="fade label" data-ignore="true" x="350" y="426">+1  ANNUAL LEAVE</text>
       </g>
 
-      <!-- 6. RESOLVE -->
-      <g data-layer="resolve" class="l-gold">
-        <circle cx="400" cy="440" r="344"/>
-        <circle cx="400" cy="300" r="46"/>
-        <circle class="fade dot" data-ignore="true" cx="400" cy="300" r="7"/>
+      <!-- 6. FIRST PAYCHECK - month 2 -->
+      <g data-layer="pay2">
+        <circle cx="290" cy="478" r="11"/>
+        <path d="M301 478 H336"/>
+        <text class="fade label" data-ignore="true" x="350" y="484">+2  FIRST PAYCHECK</text>
+      </g>
+
+      <!-- 7. month 3 -->
+      <g data-layer="pay3">
+        <circle cx="290" cy="536" r="11"/>
+        <path d="M301 536 H336"/>
+        <text class="fade label" data-ignore="true" x="350" y="542">+3  SAME AMOUNT</text>
+      </g>
+
+      <!-- 8. month 4 -->
+      <g data-layer="pay4">
+        <circle cx="290" cy="594" r="11"/>
+        <path d="M301 594 H336"/>
+        <text class="fade label" data-ignore="true" x="350" y="600">+4  BACK PAY</text>
+      </g>
+
+      <!-- 9. OFFICIAL PAYMENT - month 5 -->
+      <g data-layer="pay5" class="l-gold">
+        <circle cx="290" cy="652" r="16"/>
+        <path d="M306 652 H336"/>
+        <text class="fade label label--key" data-ignore="true" x="350" y="658">+5  OFFICIAL PAYMENT</text>
+      </g>
+
+      <!-- 10. COMPLETE -->
+      <g data-layer="done" class="l-gold">
+        <circle cx="290" cy="726" r="14"/>
+        <circle cx="290" cy="726" r="5" class="dot"/>
+        <path d="M250 700 V752"/>
+        <path d="M330 700 V752"/>
+        <text class="fade label label--key" data-ignore="true" x="350" y="732">COMPLETE</text>
       </g>
 
     </svg>
@@ -689,7 +698,6 @@ main{display:block}
       {
         id: 'opening',
         pin: true,
-        label: '[CHAPTER 1 LABEL]',          /* screen-reader only */
         heading: 'Want to retire now?',      /* h1 */
         support: '',                         /* intentionally empty */
         beats: [
@@ -772,7 +780,7 @@ main{display:block}
         beats: [
           { word: '3 months before retiring',
             key: '3 months before retiring',
-            draw: 'frame',
+            draw: 'axis',
             lines: ['Start the ORA \u2014 the Online Retirement Application.'],
             steps: [
               'Contact your HR office. They are the ones who open your application in ORA.',
@@ -787,104 +795,56 @@ main{display:block}
 
           { word: '1 month before retiring',
             key: '1 month before retiring',
-            draw: 'elements',
+            draw: 'hr',
             lines: ['An HR specialist should reach out to you by email.',
                     'If nobody has reached out, email or call 30 days before your retirement date.',
                     'Answer and fill in any documentation they ask for as soon as you can.'] },
 
           { word: '2 weeks before retiring',
             key: '2 weeks before retiring',
-            draw: 'links',
+            draw: 'exit',
             lines: ['Start your exit process.',
                     'Every agency does this differently, so ask your supervisor or your local HR.'] },
 
           { word: 'Your last day',
             key: 'Your last day',
-            draw: 'growth',
+            draw: 'day',
             lines: ['Turn in your keys, your hardware, and anything else you are holding.'] },
 
           { word: '1 month after you retire',
             key: '1 month after you retire',
-            draw: 'system',
+            draw: 'leave',
             lines: ['You should receive payment for your annual leave hours.'] },
 
           { word: '2 months after',
             key: '2 months after',
-            draw: 'resolve',
+            draw: 'pay2',
             lines: ['You should receive your first paycheck. It will not be your official one.'] },
 
           { word: '3 months after',
             key: '3 months after',
+            draw: 'pay3',
             lines: ['You receive the same amount as month 2.'] },
 
           { word: '4 months after',
             key: '4 months after',
+            draw: 'pay4',
             lines: ['You receive any back pay, minus the deductions from the previous months.'] },
 
           { word: '5 months after',
             key: '5 months after',
+            draw: 'pay5',
             lines: ['This one is your official payment.'] },
 
           { word: 'Congratulations, you retired.',
             key: 'Congratulations, you retired.',
+            draw: 'done',
             cta: { label: 'If you need help, fill out the questionnaire',
                    href: '/review' } }
         ]
       },
 
-      /* --- LEFTOVER TEMPLATE BEATS (not yet written) ------------ */
-      {
-        id: 'themes',
-        label: '[CHAPTER LABEL]',
-        beats: [
-          { word: '[WORD 3]', key: '[WORD 3]' },
-          { word: '[CENTRAL IDEA]', key: '[CENTRAL IDEA]' }
         ]
-      },
-
-      /* --- 2. CONTEXT ------------------------------------------- */
-      {
-        id: 'context',
-        label: '[CHAPTER 2 LABEL]',
-        beats: [
-          { word: '[CENTRAL IDEA]', lines: ['[CONTEXT PASSAGE 1]'] },
-          { word: '[CENTRAL IDEA]', lines: ['[CONTEXT PASSAGE 2]'] }
-        ]
-      },
-
-      /* --- 3. TRANSFORMATION ------------------------------------ */
-      {
-        id: 'transformation',
-        label: '[CHAPTER 3 LABEL]',
-        beats: [
-          { word: '[KEY WORD A]', key: '[KEY WORD A]', lines: ['[CORE MESSAGE PART 1]'] },
-          { word: '[KEY WORD B]', key: '[KEY WORD B]', lines: ['[CORE MESSAGE PART 2]'] }
-        ]
-      },
-
-      /* --- 4. COMPLETE PICTURE ---------------------------------- */
-      {
-        id: 'picture',
-        label: '[CHAPTER 4 LABEL]',
-        beats: [
-          { word: '[KEY WORD B]', lines: ['[WHY IT MATTERS PART 1]'] },
-          { word: '[KEY WORD B]',
-            lines: ['[WHY IT MATTERS PART 2]'] }
-        ]
-      },
-
-      /* --- 5. CLOSING ------------------------------------------- */
-      {
-        id: 'closing',
-        label: '[CHAPTER 5 LABEL]',
-        beats: [
-          { word: '[FINAL STATEMENT]', key: '[FINAL STATEMENT]', lines: ['[FINAL STATEMENT]'] },
-          { word: '[FINAL STATEMENT]',
-            lines: ['[CLOSING STATEMENT]'] }
-        ]
-      }
-
-    ]
   };
 
   /* ==================================================================
@@ -941,7 +901,6 @@ main{display:block}
 
       h += '<section class="chapter' + (ch.pin ? ' chapter--open' : '') + '" id="' + esc(ch.id) + '">';
       if (ch.pin) {
-        h += '<h2 class="sr-only">' + esc(ch.label) + '</h2>';
         h += '<div class="pin">';
         h += '<h1 class="opening">' + esc(ch.heading) + '</h1>';
         if (ch.support) h += '<p class="support">' + esc(ch.support) + '</p>';
