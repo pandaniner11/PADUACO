@@ -28,7 +28,8 @@
   --line:rgba(242,237,228,0.42);
   --gold:#B59410;
 
-  --display-top:6vh;
+  --nav-h:44px;
+  --display-top:calc(var(--nav-h) + 2.6vh);
   --word-h:16vh;
   --veil-h:30vh;
 
@@ -60,6 +61,36 @@ body{
   overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;border:0;
 }
 
+/* --- benefits nav --- */
+.benefit-bar{
+  position:fixed;top:0;left:0;right:0;
+  height:var(--nav-h);
+  z-index:6;
+  display:flex;align-items:center;justify-content:center;
+  gap:clamp(14px,3vw,42px);
+  padding:0 var(--gutter);
+  background:rgba(13,13,12,0.92);
+  backdrop-filter:blur(6px);
+  -webkit-backdrop-filter:blur(6px);
+  border-bottom:1px solid rgba(242,237,228,0.08);
+  overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none;
+}
+.benefit-bar::-webkit-scrollbar{display:none}
+.benefit-bar a{
+  flex:none;
+  font-family:var(--f-mono);font-size:.68rem;
+  letter-spacing:.18em;text-transform:uppercase;
+  color:rgba(242,237,228,0.55);
+  text-decoration:none;white-space:nowrap;
+  transition:color .25s ease;
+}
+.benefit-bar a:hover{color:var(--ink)}
+.benefit-bar a[aria-current="page"]{color:var(--gold)}
+.benefit-bar a:focus-visible{outline:2px solid var(--gold);outline-offset:4px}
+@media (max-width:899px){
+  .benefit-bar{justify-content:flex-start;gap:22px}
+}
+
 /* ===================================================================
    2. STATIC (NO-JS) BASE — the page reads as a long-form article
    =================================================================== */
@@ -70,7 +101,7 @@ main{display:block}
 .story{
   max-width:46rem;
   margin:0 auto;
-  padding:14vh var(--gutter) 10vh;
+  padding:calc(var(--nav-h) + 9vh) var(--gutter) 10vh;
 }
 .chapter{margin:0 0 4rem}
 .beat{margin:0 0 2.5rem}
@@ -548,6 +579,14 @@ main{display:block}
   .opening{max-width:none}
 }
 
+/* Short phones: trim the wheel copy so the drum has room below it. */
+@media (max-width:899px) and (max-height:700px){
+  .live .beat--wheel .chapter-label{display:none}
+  .live .wheel-sub{font-size:1.05rem;margin-bottom:.35rem}
+  .live .wheel-q{font-size:.86rem}
+  .live .pin,.live .copy{padding:.9rem .9rem 1rem}
+}
+
 /* ===================================================================
    6. REDUCED MOTION
    =================================================================== */
@@ -574,6 +613,15 @@ main{display:block}
     </filter>
   </defs>
 </svg>
+
+<nav class="benefit-bar" aria-label="Federal benefit programs">
+  <a href="/fers" aria-current="page">FERS</a>
+  <a href="/fehb">FEHB</a>
+  <a href="/fegli">FEGLI</a>
+  <a href="/tsp">TSP</a>
+  <a href="/fsafeds">FSAFEDS</a>
+  <a href="/fedvip">FEDVIP</a>
+</nav>
 
 <div class="veil" aria-hidden="true"></div>
 
@@ -1066,7 +1114,9 @@ main{display:block}
       }
 
       rootStyle.setProperty('--word-h', maxH + 'px');
-      rootStyle.setProperty('--veil-h', Math.round(vh * 0.06 + maxH + Math.min(40, vh * 0.03)) + 'px');
+      /* measured, not assumed: the nav bar moved the display word down */
+      var dTop = display.getBoundingClientRect().top;
+      rootStyle.setProperty('--veil-h', Math.round(dTop + maxH + Math.min(40, vh * 0.03)) + 'px');
     }
 
     /* ---------------- scroll -> t ---------------- */
@@ -1190,16 +1240,36 @@ main{display:block}
     /* On a phone the wheel takes whatever room is left under the copy,
        measured rather than assumed, so it never lands on top of it. */
     function wheelLayout(){
+      var copy = wheelStage.querySelector('.copy'),
+          vh = window.innerHeight;
+
       if (window.innerWidth >= 900) {
         wheelList.style.top = ''; wheelList.style.height = '';
+        /* Keep the wheel clear of the copy column. At middling widths the
+           focal label otherwise reaches into it by a few pixels. */
+        wheelList.style.width = '';
+        if (copy) {
+          /* the focal label is centred on the circle's edge, so it hangs
+             half its own width further left than the circle does */
+          var widest = 0;
+          for (var wi = 0; wi < wheelItems.length; wi++) {
+            widest = Math.max(widest, wheelItems[wi].scrollWidth);
+          }
+          var minLeft = copy.getBoundingClientRect().right + 24 + widest * 0.7,
+              box = wheelList.getBoundingClientRect();
+          if (box.left < minLeft) {
+            wheelList.style.width = Math.max(240, Math.round(box.right - minLeft)) + 'px';
+          }
+        }
         return;
       }
-      var copy = wheelStage.querySelector('.copy'),
-          vh = window.innerHeight,
-          cb = copy ? copy.getBoundingClientRect().bottom : vh * 0.42,
+
+      wheelList.style.width = '';
+      var cb = copy ? copy.getBoundingClientRect().bottom : vh * 0.42,
           /* floored so that, while the copy is still sliding into its
-             sticky slot, the wheel cannot ride up over it */
-          top = Math.max(vh * 0.42, Math.min(cb + 14, vh * 0.56));
+             sticky slot, the wheel cannot ride up over it; the ceiling
+             leaves the drum a usable minimum */
+          top = Math.max(vh * 0.34, Math.min(cb + 14, vh - 190));
       wheelList.style.top = Math.round(top) + 'px';
       wheelList.style.height = Math.round(vh - top) + 'px';
     }
