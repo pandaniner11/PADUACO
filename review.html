@@ -63,6 +63,15 @@ input:focus{border-color:var(--gold-hover);box-shadow:0 0 0 3px rgba(201,168,106
 .bad input{border-color:#FF8A80}
 .msg{display:none;color:#FFB4AB;font-size:12.5px;margin-top:5px;font-style:normal}.bad .msg{display:block}
 
+/* consent */
+.consent-wrap{margin:2px 0 18px}
+.consent{display:flex;gap:12px;align-items:flex-start;cursor:pointer;font-size:12.5px;line-height:1.6;color:rgba(255,255,255,.72)}
+.consent input{flex:none;width:20px;height:20px;margin-top:1px;accent-color:var(--gold-hover);cursor:pointer}
+.consent strong{color:#fff;font-weight:600}
+.consent a{color:#fff;text-decoration:underline;text-underline-offset:2px}
+.consent-wrap.bad .consent{color:#FFB4AB}
+.consent-wrap.bad .consent input{outline:2px solid #FF8A80;outline-offset:2px}
+
 /* radio options */
 .opts{display:grid;gap:10px;margin-bottom:16px}
 .opt{display:flex;align-items:center;gap:14px;padding:16px 18px;border:1px solid rgba(255,255,255,.22);border-radius:14px;background:rgba(255,255,255,.08);color:#fff;cursor:pointer;font-size:16px;font-weight:600;transition:border .2s,box-shadow .2s,background .2s}
@@ -118,6 +127,13 @@ button{font:inherit;cursor:pointer;border:none}
         </div>
         <label class="f"><span>Phone</span><input type="tel" name="phone" autocomplete="tel" inputmode="tel" placeholder="(555) 555-5555" required><em class="msg">Enter a valid phone number.</em></label>
         <label class="f"><span>Email</span><input type="email" name="email" autocomplete="email" required><em class="msg">Enter a valid email.</em></label>
+        <div class="f consent-wrap">
+          <label class="consent">
+            <input type="checkbox" name="consent">
+            <span>I agree that <strong>Padua&nbsp;Co&nbsp;LLC</strong> &mdash; and, only after I approve an introduction, <strong>one participating company</strong> &mdash; may contact me at the phone number and email above about my retirement review, including by <strong>calls and text messages that may be autodialed or use a prerecorded or artificial voice</strong>. Consent is not a condition of receiving the review or of any purchase. Message and data rates may apply and message frequency varies. I can opt out at any time by replying STOP to a text, saying so on a call, or emailing <a href="mailto:paduaco@outlook.com">paduaco@outlook.com</a>. See the <a href="/disclaimer" target="_blank" rel="noopener">disclosures, privacy notice and terms</a>.</span>
+          </label>
+          <em class="msg">Please tick the box so we know we may contact you.</em>
+        </div>
       </section>
 
       <!-- STEP 2: DOB + service -->
@@ -275,7 +291,8 @@ function validate(s){
     mark('firstname', !!val('firstname')),
     mark('lastname', !!val('lastname')),
     mark('phone', val('phone').replace(/\D/g,'').length >= 10),
-    mark('email', /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(val('email')))
+    mark('email', /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(val('email'))),
+    mark('consent', !!$('consent').checked)
   ].every(Boolean);
   if (s === 2){ const y = parseFloat(val('yos'));
     return [mark('dob', !!parseDOB(val('dob'))), mark('yos', !isNaN(y) && y >= 0 && y <= 60), mark('retire_date', !!parseFuture(val('retire_date')))].every(Boolean); }
