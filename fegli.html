@@ -17,28 +17,28 @@
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
-body{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Helvetica Neue",Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;color:#1a1a1a;background:#F2EFE6;overflow-x:hidden}
+body{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Helvetica Neue",Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;color:#2A211F;background:#F2EFE6;overflow-x:hidden}
 .serif{font-family:'Cormorant Garamond',Georgia,'Times New Roman',serif}
 .label{font-size:15px;font-weight:800;letter-spacing:.22em;text-transform:uppercase}
 .btn-primary{display:inline-flex;align-items:center;gap:12px;background:#B59410;color:#fff;font-weight:700;font-size:15px;letter-spacing:.04em;padding:clamp(14px,1.6vh,18px) clamp(26px,3vw,36px);border-radius:6px;text-decoration:none;transition:background .2s,transform .15s;box-shadow:0 4px 16px -4px rgba(176,141,87,.4)}
 .btn-primary:hover{background:#9a7a4a;transform:translateY(-1px)}
 /* ── Benefits tab bar ── */
-.benefit-bar{background:#002147;border-top:1px solid rgba(176,141,87,.25);border-bottom:1px solid rgba(176,141,87,.25)}
+.benefit-bar{background:#533E39;border-top:1px solid rgba(176,141,87,.25);border-bottom:1px solid rgba(176,141,87,.25)}
 .benefit-bar-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:center;gap:clamp(20px,4.5vw,60px);height:48px;padding:0 clamp(16px,5vw,48px);overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none}
 .benefit-bar-inner::-webkit-scrollbar{display:none}
 .benefit-bar a{position:relative;flex:none;display:block;height:48px;line-height:48px;color:rgba(255,255,255,.82);font-size:14px;font-weight:600;letter-spacing:.02em;text-decoration:none;white-space:nowrap;transition:color .2s}
 .benefit-bar a:hover,.benefit-bar a:focus-visible{color:#fff}
 .benefit-bar a::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;background:#B59410;transform:scaleX(0);transition:transform .22s cubic-bezier(.22,.7,.2,1)}
 .benefit-bar a:hover::after,.benefit-bar a:focus-visible::after{transform:scaleX(1)}
-.benefit-bar a[aria-current="page"]{color:#B59410}
+.benefit-bar a[aria-current="page"]{color:#D4B470}
 .benefit-bar a[aria-current="page"]::after{transform:scaleX(1)}
 @media(max-width:768px){.benefit-bar-inner{justify-content:flex-start;gap:26px}}
-.topnav{display:flex;align-items:center;justify-content:space-between;padding:20px clamp(20px,5vw,48px);background:#002147}
-.prog-head{background:#002147;color:#fff;padding:clamp(44px,7vh,76px) clamp(20px,5vw,48px)}
+.topnav{display:flex;align-items:center;justify-content:space-between;padding:20px clamp(20px,5vw,48px);background:#533E39}
+.prog-head{background:#533E39;color:#fff;padding:clamp(44px,7vh,76px) clamp(20px,5vw,48px)}
 .prog-head .wrap{max-width:1100px;margin:0 auto}
 .slot{max-width:1100px;margin:0 auto;padding:clamp(40px,6vh,72px) clamp(20px,5vw,48px)}
-.slot-box{border:1px dashed rgba(0,33,71,.3);border-radius:10px;padding:clamp(28px,5vw,48px);text-align:center;background:rgba(255,255,255,.55)}
-.foot{background:#002147;color:rgba(255,255,255,.5);padding:36px clamp(20px,5vw,48px);font-size:14px;line-height:1.7}
+.slot-box{border:1px dashed rgba(83,62,57,.3);border-radius:10px;padding:clamp(28px,5vw,48px);text-align:center;background:rgba(255,255,255,.55)}
+.foot{background:#533E39;color:rgba(255,255,255,.5);padding:36px clamp(20px,5vw,48px);font-size:14px;line-height:1.7}
 .foot a{color:rgba(255,255,255,.75)}
 </style>
 </head>
@@ -61,7 +61,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Helvetica Ne
 
 <header class="prog-head">
   <div class="wrap">
-    <div class="label" style="color:#B59410;margin-bottom:14px;">FEGLI</div>
+    <div class="label" style="color:#D4B470;margin-bottom:14px;">FEGLI</div>
     <h1 class="serif" style="font-weight:600;letter-spacing:-.02em;line-height:1.08;font-size:clamp(36px,5.5vw,64px);">Federal Employees' Group Life Insurance</h1>
     <p style="margin-top:18px;max-width:60ch;font-size:16px;line-height:1.7;color:rgba(255,255,255,.72);">Your life insurance is one of the pieces a specialist walks through with you on the review call — what you have now, and what changes when you retire.</p>
     <a href="/review" class="btn-primary" style="margin-top:28px;">Find out. <span style="font-size:18px;line-height:1;">→</span></a>
@@ -73,8 +73,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Helvetica Ne
 <!-- ═══════════════════════════════════════════════════════════════ -->
 <section class="slot">
   <div class="slot-box">
-    <p class="serif" style="font-size:clamp(22px,3vw,30px);font-weight:600;color:#002147;">Interactive FEGLI section</p>
-    <p style="margin-top:10px;font-size:15px;line-height:1.7;color:#3C4858;">Coming soon.</p>
+    <p class="serif" style="font-size:clamp(22px,3vw,30px);font-weight:600;color:#533E39;">Interactive FEGLI section</p>
+    <p style="margin-top:10px;font-size:15px;line-height:1.7;color:#5C4F49;">Coming soon.</p>
   </div>
 </section>
 
