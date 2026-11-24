@@ -1,4 +1,5 @@
 {
+  "cleanUrls": true,
   "headers": [
     {
       "source": "/brand.css",
@@ -28,7 +29,7 @@
       ]
     },
     {
-      "source": "/(.*)\\.html",
+      "source": "/(review|fehb|fegli|tsp|fsafeds|dental-vision)",
       "headers": [
         {
           "key": "Cache-Control",
