@@ -269,7 +269,12 @@ function qualify(){
 
 const hsDate = d => Date.UTC(d.getFullYear(), d.getMonth(), d.getDate());
 
-function hsSubmit(formId, fields){
+/* Fields HubSpot may not know yet. If the form definition lacks them the
+   whole submission is rejected, so on that specific error we drop them and
+   resend rather than lose the lead. */
+const HS_OPTIONAL = ['consent_to_contact','consent_text'];
+
+function hsSubmit(formId, fields, allowPrune = true){
   if (!HUBSPOT.portalId || !formId){ console.warn('HubSpot not configured', fields); return Promise.resolve(); }
   const hutk = (document.cookie.match(/hubspotutk=([^;]+)/)||[])[1];
   return fetch(`https://api.hsforms.com/submissions/v3/integration/submit/${HUBSPOT.portalId}/${formId}`, {
@@ -278,8 +283,28 @@ function hsSubmit(formId, fields){
       fields: Object.entries(fields).map(([name,value]) => ({objectTypeId:'0-1', name, value:String(value)})),
       context: { pageUri: location.href, pageName: document.title, ...(hutk ? {hutk} : {}) }
     })
-  }).then(r => { if(!r.ok) r.text().then(t => console.error('HubSpot error', r.status, t)); })
-    .catch(e => console.error('HubSpot network error', e));
+  }).then(r => {
+    if (r.ok) return;
+    return r.text().then(t => {
+      const prunable = allowPrune && r.status === 400
+        && /FIELD_NOT_IN_FORM_DEFINITION/.test(t)
+        && HS_OPTIONAL.some(k => k in fields);
+      if (prunable){
+        const pruned = Object.assign({}, fields);
+        HS_OPTIONAL.forEach(k => delete pruned[k]);
+        console.warn('HubSpot does not have the consent fields yet; resending without them so the lead is still captured.');
+        return hsSubmit(formId, pruned, false);
+      }
+      console.error('HubSpot error', r.status, t);
+    });
+  }).catch(e => console.error('HubSpot network error', e));
+}
+
+/* The exact wording shown beside the checkbox, so the record reflects what
+   was actually agreed to rather than a copy that can drift out of date. */
+function consentWording(){
+  const el = document.querySelector('.consent span');
+  return el ? el.innerText.replace(/\s+/g, ' ').trim() : '';
 }
 
 /* ===== Validation ===== */
@@ -323,7 +348,12 @@ f.addEventListener('submit', async e => {
   const btn = document.getElementById('nextBtn');
 
   if (step === 1){
-    const contact = { firstname: val('firstname'), lastname: val('lastname'), phone: val('phone'), email: val('email') };
+    const contact = {
+      firstname: val('firstname'), lastname: val('lastname'),
+      phone: val('phone'), email: val('email'),
+      consent_to_contact: $('consent').checked,
+      consent_text: consentWording()
+    };
     hsSubmit(HUBSPOT.contactFormId, contact);
     contactSent = true;
     gtag('event', 'funnel_contact_submitted');
