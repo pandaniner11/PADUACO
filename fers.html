@@ -363,11 +363,16 @@ main{display:block}
   max-width:var(--measure);
   padding-bottom:3vh;
 }
+/* The closing block gets a wider column than the reading measure: at
+   the narrow measure the disclaimer alone ran 274px and pushed the
+   block past the height where it can stay pinned. */
+.live .beat:last-child .copy{max-width:min(60ch,44vw)}
 .live .outro{
   padding:0;
-  margin:2.4rem 0 0;
+  margin:1.8rem 0 0;
   max-width:none;
 }
+.live .legal{margin-top:2.5rem;padding-top:1.2rem}
 .live .cue{transition:opacity .6s ease}
 .live.moved .cue{opacity:0}
 .live .cue-line{position:relative;overflow:hidden}
