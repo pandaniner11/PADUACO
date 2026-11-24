@@ -195,6 +195,23 @@ main{display:block}
 }
 .route-item:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
 
+.steps{
+  margin:1.3rem 0 0;padding:0;list-style:none;counter-reset:ora;
+}
+.steps li{
+  position:relative;counter-increment:ora;
+  padding:0 0 0 2.2rem;margin:0 0 .85rem;
+  font-family:var(--f-body);
+  font-size:clamp(.92rem,1.05vw,1rem);
+  line-height:1.6;color:var(--ink);
+}
+.steps li::before{
+  content:counter(ora);
+  position:absolute;left:0;top:.05em;
+  font-family:var(--f-mono);font-size:.74rem;
+  letter-spacing:.1em;color:var(--gold);
+}
+
 .cta-wrap{margin:1.6rem 0 0}
 .cta{
   display:inline-flex;align-items:center;gap:10px;
@@ -434,6 +451,7 @@ main{display:block}
 .live .route-item[aria-current="true"]{border-color:var(--gold)}
 .live .route-item[aria-current="true"] .route-n{color:var(--gold)}
 .live .beat--rings{min-height:260vh}
+.live .beat--tall{min-height:215vh}
 
 /* "Your MRA is" caption above the big answer */
 .live .display-cap{
@@ -508,6 +526,7 @@ main{display:block}
   .live .beat{min-height:112vh}
   .live .beat--wheel{min-height:300vh}
   .live .beat--rings{min-height:240vh}
+  .live .beat--tall{min-height:250vh}
   .live .mra-list,
   .live .route-list{left:0;right:0;width:100%}
   .live .mra-item{font-size:.82rem;letter-spacing:.08em}
@@ -744,6 +763,75 @@ main{display:block}
         ]
       },
 
+      /* --- THE ONLINE RETIREMENT APPLICATION --------------------
+         Steps taken from OPM's "Getting Started with ORA", condensed.
+         Source: opm.gov/retirement-center/apply/online-retirement-application/ */
+      {
+        id: 'ora',
+        label: 'The Online Retirement Application',
+        beats: [
+          { word: '3 months before retiring',
+            key: '3 months before retiring',
+            draw: 'frame',
+            lines: ['Start the ORA \u2014 the Online Retirement Application.'],
+            steps: [
+              'Contact your HR office. They are the ones who open your application in ORA.',
+              'Give them your personal email, and link that address to your Login.gov account.',
+              'Watch your inbox for the invitation with your access instructions.',
+              'Sign in through Login.gov, then create your digital signature PIN.',
+              'Fill in your application and upload your supporting documents as PDFs.'
+            ],
+            cta: { label: 'Read the full steps on OPM.gov',
+                   href: 'https://www.opm.gov/retirement-center/apply/online-retirement-application/',
+                   external: true } },
+
+          { word: '1 month before retiring',
+            key: '1 month before retiring',
+            draw: 'elements',
+            lines: ['An HR specialist should reach out to you by email.',
+                    'If nobody has reached out, email or call 30 days before your retirement date.',
+                    'Answer and fill in any documentation they ask for as soon as you can.'] },
+
+          { word: '2 weeks before retiring',
+            key: '2 weeks before retiring',
+            draw: 'links',
+            lines: ['Start your exit process.',
+                    'Every agency does this differently, so ask your supervisor or your local HR.'] },
+
+          { word: 'Your last day',
+            key: 'Your last day',
+            draw: 'growth',
+            lines: ['Turn in your keys, your hardware, and anything else you are holding.'] },
+
+          { word: '1 month after you retire',
+            key: '1 month after you retire',
+            draw: 'system',
+            lines: ['You should receive payment for your annual leave hours.'] },
+
+          { word: '2 months after',
+            key: '2 months after',
+            draw: 'resolve',
+            lines: ['You should receive your first paycheck. It will not be your official one.'] },
+
+          { word: '3 months after',
+            key: '3 months after',
+            lines: ['You receive the same amount as month 2.'] },
+
+          { word: '4 months after',
+            key: '4 months after',
+            lines: ['You receive any back pay, minus the deductions from the previous months.'] },
+
+          { word: '5 months after',
+            key: '5 months after',
+            lines: ['This one is your official payment.'] },
+
+          { word: 'Congratulations, you retired.',
+            key: 'Congratulations, you retired.',
+            cta: { label: 'If you need help, fill out the questionnaire',
+                   href: '/review' } }
+        ]
+      },
+
       /* --- LEFTOVER TEMPLATE BEATS (not yet written) ------------ */
       {
         id: 'themes',
@@ -759,10 +847,8 @@ main{display:block}
         id: 'context',
         label: '[CHAPTER 2 LABEL]',
         beats: [
-          { word: '[CENTRAL IDEA]', draw: 'frame',
-            lines: ['[CONTEXT PASSAGE 1]'] },
-          { word: '[CENTRAL IDEA]', draw: 'elements',
-            lines: ['[CONTEXT PASSAGE 2]'] }
+          { word: '[CENTRAL IDEA]', lines: ['[CONTEXT PASSAGE 1]'] },
+          { word: '[CENTRAL IDEA]', lines: ['[CONTEXT PASSAGE 2]'] }
         ]
       },
 
@@ -771,10 +857,8 @@ main{display:block}
         id: 'transformation',
         label: '[CHAPTER 3 LABEL]',
         beats: [
-          { word: '[KEY WORD A]', key: '[KEY WORD A]', draw: 'links',
-            lines: ['[CORE MESSAGE PART 1]'] },
-          { word: '[KEY WORD B]', key: '[KEY WORD B]', draw: 'growth',
-            lines: ['[CORE MESSAGE PART 2]'] }
+          { word: '[KEY WORD A]', key: '[KEY WORD A]', lines: ['[CORE MESSAGE PART 1]'] },
+          { word: '[KEY WORD B]', key: '[KEY WORD B]', lines: ['[CORE MESSAGE PART 2]'] }
         ]
       },
 
@@ -783,8 +867,7 @@ main{display:block}
         id: 'picture',
         label: '[CHAPTER 4 LABEL]',
         beats: [
-          { word: '[KEY WORD B]', draw: 'system',
-            lines: ['[WHY IT MATTERS PART 1]'] },
+          { word: '[KEY WORD B]', lines: ['[WHY IT MATTERS PART 1]'] },
           { word: '[KEY WORD B]',
             lines: ['[WHY IT MATTERS PART 2]'] }
         ]
@@ -795,8 +878,7 @@ main{display:block}
         id: 'closing',
         label: '[CHAPTER 5 LABEL]',
         beats: [
-          { word: '[FINAL STATEMENT]', key: '[FINAL STATEMENT]', draw: 'resolve',
-            lines: ['[FINAL STATEMENT]'] },
+          { word: '[FINAL STATEMENT]', key: '[FINAL STATEMENT]', lines: ['[FINAL STATEMENT]'] },
           { word: '[FINAL STATEMENT]',
             lines: ['[CLOSING STATEMENT]'] }
         ]
@@ -867,14 +949,20 @@ main{display:block}
         h += '</div>';
       }
       ch.beats.forEach(function (b, i) {
-        h += '<div class="beat" data-word="' + esc(b.word) + '"' +
+        h += '<div class="beat' + (b.steps ? ' beat--tall' : '') + '" data-word="' + esc(b.word) + '"' +
              (b.draw ? ' data-draw="' + esc(b.draw) + '"' : '') + '>';
         h += '<div class="copy">';
         if (!ch.pin && i === 0) h += '<h2 class="chapter-label">' + esc(ch.label) + '</h2>';
         if (b.key) h += '<h3 class="sr-only">' + esc(b.key) + '</h3>';
         (b.lines || []).forEach(function (p) { h += '<p>' + esc(p) + '</p>'; });
+        if (b.steps) {
+          h += '<ol class="steps">';
+          b.steps.forEach(function (st) { h += '<li>' + esc(st) + '</li>'; });
+          h += '</ol>';
+        }
         if (b.cta) {
-          h += '<p class="cta-wrap"><a class="cta" href="' + esc(b.cta.href) + '">' +
+          h += '<p class="cta-wrap"><a class="cta" href="' + esc(b.cta.href) + '"' +
+               (b.cta.external ? ' target="_blank" rel="noopener"' : '') + '>' +
                esc(b.cta.label) + ' <span aria-hidden="true">&rarr;</span></a></p>';
         }
         h += '</div></div>';
@@ -985,6 +1073,15 @@ main{display:block}
       measureEl.textContent = '';
       measureEl.style.fontSize = '';
       if (!maxH) maxH = Math.round(vh * 0.16);
+
+      /* Sticky only works for copy that fits on screen. Anything taller
+         would be pinned with its tail permanently off the bottom, so let
+         it scroll instead. */
+      var blocks = story.querySelectorAll('.copy, .pin');
+      for (var k = 0; k < blocks.length; k++) {
+        blocks[k].style.position = '';
+        if (blocks[k].offsetHeight > vh * 0.82) blocks[k].style.position = 'static';
+      }
 
       rootStyle.setProperty('--word-h', maxH + 'px');
       rootStyle.setProperty('--veil-h', Math.round(vh * 0.06 + maxH + Math.min(40, vh * 0.03)) + 'px');
