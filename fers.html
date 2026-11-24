@@ -32,6 +32,8 @@
   --word-h:16vh;
   --veil-h:30vh;
 
+  --veil-fade:96px;
+  --copy-top:calc(var(--veil-h) + 6.5rem);
   --gutter:clamp(1.25rem,5vw,5.5rem);
   --measure:min(42ch,34vw);
 
@@ -236,14 +238,14 @@ main{display:block}
 .live .veil{
   position:fixed;
   top:0;left:0;right:0;
-  height:calc(var(--veil-h) + 96px);
+  height:calc(var(--veil-h) + var(--veil-fade));
   z-index:3;
   pointer-events:none;
   background:linear-gradient(
     to bottom,
     var(--bg) 0,
-    var(--bg) calc(100% - 96px),
-    rgba(13,13,12,0.86) calc(100% - 58px),
+    var(--bg) calc(100% - var(--veil-fade)),
+    rgba(13,13,12,0.86) calc(100% - var(--veil-fade) * 0.6),
     rgba(13,13,12,0) 100%
   );
 }
@@ -295,7 +297,7 @@ main{display:block}
 .live .chapter--open{padding-top:30vh}
 .live .pin{
   position:sticky;
-  top:calc(var(--veil-h) + 6.5rem);
+  top:var(--copy-top);
   max-width:var(--measure);
   padding-bottom:4vh;
 }
@@ -306,7 +308,7 @@ main{display:block}
 }
 .live .copy{
   position:sticky;
-  top:calc(var(--veil-h) + 6.5rem);
+  top:var(--copy-top);
   max-width:var(--measure);
   padding-bottom:3vh;
 }
@@ -354,7 +356,7 @@ main{display:block}
 /* the ring, and the focal marker on the side that faces the lettering */
 .live .mra-list::before{
   content:"";position:absolute;left:50%;top:50%;
-  width:var(--wheel-d,0);height:var(--wheel-d,0);
+  width:var(--wheel-dx,0);height:var(--wheel-dy,0);
   transform:translate(-50%,calc(-50% + var(--wheel-cy,0px)));
   border:1px solid rgba(242,237,228,0.13);border-radius:50%;
 }
@@ -363,8 +365,8 @@ main{display:block}
   display:block;white-space:nowrap;width:auto;padding:.3rem .45rem;
   transform-origin:50% 50%;
   font-family:var(--f-mono);
-  font-size:clamp(.7rem,1vw,.88rem);
-  letter-spacing:.14em;text-transform:uppercase;
+  font-size:clamp(.95rem,1.3vw,1.15rem);
+  letter-spacing:.12em;text-transform:uppercase;
   will-change:transform,opacity;
 }
 .live .mra-item .mra-year{font-weight:400}
@@ -421,6 +423,7 @@ main{display:block}
    5. NARROW SCREENS
    =================================================================== */
 @media (max-width:899px){
+  :root{--veil-fade:48px;--copy-top:calc(var(--veil-h) + 3.6rem)}
   .live .story{width:100%;padding:0 var(--gutter)}
   .live .display{left:var(--gutter);right:var(--gutter);width:auto}
   .live .measure{left:var(--gutter);right:var(--gutter);width:auto}
@@ -445,11 +448,8 @@ main{display:block}
   }
   .live .beat{min-height:112vh}
   .live .beat--wheel{min-height:300vh}
-  .live .mra-list{
-    top:0;left:0;right:0;width:100%;height:100vh;
-  }
-  .live .mra-item{font-size:.66rem;letter-spacing:.1em}
-  .live .beat--wheel .copy{margin-top:46vh}
+  .live .mra-list{left:0;right:0;width:100%}
+  .live .mra-item{font-size:.82rem;letter-spacing:.08em}
   .live .gauge{top:18vh;bottom:18vh}
   .live .outro{max-width:none}
   .copy p{max-width:none}
@@ -625,9 +625,9 @@ main{display:block}
       {
         id: 'mra',
         wheel: true,
-        label: 'Know your MRA',
-        intro: 'Minimum Retirement Age',
-        question: 'When were you born?',
+        label: 'Minimum Retirement Age',
+        intro: 'You have to first know your MRA.',
+        question: 'What year were you born?',
         answerLead: 'Your MRA is',
         rows: [
           ['Before 1948',       '55'],
@@ -982,12 +982,42 @@ main{display:block}
       return px;
     }
 
-    function wheelRadius(){
-      var w = wheelList.clientWidth, h = wheelList.clientHeight,
-          R = Math.max(70, Math.min(w, h) * 0.40);
-      wheelList.style.setProperty('--wheel-r', R + 'px');
-      wheelList.style.setProperty('--wheel-d', (R * 2) + 'px');
-      return R;
+    /* A circle on wide screens. On a phone a circle cannot hold labels
+       this wide, so it becomes a tall narrow ellipse: horizontally tight
+       enough to stay on screen, vertically stretched so the readable
+       labels near the focus do not collide. */
+    /* On a phone the wheel takes whatever room is left under the copy,
+       measured rather than assumed, so it never lands on top of it. */
+    function wheelLayout(){
+      if (window.innerWidth >= 900) {
+        wheelList.style.top = ''; wheelList.style.height = '';
+        return;
+      }
+      var copy = wheelStage.querySelector('.copy'),
+          vh = window.innerHeight,
+          cb = copy ? copy.getBoundingClientRect().bottom : vh * 0.42,
+          /* floored so that, while the copy is still sliding into its
+             sticky slot, the wheel cannot ride up over it */
+          top = Math.max(vh * 0.42, Math.min(cb + 14, vh * 0.56));
+      wheelList.style.top = Math.round(top) + 'px';
+      wheelList.style.height = Math.round(vh - top) + 'px';
+    }
+
+    function wheelRadii(){
+      var w = wheelList.clientWidth,
+          h = wheelList.clientHeight,
+          narrow = window.innerWidth < 900,
+          rx, ry;
+      if (narrow) {
+        rx = Math.max(56, w * 0.26);
+        ry = Math.max(96, h * 0.46);
+      } else {
+        rx = ry = Math.max(70, Math.min(w, h) * 0.40);
+      }
+      wheelList.style.setProperty('--wheel-r',  rx + 'px');
+      wheelList.style.setProperty('--wheel-dx', (rx * 2) + 'px');
+      wheelList.style.setProperty('--wheel-dy', (ry * 2) + 'px');
+      return { rx: rx, ry: ry };
     }
 
     /* 0..1 across the wheel section, or -1 when it is off screen */
@@ -1001,35 +1031,64 @@ main{display:block}
       return clamp(p, 0, 1);
     }
 
+    /* The copy is sticky; on the way into the section it has not latched
+       yet and sits low on screen. Hold the wheel back until it has, or
+       the two overlap on entry. */
+    function copyStuck(){
+      var el = wheelStage.querySelector('.copy');
+      if (!el) return true;
+      var want = parseFloat(window.getComputedStyle(el).top) || 0;
+      return el.getBoundingClientRect().top <= want + 2;
+    }
+
     function paintWheel(){
       if (!wheelN || !wheelStage) return false;
-      var p = wheelProgress(), on = p >= 0;
+      var p = wheelProgress(), on = p >= 0 && copyStuck();
       document.body.classList.toggle('wheel-on', on);
       if (!on) { wheelAct = -1; return false; }
 
-      var R = wheelRadius(),
+      wheelLayout();
+      var rad = wheelRadii(),
           narrow = window.innerWidth < 900,
           focal = narrow ? -Math.PI / 2 : Math.PI,
-          cyShift = narrow ? Math.round(window.innerHeight * 0.22) : 0,
-          step = (Math.PI * 2) / wheelN,
+          cyShift = 0,
+          /* A phone cannot fit 13 labels around one turn without the
+             enlarged focal label clipping its neighbours, so widen the
+             step there. The far side wraps and doubles up, which is
+             invisible at those opacities. */
+          step = ((Math.PI * 2) / wheelN) * (narrow ? 1.9 : 1),
           off  = -(p * (wheelN - 1)) * step,
           act  = Math.round(p * (wheelN - 1));
 
       wheelList.style.setProperty('--wheel-cy', cyShift + 'px');
 
       for (var i = 0; i < wheelN; i++) {
-        var th = focal + i * step + off,
-            x  = Math.cos(th) * R,
-            y  = Math.sin(th) * R + cyShift,
-            /* angular distance from the focal point, 0 (focus) .. 1 (far side) */
-            d  = Math.abs(Math.atan2(Math.sin(th - focal), Math.cos(th - focal))) / Math.PI,
+        /* Offset from the focal point, in radians, before any wrapping. */
+        var rel = i * step + off, dAng, hidden = false;
+
+        if (narrow) {
+          /* A drum, not a loop: the widened step means a wrapped ring
+             would stack item i on item i+8 right at the focus. Anything
+             past half a turn is simply hidden. */
+          if (Math.abs(rel) > Math.PI) { hidden = true; rel = rel > 0 ? Math.PI : -Math.PI; }
+          dAng = Math.abs(rel);
+        } else {
+          dAng = Math.abs(Math.atan2(Math.sin(rel), Math.cos(rel)));
+        }
+
+        var th = focal + rel,
+            x  = Math.cos(th) * rad.rx,
+            y  = Math.sin(th) * rad.ry + cyShift,
+            d  = dAng / Math.PI,
             near = 1 - d,
-            sc = 0.52 + 0.78 * near * near,
-            op = 0.10 + 0.90 * Math.pow(near, 2.4);
+            sc = 0.55 + 0.85 * near * near,
+            op = hidden ? 0 : (0.10 + 0.90 * Math.pow(near, 2.4));
+
         wheelItems[i].parentNode.style.transform =
           'translate(' + x.toFixed(1) + 'px,' + y.toFixed(1) + 'px)';
         wheelItems[i].style.transform = 'translate(-50%,-50%) scale(' + sc.toFixed(3) + ')';
         wheelItems[i].style.opacity = op.toFixed(3);
+        wheelItems[i].style.pointerEvents = hidden ? 'none' : '';
         wheelItems[i].setAttribute('aria-current', i === act ? 'true' : 'false');
       }
 
