@@ -171,7 +171,9 @@ main{display:block}
   position:fixed;
   top:var(--display-top);
   left:var(--gutter);
-  width:min(56vw,30ch);
+  /* NOT ch: ch resolves against this box's inherited 16px font, not the
+     display font, which collapsed the column to ~240px. */
+  width:min(56vw,56rem);
   height:var(--word-h);
   z-index:4;
   pointer-events:none;
@@ -185,8 +187,7 @@ main{display:block}
   line-height:1.04;
   letter-spacing:-0.022em;
   color:var(--ink);
-  overflow-wrap:anywhere;
-  hyphens:auto;
+  white-space:nowrap;
   will-change:opacity,filter;
 }
 .live .display.morphing{filter:url(#threshold) blur(0.6px)}
@@ -195,7 +196,8 @@ main{display:block}
 .live .measure{
   position:fixed;
   top:0;left:var(--gutter);
-  width:min(56vw,30ch);
+  width:auto;max-width:none;
+  white-space:nowrap;
   font-family:var(--f-display);
   font-weight:600;
   font-size:clamp(2.4rem,7.4vw,6.4rem);
@@ -526,12 +528,12 @@ main{display:block}
         id: 'opening',
         pin: true,
         label: '[CHAPTER 1 LABEL]',          /* screen-reader only */
-        heading: '[OPENING STATEMENT]',      /* h1 */
-        support: '[SUPPORTING LINE]',
+        heading: 'Want to retire now?',      /* h1 */
+        support: '',                         /* intentionally empty */
         beats: [
-          { word: '[WORD 1]',      key: '[WORD 1]' },
-          { word: '[WORD 2]',      key: '[WORD 2]' },
-          { word: '[WORD 3]',      key: '[WORD 3]' },
+          { word: '' },                      /* page opens with no display word */
+          { word: '1 year before retiring', key: '1 year before retiring' },
+          { word: '[WORD 3]', key: '[WORD 3]' },
           { word: '[CENTRAL IDEA]', key: '[CENTRAL IDEA]' }
         ]
       },
@@ -604,7 +606,7 @@ main{display:block}
         h += '<h2 class="sr-only">' + esc(ch.label) + '</h2>';
         h += '<div class="pin">';
         h += '<h1 class="opening">' + esc(ch.heading) + '</h1>';
-        h += '<p class="support">' + esc(ch.support) + '</p>';
+        if (ch.support) h += '<p class="support">' + esc(ch.support) + '</p>';
         h += '<p class="cue" aria-hidden="true"><span class="cue-line"></span>' + esc(CONTENT.cue) + '</p>';
         h += '</div>';
       }
@@ -672,7 +674,7 @@ main{display:block}
         outro    = story.querySelector('.outro'),
         rootStyle= document.documentElement.style;
 
-    var triggers = [], tRaw = 0, settle = null, prevI = 0,
+    var triggers = [], fontPx = [], tRaw = 0, settle = null, prevI = 0,
         queued = false, idleT = null, vivus = null, ranges = null, fades = [];
 
     function clamp(v, a, b) { return v < a ? a : (v > b ? b : v); }
@@ -691,12 +693,24 @@ main{display:block}
         if (triggers[i] <= triggers[i - 1]) triggers[i] = triggers[i - 1] + 1;
       }
 
-      var maxH = 0;
+      /* Auto-fit: every display word is forced onto ONE line, scaled down
+         only as far as it needs to go to fit the column. */
+      var basePx = parseFloat(window.getComputedStyle(measureEl).fontSize) || 64,
+          availW = display.clientWidth || 1,
+          maxH = 0;
+      fontPx = [];
       for (var j = 0; j < words.length; j++) {
-        measureEl.textContent = words[j];
-        maxH = Math.max(maxH, measureEl.offsetHeight);
+        measureEl.style.fontSize = basePx + 'px';
+        measureEl.textContent = words[j] || '';
+        var natW = measureEl.scrollWidth,
+            k = (natW > availW && natW > 0) ? Math.max(availW / natW, 0.3) : 1,
+            px = Math.max(14, Math.floor(basePx * k));
+        fontPx.push(px);
+        measureEl.style.fontSize = px + 'px';
+        if (words[j]) maxH = Math.max(maxH, measureEl.offsetHeight);
       }
       measureEl.textContent = '';
+      measureEl.style.fontSize = '';
       if (!maxH) maxH = Math.round(vh * 0.16);
 
       rootStyle.setProperty('--word-h', maxH + 'px');
@@ -822,6 +836,10 @@ main{display:block}
       else if (Math.abs(i - prevI) > 1) f = f < 0.5 ? 0 : 1;   /* big jump: one word at most */
       prevI = i;
 
+      if (fontPx.length) {
+        wOut.style.fontSize = fontPx[i] + 'px';
+        wIn.style.fontSize  = fontPx[Math.min(i + 1, lastI)] + 'px';
+      }
       setWord(a, b, f);
 
       var prog = lastI ? t / lastI : 0;
