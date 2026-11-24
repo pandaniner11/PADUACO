@@ -11,81 +11,915 @@
 <meta name="description" content="FERS — Federal Employees Retirement System. What to look at before you retire. Padua Co LLC is a private company, not a government agency.">
 <link rel="canonical" href="https://www.paduaco.com/fers">
 <meta name="robots" content="index, follow">
+<meta name="theme-color" content="#0d0d0c">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Gloock&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Gloock&family=Inter:wght@400;500&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-body{font-family:'Gloock',Georgia,'Times New Roman',serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;color:#181818;background:#FAF7EF;overflow-x:hidden}
-.serif{font-family:'Gloock',Georgia,'Times New Roman',serif}
-.label{font-size:15px;font-weight:800;letter-spacing:.22em;text-transform:uppercase}
-.btn-primary{display:inline-flex;align-items:center;gap:12px;background:#B59410;color:#181818;font-weight:700;font-size:15px;letter-spacing:.04em;padding:clamp(14px,1.6vh,18px) clamp(26px,3vw,36px);border-radius:6px;text-decoration:none;transition:background .2s,transform .15s;box-shadow:0 4px 16px -4px rgba(181,148,16,.4)}
-.btn-primary:hover{background:#8E7410;transform:translateY(-1px)}
-/* ── Benefits tab bar ── */
-.benefit-bar{background:#181818;border-top:1px solid rgba(181,148,16,.25);border-bottom:1px solid rgba(181,148,16,.25)}
-.benefit-bar-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:center;gap:clamp(20px,4.5vw,60px);height:48px;padding:0 clamp(16px,5vw,48px);overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none}
-.benefit-bar-inner::-webkit-scrollbar{display:none}
-.benefit-bar a{position:relative;flex:none;display:block;height:48px;line-height:48px;color:rgba(255,255,255,.82);font-size:14px;font-weight:600;letter-spacing:.02em;text-decoration:none;white-space:nowrap;transition:color .2s}
-.benefit-bar a:hover,.benefit-bar a:focus-visible{color:#fff}
-.benefit-bar a::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;background:#B59410;transform:scaleX(0);transition:transform .22s cubic-bezier(.22,.7,.2,1)}
-.benefit-bar a:hover::after,.benefit-bar a:focus-visible::after{transform:scaleX(1)}
-.benefit-bar a[aria-current="page"]{color:#B59410}
-.benefit-bar a[aria-current="page"]::after{transform:scaleX(1)}
-@media(max-width:768px){.benefit-bar-inner{justify-content:flex-start;gap:26px}}
-.topnav{display:flex;align-items:center;justify-content:space-between;padding:20px clamp(20px,5vw,48px);background:#181818}
-.prog-head{background:#181818;color:#fff;padding:clamp(44px,7vh,76px) clamp(20px,5vw,48px)}
-.prog-head .wrap{max-width:1100px;margin:0 auto}
-.slot{max-width:1100px;margin:0 auto;padding:clamp(40px,6vh,72px) clamp(20px,5vw,48px)}
-.slot-box{border:1px dashed rgba(24,24,24,.3);border-radius:10px;padding:clamp(28px,5vw,48px);text-align:center;background:rgba(255,255,255,.55)}
-.foot{background:#181818;color:rgba(255,255,255,.5);padding:36px clamp(20px,5vw,48px);font-size:14px;line-height:1.7}
-.foot a{color:rgba(255,255,255,.75)}
+/* ===================================================================
+   1. TOKENS
+   =================================================================== */
+:root{
+  --bg:#0d0d0c;
+  --ink:#f2ede4;
+  --mute:#a39d92;
+  --line:rgba(242,237,228,0.42);
+  --gold:#B59410;
+
+  --display-top:6vh;
+  --word-h:16vh;
+  --veil-h:30vh;
+
+  --gutter:clamp(1.25rem,5vw,5.5rem);
+  --measure:min(42ch,34vw);
+
+  --f-display:'Gloock',Georgia,'Times New Roman',serif;
+  --f-body:'Inter',system-ui,-apple-system,sans-serif;
+  --f-mono:'JetBrains Mono',ui-monospace,monospace;
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--bg);color:var(--ink)}
+html{overflow-x:hidden;-webkit-text-size-adjust:100%}
+body{
+  font-family:var(--f-body);
+  font-weight:400;
+  line-height:1.5;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+::selection{background:var(--gold);color:#0d0d0c}
+
+.sr-only{
+  position:absolute;width:1px;height:1px;padding:0;margin:-1px;
+  overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;border:0;
+}
+
+/* ===================================================================
+   2. STATIC (NO-JS) BASE — the page reads as a long-form article
+   =================================================================== */
+.defs{position:absolute;width:0;height:0;overflow:hidden}
+.display,.veil,.art,.gauge,.measure{display:none}
+
+main{display:block}
+.story{
+  max-width:46rem;
+  margin:0 auto;
+  padding:14vh var(--gutter) 10vh;
+}
+.chapter{margin:0 0 4rem}
+.beat{margin:0 0 2.5rem}
+.copy p{
+  font-size:clamp(1.02rem,1.3vw,1.22rem);
+  line-height:1.68;
+  color:var(--ink);
+  margin:0 0 1.1em;
+  max-width:46ch;
+}
+.opening{
+  font-family:var(--f-display);
+  font-weight:600;
+  font-size:clamp(1.7rem,3.6vw,2.9rem);
+  line-height:1.14;
+  letter-spacing:-0.02em;
+  margin:0 0 1.1rem;
+  max-width:22ch;
+  overflow-wrap:anywhere;
+}
+.support{
+  font-family:var(--f-body);
+  font-size:clamp(0.95rem,1.1vw,1.05rem);
+  line-height:1.6;
+  color:var(--mute);
+  margin:0;
+  max-width:38ch;
+}
+.chapter-label{
+  font-family:var(--f-mono);
+  font-size:0.72rem;
+  font-weight:400;
+  letter-spacing:0.22em;
+  text-transform:uppercase;
+  color:var(--mute);
+  margin:0 0 1.4rem;
+}
+.chapter-label::before{
+  content:"";display:block;width:3.5rem;height:1px;
+  background:var(--line);margin:0 0 0.9rem;
+}
+.cue{
+  font-family:var(--f-mono);
+  font-size:0.68rem;
+  letter-spacing:0.24em;
+  text-transform:uppercase;
+  color:var(--mute);
+  margin:2.6rem 0 0;
+  display:flex;align-items:center;gap:0.75rem;
+  user-select:none;pointer-events:none;
+}
+.cue-line{display:block;width:2.4rem;height:1px;background:var(--line)}
+
+/* --- outro: return button + legal disclaimer --- */
+.outro{margin:7rem 0 0}
+.return{
+  display:inline-flex;align-items:center;gap:12px;
+  font-family:var(--f-body);
+  font-size:0.95rem;
+  font-weight:500;
+  letter-spacing:0.02em;
+  color:var(--ink);
+  text-decoration:none;
+  padding:0.95rem 1.7rem;
+  border:1px solid var(--line);
+  border-radius:6px;
+  transition:border-color .35s ease,color .35s ease,background-color .35s ease;
+}
+.return:hover{border-color:var(--gold);color:var(--gold)}
+.return:focus-visible{outline:2px solid var(--gold);outline-offset:6px}
+
+.legal{
+  margin:4.5rem 0 0;
+  padding:1.9rem 0 0;
+  border-top:1px solid rgba(242,237,228,0.12);
+  font-family:var(--f-body);
+  font-size:0.8rem;
+  line-height:1.75;
+  color:rgba(242,237,228,0.46);
+  max-width:62ch;
+}
+.legal p{margin:0 0 0.9rem}
+.legal p:last-child{margin:0}
+.legal strong{color:rgba(242,237,228,0.72);font-weight:500}
+.legal a{color:rgba(242,237,228,0.68);text-decoration:underline;text-underline-offset:2px}
+.legal a:hover{color:var(--gold)}
+.legal a:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+
+/* ===================================================================
+   3. LIVE LAYOUT — only once the script has started
+   =================================================================== */
+.live .display,
+.live .veil,
+.live .art,
+.live .gauge{display:block}
+.live .measure{display:block}
+
+/* --- fixed display word --- */
+.live .display{
+  position:fixed;
+  top:var(--display-top);
+  left:var(--gutter);
+  width:min(56vw,30ch);
+  height:var(--word-h);
+  z-index:4;
+  pointer-events:none;
+}
+.live .display .w{
+  position:absolute;
+  inset:0;
+  font-family:var(--f-display);
+  font-weight:600;
+  font-size:clamp(2.4rem,7.4vw,6.4rem);
+  line-height:1.04;
+  letter-spacing:-0.022em;
+  color:var(--ink);
+  overflow-wrap:anywhere;
+  hyphens:auto;
+  will-change:opacity,filter;
+}
+.live .display.morphing{filter:url(#threshold) blur(0.6px)}
+
+/* hidden twin used to measure the tallest word */
+.live .measure{
+  position:fixed;
+  top:0;left:var(--gutter);
+  width:min(56vw,30ch);
+  font-family:var(--f-display);
+  font-weight:600;
+  font-size:clamp(2.4rem,7.4vw,6.4rem);
+  line-height:1.04;
+  letter-spacing:-0.022em;
+  visibility:hidden;
+  pointer-events:none;
+  z-index:-1;
+}
+
+/* --- veil under the display word --- */
+.live .veil{
+  position:fixed;
+  top:0;left:0;right:0;
+  height:calc(var(--veil-h) + 96px);
+  z-index:3;
+  pointer-events:none;
+  background:linear-gradient(
+    to bottom,
+    var(--bg) 0,
+    var(--bg) calc(100% - 96px),
+    rgba(13,13,12,0.86) calc(100% - 58px),
+    rgba(13,13,12,0) 100%
+  );
+}
+
+/* --- artwork --- */
+.live .art{
+  position:fixed;
+  top:var(--veil-h);
+  right:clamp(2rem,4vw,4.5rem);
+  width:min(44vw,640px);
+  height:calc(100vh - var(--veil-h) - 6vh);
+  z-index:0;
+  pointer-events:none;
+  opacity:0;
+  transition:opacity .9s ease;
+  display:flex;align-items:center;justify-content:center;
+}
+.live .art.ready{opacity:1}
+.live .art-inner{width:100%;height:100%;display:flex;align-items:center;justify-content:center;will-change:transform}
+#art-svg{width:100%;height:100%;max-height:100%}
+
+/* --- progress line --- */
+.live .gauge{
+  position:fixed;
+  right:clamp(10px,1.5vw,22px);
+  top:26vh;bottom:26vh;
+  width:1px;
+  background:rgba(242,237,228,0.14);
+  z-index:5;
+  pointer-events:none;
+}
+.live .gauge i{
+  display:block;width:100%;height:100%;
+  background:var(--gold);
+  transform:scaleY(0);
+  transform-origin:top center;
+}
+
+/* --- story column --- */
+.live .story{
+  max-width:none;
+  margin:0;
+  padding:0 0 0 var(--gutter);
+  width:min(50vw,52rem);
+  position:relative;
+  z-index:2;
+}
+.live .chapter{margin:0}
+.live .chapter--open{padding-top:30vh}
+.live .pin{
+  position:sticky;
+  top:calc(var(--veil-h) + 1.4rem);
+  max-width:var(--measure);
+  padding-bottom:4vh;
+}
+.live .beat{
+  min-height:125vh;
+  margin:0;
+  display:block;
+}
+.live .copy{
+  position:sticky;
+  top:calc(var(--veil-h) + 1.4rem);
+  max-width:var(--measure);
+  padding-bottom:3vh;
+}
+.live .outro{
+  padding:22vh 0 18vh;
+  max-width:min(62ch,44vw);
+}
+/* --- endgame: retire the fixed layers so the outro is never covered --- */
+.live .display,
+.live .gauge{transition:opacity .55s ease}
+.live.ending .display,
+.live.ending .gauge{opacity:0}
+.live.ending .art.ready{opacity:0}
+
+.live .cue{transition:opacity .6s ease}
+.live.moved .cue{opacity:0}
+.live .cue-line{position:relative;overflow:hidden}
+.live .cue-line::after{
+  content:"";position:absolute;inset:0;
+  background:var(--gold);
+  transform:translateX(-100%);
+  animation:cue 2.8s cubic-bezier(.6,0,.2,1) infinite;
+}
+@keyframes cue{
+  0%{transform:translateX(-100%)}
+  55%{transform:translateX(100%)}
+  100%{transform:translateX(100%)}
+}
+
+/* ===================================================================
+   4. ARTWORK STROKES
+   =================================================================== */
+#art-svg [data-layer] path,
+#art-svg [data-layer] circle,
+#art-svg [data-layer] line{
+  fill:none;
+  stroke:var(--line);
+  stroke-width:1.6;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+#art-svg .l-gold path,
+#art-svg .l-gold circle{stroke:var(--gold)}
+#art-svg .dash{
+  stroke:rgba(242,237,228,0.2);
+  stroke-dasharray:5 11;
+  stroke-width:1.2;
+}
+#art-svg text.label{
+  font-family:var(--f-mono);
+  font-size:17px;
+  letter-spacing:0.16em;
+  fill:var(--mute);
+  stroke:none;
+  text-anchor:middle;
+}
+#art-svg .fade{opacity:0}
+#art-svg .dot{fill:var(--gold);stroke:none}
+
+/* ===================================================================
+   5. NARROW SCREENS
+   =================================================================== */
+@media (max-width:899px){
+  .live .story{width:100%;padding:0 var(--gutter)}
+  .live .display{left:var(--gutter);right:var(--gutter);width:auto}
+  .live .measure{left:var(--gutter);right:var(--gutter);width:auto}
+  .live .display .w{font-size:clamp(2rem,10.5vw,3.6rem);letter-spacing:-0.018em}
+  .live .measure{font-size:clamp(2rem,10.5vw,3.6rem)}
+  .live .art{
+    top:0;right:0;left:0;
+    width:100%;height:100vh;
+    opacity:0;
+  }
+  .live .art.ready{opacity:0.13}
+  #art-svg{width:118vw;max-width:none;height:auto}
+  .live .pin,
+  .live .copy{
+    max-width:none;
+    background:rgba(13,13,12,0.88);
+    border:1px solid rgba(242,237,228,0.07);
+    border-radius:6px;
+    padding:1.15rem 1.15rem 1.3rem;
+    backdrop-filter:blur(3px);
+    -webkit-backdrop-filter:blur(3px);
+  }
+  .live .beat{min-height:112vh}
+  .live .gauge{top:18vh;bottom:18vh}
+  .live .outro{max-width:none}
+  .copy p{max-width:none}
+  .opening{max-width:none}
+}
+
+/* ===================================================================
+   6. REDUCED MOTION
+   =================================================================== */
+@media (prefers-reduced-motion:reduce){
+  *{animation-duration:0.001ms !important;animation-iteration-count:1 !important;transition-duration:0.001ms !important}
+}
+.reduced .cue-line::after{display:none}
+.reduced #art-svg .fade{opacity:1}
+.reduced .live .art{transition:none}
 </style>
 </head>
+
 <body>
 
-<nav class="topnav">
-  <a href="/" style="display:flex;align-items:center;"><img src="assets/logo-white.png" alt="Padua Co" style="height:36px;width:auto;"></a>
-  <a href="/review" class="btn-primary" style="font-size:15px;padding:10px 22px;box-shadow:none;">Find out. <span style="font-size:15px;line-height:1;">→</span></a>
-</nav>
+<!-- morph threshold filter -->
+<svg class="defs" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter id="threshold">
+      <feColorMatrix in="SourceGraphic" type="matrix"
+        values="1 0 0 0 0
+                0 1 0 0 0
+                0 0 1 0 0
+                0 0 0 255 -140"/>
+    </filter>
+  </defs>
+</svg>
 
-<nav class="benefit-bar" aria-label="Federal benefit programs">
-    <div class="benefit-bar-inner">
-      <a href="/fers" aria-current="page">FERS</a>
-      <a href="/fehb">FEHB</a>
-      <a href="/fegli">FEGLI</a>
-      <a href="/tsp">TSP</a>
-      <a href="/fsafeds">FSAFEDS</a>
-      <a href="/fedvip">FEDVIP</a>
-    </div>
-  </nav>
+<div class="veil" aria-hidden="true"></div>
 
-<header class="prog-head">
-  <div class="wrap">
-    <div class="label" style="color:#B59410;margin-bottom:14px;">FERS</div>
-    <h1 class="serif" style="font-weight:600;letter-spacing:-.02em;line-height:1.08;font-size:clamp(36px,5.5vw,64px);">Federal Employees Retirement System</h1>
-    <p style="margin-top:18px;max-width:60ch;font-size:16px;line-height:1.7;color:rgba(255,255,255,.72);">Your FERS pension and eligibility date are the first pieces a specialist walks through with you on the review call — what you have now, and what changes when you retire.</p>
-    <a href="/review" class="btn-primary" style="margin-top:28px;">Find out. <span style="font-size:18px;line-height:1;">→</span></a>
+<div class="display" id="display" aria-hidden="true">
+  <span class="w" id="wOut"></span>
+  <span class="w" id="wIn"></span>
+</div>
+<div class="measure" id="measure" aria-hidden="true"></div>
+
+<div class="art" id="art" aria-hidden="true">
+  <div class="art-inner" id="artInner">
+    <svg id="art-svg" viewBox="0 0 800 800" xmlns="http://www.w3.org/2000/svg" role="presentation" focusable="false">
+
+      <!-- 1. FRAME -->
+      <g data-layer="frame">
+        <path d="M90 700 H710"/>
+        <path d="M90 700 V682"/>
+        <path d="M214 700 V682"/>
+        <path d="M338 700 V682"/>
+        <path d="M462 700 V682"/>
+        <path d="M586 700 V682"/>
+        <path d="M710 700 V682"/>
+        <path d="M96 150 H150"/><path d="M96 150 V204"/>
+        <path d="M704 150 H650"/><path d="M704 150 V204"/>
+        <path d="M96 752 H150"/><path d="M96 752 V698"/>
+        <path d="M704 752 H650"/><path d="M704 752 V698"/>
+        <path class="fade dash" data-ignore="true" d="M90 440 H710"/>
+      </g>
+
+      <!-- 2. ELEMENTS -->
+      <g data-layer="elements">
+        <circle cx="200" cy="560" r="38"/>
+        <circle cx="400" cy="560" r="38"/>
+        <circle cx="600" cy="560" r="38"/>
+        <path d="M200 598 V700"/>
+        <path d="M400 598 V700"/>
+        <path d="M600 598 V700"/>
+        <text class="fade label" data-ignore="true" x="200" y="736">01</text>
+        <text class="fade label" data-ignore="true" x="400" y="736">02</text>
+        <text class="fade label" data-ignore="true" x="600" y="736">03</text>
+      </g>
+
+      <!-- 3. LINKS -->
+      <g data-layer="links" class="l-gold">
+        <path d="M238 560 C280 486 320 486 362 560"/>
+        <path d="M438 560 C480 486 520 486 562 560"/>
+        <path d="M186 594 C282 676 518 676 614 594"/>
+      </g>
+
+      <!-- 4. GROWTH -->
+      <g data-layer="growth">
+        <path d="M400 522 V346"/>
+        <path d="M372 330 L228 530"/>
+        <path d="M428 330 L572 530"/>
+      </g>
+
+      <!-- 5. SYSTEM -->
+      <g data-layer="system">
+        <circle cx="400" cy="440" r="300"/>
+        <path d="M400 140 V156"/>
+        <path d="M550 180.2 L542 194"/>
+        <path d="M659.8 290 L646 298"/>
+        <path d="M700 440 H684"/>
+        <path d="M659.8 590 L646 582"/>
+        <path d="M550 699.8 L542 686"/>
+        <path d="M400 740 V724"/>
+        <path d="M250 699.8 L258 686"/>
+        <path d="M140.2 590 L154 582"/>
+        <path d="M100 440 H116"/>
+        <path d="M140.2 290 L154 298"/>
+        <path d="M250 180.2 L258 194"/>
+        <path d="M612.1 227.9 L634.8 205.2"/>
+        <path d="M612.1 652.1 L634.8 674.8"/>
+        <path d="M187.9 652.1 L165.2 674.8"/>
+        <path d="M187.9 227.9 L165.2 205.2"/>
+        <path class="fade dash" data-ignore="true" d="M110 300 H690"/>
+      </g>
+
+      <!-- 6. RESOLVE -->
+      <g data-layer="resolve" class="l-gold">
+        <circle cx="400" cy="440" r="344"/>
+        <circle cx="400" cy="300" r="46"/>
+        <circle class="fade dot" data-ignore="true" cx="400" cy="300" r="7"/>
+      </g>
+
+    </svg>
   </div>
-</header>
+</div>
 
-<!-- ═══════════════════════════════════════════════════════════════ -->
-<!-- INTERACTIVE SECTION — to be built                              -->
-<!-- ═══════════════════════════════════════════════════════════════ -->
-<section class="slot">
-  <div class="slot-box">
-    <p class="serif" style="font-size:clamp(22px,3vw,30px);font-weight:600;color:#181818;">Interactive FERS section</p>
-    <p style="margin-top:10px;font-size:15px;line-height:1.7;color:#585858;">Coming soon.</p>
-  </div>
-</section>
+<div class="gauge" aria-hidden="true"><i id="bar"></i></div>
 
-<footer class="foot">
-  <div style="max-width:1100px;margin:0 auto;">
-    <p>Padua Co LLC is a private company — <strong style="color:rgba(255,255,255,.8);font-weight:600;">not a government agency</strong> — and is not affiliated with, endorsed by, or acting on behalf of the U.S. Office of Personnel Management, the Thrift Savings Plan, or any other federal agency. Nothing on this page is a benefit determination or individualized advice. For official FERS rules, check with your employing agency or the official program source (<a href="https://www.opm.gov" target="_blank" rel="noopener">opm.gov</a>).</p>
-    <p style="margin-top:16px;"><a href="/disclaimer">Disclosures, Privacy &amp; Terms</a> · <a href="/">Back to home</a> &middot; <a href="mailto:paduaco@outlook.com">paduaco@outlook.com</a></p>
-    <p style="margin-top:16px;">© 2011 Padua Co · All rights reserved</p>
-  </div>
-</footer>
+<main>
+  <article class="story" id="story"></article>
+</main>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ==================================================================
+     CONTENT — every word on this page lives in this object.
+     Replace the [BRACKETED] values. Nothing else needs editing.
+     ================================================================== */
+  var CONTENT = {
+
+    site: {
+      name: 'Padua Co',
+      returnHref: '/'
+    },
+
+    cue: 'Scroll to discover',
+
+    /* Legal footer — carried over from the previous /fers page.
+       Keep this accurate; it is a disclosure, not decoration. */
+    legal: [
+      'Padua Co LLC is a private company — <strong>not a government agency</strong> — and is not affiliated with, endorsed by, or acting on behalf of the U.S. Office of Personnel Management, the Thrift Savings Plan, or any other federal agency. Nothing on this page is a benefit determination or individualized advice. For official FERS rules, check with your employing agency or the official program source (<a href="https://www.opm.gov" target="_blank" rel="noopener">opm.gov</a>).',
+      '<a href="/disclaimer">Disclosures, Privacy &amp; Terms</a> · <a href="mailto:paduaco@outlook.com">paduaco@outlook.com</a>',
+      '© 2011 Padua Co · All rights reserved'
+    ],
+
+    chapters: [
+
+      /* --- 1. OPENING ------------------------------------------- */
+      {
+        id: 'opening',
+        pin: true,
+        label: '[CHAPTER 1 LABEL]',          /* screen-reader only */
+        heading: '[OPENING STATEMENT]',      /* h1 */
+        support: '[SUPPORTING LINE]',
+        beats: [
+          { word: '[WORD 1]',      key: '[WORD 1]' },
+          { word: '[WORD 2]',      key: '[WORD 2]' },
+          { word: '[WORD 3]',      key: '[WORD 3]' },
+          { word: '[CENTRAL IDEA]', key: '[CENTRAL IDEA]' }
+        ]
+      },
+
+      /* --- 2. CONTEXT ------------------------------------------- */
+      {
+        id: 'context',
+        label: '[CHAPTER 2 LABEL]',
+        beats: [
+          { word: '[CENTRAL IDEA]', draw: 'frame',
+            lines: ['[CONTEXT PASSAGE 1]'] },
+          { word: '[CENTRAL IDEA]', draw: 'elements',
+            lines: ['[CONTEXT PASSAGE 2]'] }
+        ]
+      },
+
+      /* --- 3. TRANSFORMATION ------------------------------------ */
+      {
+        id: 'transformation',
+        label: '[CHAPTER 3 LABEL]',
+        beats: [
+          { word: '[KEY WORD A]', key: '[KEY WORD A]', draw: 'links',
+            lines: ['[CORE MESSAGE PART 1]'] },
+          { word: '[KEY WORD B]', key: '[KEY WORD B]', draw: 'growth',
+            lines: ['[CORE MESSAGE PART 2]'] }
+        ]
+      },
+
+      /* --- 4. COMPLETE PICTURE ---------------------------------- */
+      {
+        id: 'picture',
+        label: '[CHAPTER 4 LABEL]',
+        beats: [
+          { word: '[KEY WORD B]', draw: 'system',
+            lines: ['[WHY IT MATTERS PART 1]'] },
+          { word: '[KEY WORD B]',
+            lines: ['[WHY IT MATTERS PART 2]'] }
+        ]
+      },
+
+      /* --- 5. CLOSING ------------------------------------------- */
+      {
+        id: 'closing',
+        label: '[CHAPTER 5 LABEL]',
+        beats: [
+          { word: '[FINAL STATEMENT]', key: '[FINAL STATEMENT]', draw: 'resolve',
+            lines: ['[FINAL STATEMENT]'] },
+          { word: '[FINAL STATEMENT]',
+            lines: ['[CLOSING STATEMENT]'] }
+        ]
+      }
+
+    ]
+  };
+
+  /* ==================================================================
+     RENDER — the article exists in the DOM before anything animates.
+     ================================================================== */
+  function esc(s){
+    return String(s)
+      .replace(/&/g,'&amp;').replace(/</g,'&lt;')
+      .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  function build(){
+    var h = '';
+    CONTENT.chapters.forEach(function (ch) {
+      h += '<section class="chapter' + (ch.pin ? ' chapter--open' : '') + '" id="' + esc(ch.id) + '">';
+      if (ch.pin) {
+        h += '<h2 class="sr-only">' + esc(ch.label) + '</h2>';
+        h += '<div class="pin">';
+        h += '<h1 class="opening">' + esc(ch.heading) + '</h1>';
+        h += '<p class="support">' + esc(ch.support) + '</p>';
+        h += '<p class="cue" aria-hidden="true"><span class="cue-line"></span>' + esc(CONTENT.cue) + '</p>';
+        h += '</div>';
+      }
+      ch.beats.forEach(function (b, i) {
+        h += '<div class="beat" data-word="' + esc(b.word) + '"' +
+             (b.draw ? ' data-draw="' + esc(b.draw) + '"' : '') + '>';
+        h += '<div class="copy">';
+        if (!ch.pin && i === 0) h += '<h2 class="chapter-label">' + esc(ch.label) + '</h2>';
+        if (b.key) h += '<h3 class="sr-only">' + esc(b.key) + '</h3>';
+        (b.lines || []).forEach(function (p) { h += '<p>' + esc(p) + '</p>'; });
+        h += '</div></div>';
+      });
+      h += '</section>';
+    });
+
+    h += '<footer class="outro">';
+    h += '<a class="return" href="' + esc(CONTENT.site.returnHref) + '">' +
+         'Return to ' + esc(CONTENT.site.name) +
+         ' <span aria-hidden="true">&rarr;</span></a>';
+    /* legal strings are trusted first-party markup, intentionally not escaped */
+    h += '<div class="legal">';
+    (CONTENT.legal || []).forEach(function (p) { h += '<p>' + p + '</p>'; });
+    h += '</div>';
+    h += '</footer>';
+    return h;
+  }
+
+  var story = document.getElementById('story');
+  if (!story) return;
+  story.innerHTML = build();
+
+  /* ==================================================================
+     ENGINE
+     ================================================================== */
+  try { engine(); } catch (e) { /* article stays readable, unanimated */ }
+
+  function engine(){
+
+    var reduced =
+      (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) ||
+      /(^|[?&])reduced(=|&|$)/.test(window.location.search);
+    if (reduced) document.documentElement.classList.add('reduced');
+
+    var beats = Array.prototype.slice.call(story.querySelectorAll('.beat'));
+    if (!beats.length) return;
+
+    var words = beats.map(function (b) { return b.getAttribute('data-word') || ''; });
+    var lastI = beats.length - 1;
+
+    /* drawing segments: a layer draws from its own beat to the next drawn beat */
+    var segs = [];
+    beats.forEach(function (b, i) {
+      var d = b.getAttribute('data-draw');
+      if (d) segs.push({ name: d, start: i, end: lastI });
+    });
+    segs.forEach(function (s, i) { if (segs[i + 1]) s.end = segs[i + 1].start; });
+
+    var display  = document.getElementById('display'),
+        wOut     = document.getElementById('wOut'),
+        wIn      = document.getElementById('wIn'),
+        measureEl= document.getElementById('measure'),
+        art      = document.getElementById('art'),
+        artInner = document.getElementById('artInner'),
+        bar      = document.getElementById('bar'),
+        outro    = story.querySelector('.outro'),
+        rootStyle= document.documentElement.style;
+
+    var triggers = [], tRaw = 0, settle = null, prevI = 0,
+        queued = false, idleT = null, vivus = null, ranges = null, fades = [];
+
+    function clamp(v, a, b) { return v < a ? a : (v > b ? b : v); }
+
+    /* ---------------- measurement ---------------- */
+    function measure(){
+      var vh = window.innerHeight,
+          y  = window.pageYOffset || document.documentElement.scrollTop;
+
+      triggers = beats.map(function (b) {
+        return b.getBoundingClientRect().top + y - vh * 0.62;
+      });
+      var shift = Math.min(0, triggers[0]);
+      if (shift < 0) triggers = triggers.map(function (v) { return v - shift; });
+      for (var i = 1; i < triggers.length; i++) {
+        if (triggers[i] <= triggers[i - 1]) triggers[i] = triggers[i - 1] + 1;
+      }
+
+      var maxH = 0;
+      for (var j = 0; j < words.length; j++) {
+        measureEl.textContent = words[j];
+        maxH = Math.max(maxH, measureEl.offsetHeight);
+      }
+      measureEl.textContent = '';
+      if (!maxH) maxH = Math.round(vh * 0.16);
+
+      rootStyle.setProperty('--word-h', maxH + 'px');
+      rootStyle.setProperty('--veil-h', Math.round(vh * 0.06 + maxH + Math.min(40, vh * 0.03)) + 'px');
+    }
+
+    /* ---------------- scroll -> t ---------------- */
+    function beatPosition(){
+      var y = window.pageYOffset || document.documentElement.scrollTop;
+      if (y <= triggers[0]) return 0;
+      if (y >= triggers[lastI]) return lastI;
+      var i = 0;
+      while (i < lastI && triggers[i + 1] <= y) i++;
+      return i + (y - triggers[i]) / (triggers[i + 1] - triggers[i]);
+    }
+
+    function morphF(t){
+      var frac = t - Math.floor(t);
+      return clamp((frac - 0.45) / 0.45, 0, 1);
+    }
+
+    /* ---------------- word morph ---------------- */
+    function setWord(a, b, f){
+      if (wOut.textContent !== a) wOut.textContent = a;
+      if (wIn.textContent  !== b) wIn.textContent  = b;
+
+      if (f <= 0.002) {
+        wOut.style.opacity = '1'; wOut.style.filter = 'none';
+        wIn.style.opacity  = '0'; wIn.style.filter  = 'none';
+        display.classList.remove('morphing');
+        return;
+      }
+      if (f >= 0.998) {
+        wOut.style.opacity = '0'; wOut.style.filter = 'none';
+        wIn.style.opacity  = '1'; wIn.style.filter  = 'none';
+        display.classList.remove('morphing');
+        return;
+      }
+      var g = 1 - f;
+      wIn.style.filter  = 'blur(' + Math.min(8 / f - 8, 100).toFixed(2) + 'px)';
+      wIn.style.opacity = Math.pow(f, 0.4).toFixed(3);
+      wOut.style.filter  = 'blur(' + Math.min(8 / g - 8, 100).toFixed(2) + 'px)';
+      wOut.style.opacity = Math.pow(g, 0.4).toFixed(3);
+      display.classList.add('morphing');
+    }
+
+    /* ---------------- drawing ---------------- */
+    function layerRanges(){
+      var r = {}, map = (vivus && vivus.map) || [], fl = (vivus && vivus.frameLength) || 0, i, o, g, n, a, b;
+      for (i = 0; i < map.length; i++) {
+        o = map[i];
+        if (!o || !o.el || typeof o.startAt !== 'number' || !fl) continue;
+        g = o.el.closest ? o.el.closest('[data-layer]') : climb(o.el);
+        if (!g) continue;
+        n = g.getAttribute('data-layer');
+        a = o.startAt / fl;
+        b = (o.startAt + (o.duration || 0)) / fl;
+        if (!r[n]) r[n] = { from: a, to: b };
+        else { r[n].from = Math.min(r[n].from, a); r[n].to = Math.max(r[n].to, b); }
+      }
+      segs.forEach(function (s, i) {           /* fallback: even split */
+        if (!r[s.name]) r[s.name] = { from: i / segs.length, to: (i + 1) / segs.length };
+      });
+      return r;
+    }
+    function climb(el){
+      while (el && el.getAttribute) {
+        if (el.getAttribute('data-layer')) return el;
+        el = el.parentNode;
+      }
+      return null;
+    }
+
+    function segLocal(s, t){
+      if (t >= s.end) return 1;
+      if (t <= s.start) return 0;
+      return (t - s.start) / (s.end - s.start);
+    }
+
+    function artProgress(t){
+      var p = 0;
+      for (var i = 0; i < segs.length; i++) {
+        var s = segs[i], R = ranges[s.name];
+        if (!R) continue;
+        if (t >= s.end) { p = R.to; continue; }
+        if (t <= s.start) break;
+        p = R.from + (R.to - R.from) * segLocal(s, t);
+        break;
+      }
+      return clamp(p, 0, 1);
+    }
+
+    function paintFades(t){
+      for (var i = 0; i < fades.length; i++) {
+        var el = fades[i], g = el.closest ? el.closest('[data-layer]') : climb(el);
+        if (!g) continue;
+        var name = g.getAttribute('data-layer'), s = null;
+        for (var j = 0; j < segs.length; j++) if (segs[j].name === name) s = segs[j];
+        if (!s) continue;
+        var local = segLocal(s, t);
+        el.style.opacity = clamp((local - 0.3) / 0.45, 0, 1).toFixed(3);
+      }
+    }
+
+    /* ---------------- endgame ---------------- */
+    /* The display word, artwork and gauge are position:fixed. The outro is not,
+       so without this it scrolls up underneath them. Reverses on scroll up. */
+    function endingCheck(){
+      if (!outro) return;
+      var top = outro.getBoundingClientRect().top;
+      document.body.classList.toggle('ending', top < window.innerHeight * 0.72);
+    }
+
+    /* ---------------- paint ---------------- */
+    function paint(t){
+      var i = Math.min(Math.floor(t), lastI),
+          a = words[i],
+          b = words[Math.min(i + 1, lastI)],
+          f = settle ? settle.v : morphF(t);
+
+      if (a === b) f = 0;
+      else if (reduced) f = f < 0.5 ? 0 : 1;
+      else if (Math.abs(i - prevI) > 1) f = f < 0.5 ? 0 : 1;   /* big jump: one word at most */
+      prevI = i;
+
+      setWord(a, b, f);
+
+      var prog = lastI ? t / lastI : 0;
+      bar.style.transform = 'scaleY(' + prog.toFixed(4) + ')';
+      artInner.style.transform = 'scale(' + (0.94 + 0.08 * prog).toFixed(4) + ')';
+      document.body.classList.toggle('moved', t > 0.25);
+      endingCheck();
+
+      if (vivus && ranges && !reduced) {
+        try { vivus.setFrameProgress(artProgress(t)); } catch (e) {}
+        paintFades(t);
+      }
+    }
+
+    /* ---------------- loop ---------------- */
+    function frame(){
+      queued = false;
+      if (settle) {
+        settle.v += (settle.to - settle.v) * 0.14;
+        if (Math.abs(settle.to - settle.v) < 0.004) { settle.v = settle.to; paint(tRaw); settle = null; return; }
+        paint(tRaw);
+        request();
+        return;
+      }
+      tRaw = beatPosition();
+      paint(tRaw);
+    }
+    function request(){
+      if (!queued) { queued = true; window.requestAnimationFrame(frame); }
+    }
+    function onIdle(){
+      if (reduced) return;
+      var f = morphF(tRaw);
+      if (f > 0.002 && f < 0.998) { settle = { v: f, to: f < 0.5 ? 0 : 1 }; request(); }
+    }
+
+    /* ---------------- wire up ---------------- */
+    document.body.classList.add('live');
+    measure();
+    tRaw = beatPosition();
+    paint(tRaw);
+
+    window.addEventListener('scroll', function () {
+      settle = null;
+      if (idleT) clearTimeout(idleT);
+      idleT = setTimeout(onIdle, 160);
+      request();
+    }, { passive: true });
+
+    var rT = null;
+    window.addEventListener('resize', function () {
+      if (rT) clearTimeout(rT);
+      rT = setTimeout(function () { measure(); tRaw = beatPosition(); paint(tRaw); }, 140);
+    }, { passive: true });
+
+    if (document.fonts && document.fonts.ready && document.fonts.ready.then) {
+      document.fonts.ready.then(function () { measure(); paint(beatPosition()); });
+    }
+
+    /* ---------------- Vivus ---------------- */
+    function artStatic(){
+      var all = document.querySelectorAll('#art-svg .fade');
+      for (var i = 0; i < all.length; i++) all[i].style.opacity = '1';
+      art.classList.add('ready');
+    }
+
+    var s = document.createElement('script');
+    s.src = 'https://cdnjs.cloudflare.com/ajax/libs/vivus/0.4.6/vivus.min.js';
+    s.async = true;
+    s.onerror = artStatic;
+    s.onload = function () {
+      try {
+        vivus = new Vivus('art-svg', {
+          type: 'oneByOne',
+          start: 'manual',
+          duration: 400,
+          animTimingFunction: Vivus.LINEAR,
+          pathTimingFunction: Vivus.LINEAR
+        });
+        ranges = layerRanges();
+        fades = Array.prototype.slice.call(document.querySelectorAll('#art-svg .fade'));
+        if (reduced) {
+          vivus.setFrameProgress(1);
+          for (var i = 0; i < fades.length; i++) fades[i].style.opacity = '1';
+        } else {
+          vivus.setFrameProgress(artProgress(tRaw));
+          paintFades(tRaw);
+        }
+        art.classList.add('ready');
+        paint(tRaw);
+      } catch (e) {
+        artStatic();
+      }
+    };
+    document.head.appendChild(s);
+  }
+})();
+</script>
 
 </body>
 </html>
