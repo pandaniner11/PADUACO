@@ -8,84 +8,1627 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>FEGLI · Federal Employees' Group Life Insurance — Padua Co</title>
-<meta name="description" content="FEGLI — Federal Employees' Group Life Insurance. What to look at before you retire. Padua Co LLC is a private company, not a government agency.">
+<meta name="description" content="FEGLI — what happens to your life insurance when you retire: the five-year test, the 75% / 50% / No Reduction election, and what each one costs. Padua Co LLC is a private company, not a government agency.">
 <link rel="canonical" href="https://www.paduaco.com/fegli">
 <meta name="robots" content="index, follow">
+<meta name="theme-color" content="#0d0d0c">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Gloock&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Gloock&family=Inter:wght@400;500&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-body{font-family:'Gloock',Georgia,'Times New Roman',serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;color:#181818;background:#FAF7EF;overflow-x:hidden}
-.serif{font-family:'Gloock',Georgia,'Times New Roman',serif}
-.label{font-size:15px;font-weight:800;letter-spacing:.22em;text-transform:uppercase}
-.btn-primary{display:inline-flex;align-items:center;gap:12px;background:#B59410;color:#181818;font-weight:700;font-size:15px;letter-spacing:.04em;padding:clamp(14px,1.6vh,18px) clamp(26px,3vw,36px);border-radius:6px;text-decoration:none;transition:background .2s,transform .15s;box-shadow:0 4px 16px -4px rgba(181,148,16,.4)}
-.btn-primary:hover{background:#8E7410;transform:translateY(-1px)}
-/* ── Benefits tab bar ── */
-.benefit-bar{background:#181818;border-top:1px solid rgba(181,148,16,.25);border-bottom:1px solid rgba(181,148,16,.25)}
-.benefit-bar-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:center;gap:clamp(20px,4.5vw,60px);height:48px;padding:0 clamp(16px,5vw,48px);overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none}
-.benefit-bar-inner::-webkit-scrollbar{display:none}
-.benefit-bar a{position:relative;flex:none;display:block;height:48px;line-height:48px;color:rgba(255,255,255,.82);font-size:14px;font-weight:600;letter-spacing:.02em;text-decoration:none;white-space:nowrap;transition:color .2s}
-.benefit-bar a:hover,.benefit-bar a:focus-visible{color:#fff}
-.benefit-bar a::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;background:#B59410;transform:scaleX(0);transition:transform .22s cubic-bezier(.22,.7,.2,1)}
-.benefit-bar a:hover::after,.benefit-bar a:focus-visible::after{transform:scaleX(1)}
-.benefit-bar a[aria-current="page"]{color:#B59410}
-.benefit-bar a[aria-current="page"]::after{transform:scaleX(1)}
-@media(max-width:768px){.benefit-bar-inner{justify-content:flex-start;gap:26px}}
-.topnav{display:flex;align-items:center;justify-content:space-between;padding:20px clamp(20px,5vw,48px);background:#181818}
-.prog-head{background:#181818;color:#fff;padding:clamp(44px,7vh,76px) clamp(20px,5vw,48px)}
-.prog-head .wrap{max-width:1100px;margin:0 auto}
-.slot{max-width:1100px;margin:0 auto;padding:clamp(40px,6vh,72px) clamp(20px,5vw,48px)}
-.slot-box{border:1px dashed rgba(24,24,24,.3);border-radius:10px;padding:clamp(28px,5vw,48px);text-align:center;background:rgba(255,255,255,.55)}
-.foot{background:#181818;color:rgba(255,255,255,.5);padding:36px clamp(20px,5vw,48px);font-size:14px;line-height:1.7}
-.foot a{color:rgba(255,255,255,.75)}
+/* ===================================================================
+   1. TOKENS
+   =================================================================== */
+:root{
+  --bg:#0d0d0c;
+  --ink:#f2ede4;
+  --mute:#a39d92;
+  --line:rgba(242,237,228,0.42);
+  --gold:#B59410;
+
+  --nav-h:44px;
+  --display-top:calc(var(--nav-h) + 2.6vh);
+  --word-h:16vh;
+  --veil-h:30vh;
+
+  --veil-fade:96px;
+  --copy-top:calc(var(--veil-h) + 6.5rem);
+  --gutter:clamp(1.25rem,5vw,5.5rem);
+  --measure:min(42ch,34vw);
+
+  --f-display:'Gloock',Georgia,'Times New Roman',serif;
+  --f-body:'Inter',system-ui,-apple-system,sans-serif;
+  --f-mono:'JetBrains Mono',ui-monospace,monospace;
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--bg);color:var(--ink)}
+html{overflow-x:clip;-webkit-text-size-adjust:100%}
+body{
+  font-family:var(--f-body);
+  font-weight:400;
+  line-height:1.5;
+  overflow-x:clip;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+::selection{background:var(--gold);color:#0d0d0c}
+
+.sr-only{
+  position:absolute;width:1px;height:1px;padding:0;margin:-1px;
+  overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;border:0;
+}
+
+/* --- benefits nav --- */
+.benefit-bar{
+  position:fixed;top:0;left:0;right:0;
+  height:var(--nav-h);
+  z-index:6;
+  display:flex;align-items:center;justify-content:center;
+  gap:clamp(14px,3vw,42px);
+  padding:0 var(--gutter);
+  background:rgba(13,13,12,0.92);
+  backdrop-filter:blur(6px);
+  -webkit-backdrop-filter:blur(6px);
+  border-bottom:1px solid rgba(242,237,228,0.08);
+  overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none;
+}
+.benefit-bar::-webkit-scrollbar{display:none}
+.benefit-bar a{
+  flex:none;
+  font-family:var(--f-mono);font-size:.68rem;
+  letter-spacing:.18em;text-transform:uppercase;
+  color:rgba(242,237,228,0.55);
+  text-decoration:none;white-space:nowrap;
+  transition:color .25s ease;
+}
+.benefit-bar a:hover{color:var(--ink)}
+.benefit-bar a[aria-current="page"]{color:var(--gold)}
+.benefit-bar a:focus-visible{outline:2px solid var(--gold);outline-offset:4px}
+@media (max-width:899px){
+  .benefit-bar{justify-content:flex-start;gap:22px}
+}
+
+/* ===================================================================
+   2. STATIC (NO-JS) BASE — the page reads as a long-form article
+   =================================================================== */
+.defs{position:absolute;width:0;height:0;overflow:hidden}
+.display,.veil,.art,.gauge,.measure{display:none}
+
+main{display:block}
+.story{
+  max-width:46rem;
+  margin:0 auto;
+  padding:calc(var(--nav-h) + 9vh) var(--gutter) 10vh;
+}
+.chapter{margin:0 0 4rem}
+.beat{margin:0 0 2.5rem}
+.copy p{
+  font-size:clamp(1.02rem,1.3vw,1.22rem);
+  line-height:1.68;
+  color:var(--ink);
+  margin:0 0 1.1em;
+  max-width:46ch;
+}
+.opening{
+  font-family:var(--f-display);
+  font-weight:600;
+  font-size:clamp(1.7rem,3.6vw,2.9rem);
+  line-height:1.14;
+  letter-spacing:-0.02em;
+  margin:0 0 1.1rem;
+  max-width:22ch;
+  overflow-wrap:anywhere;
+}
+.support{
+  font-family:var(--f-body);
+  font-size:clamp(0.95rem,1.1vw,1.05rem);
+  line-height:1.6;
+  color:var(--mute);
+  margin:0;
+  max-width:38ch;
+}
+.chapter-label{
+  font-family:var(--f-mono);
+  font-size:0.72rem;
+  font-weight:400;
+  letter-spacing:0.22em;
+  text-transform:uppercase;
+  color:var(--mute);
+  margin:0 0 1.4rem;
+}
+.chapter-label::before{
+  content:"";display:block;width:3.5rem;height:1px;
+  background:var(--line);margin:0 0 0.9rem;
+}
+.cue{
+  font-family:var(--f-mono);
+  font-size:0.68rem;
+  letter-spacing:0.24em;
+  text-transform:uppercase;
+  color:var(--mute);
+  margin:2.6rem 0 0;
+  display:flex;align-items:center;gap:0.75rem;
+  user-select:none;pointer-events:none;
+}
+.cue-line{display:block;width:2.4rem;height:1px;background:var(--line)}
+
+/* --- outro: return button + legal disclaimer --- */
+.outro{margin:3rem 0 0}
+.return{
+  display:inline-flex;align-items:center;gap:12px;
+  font-family:var(--f-body);
+  font-size:0.95rem;
+  font-weight:500;
+  letter-spacing:0.02em;
+  color:var(--ink);
+  text-decoration:none;
+  padding:0.95rem 1.7rem;
+  border:1px solid var(--line);
+  border-radius:6px;
+  transition:border-color .35s ease,color .35s ease,background-color .35s ease;
+}
+.return:hover{border-color:var(--gold);color:var(--gold)}
+.return:focus-visible{outline:2px solid var(--gold);outline-offset:6px}
+
+.legal{
+  margin:4.5rem 0 0;
+  padding:1.9rem 0 0;
+  border-top:1px solid rgba(242,237,228,0.12);
+  font-family:var(--f-body);
+  font-size:0.8rem;
+  line-height:1.75;
+  color:rgba(242,237,228,0.46);
+  max-width:62ch;
+}
+.legal p{margin:0 0 0.9rem}
+.legal p:last-child{margin:0}
+.legal strong{color:rgba(242,237,228,0.72);font-weight:500}
+.legal a{color:rgba(242,237,228,0.68);text-decoration:underline;text-underline-offset:2px}
+.legal a:hover{color:var(--gold)}
+.legal a:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+
+/* ---- MRA wheel: static base. Without JS this is a plain readable list. ---- */
+.wheel-sub{
+  font-family:var(--f-display);font-weight:600;
+  font-size:clamp(1.3rem,2.4vw,2rem);line-height:1.18;
+  letter-spacing:-0.015em;margin:0 0 .5rem;
+}
+.wheel-q{
+  font-family:var(--f-body);font-size:clamp(.92rem,1.1vw,1.02rem);
+  color:var(--mute);margin:0;
+}
+.mra-list{list-style:none;margin:2rem 0 0;padding:0}
+.mra-list li{margin:0 0 .35rem}
+.mra-item{
+  display:flex;flex-wrap:wrap;gap:.2rem .9rem;align-items:baseline;
+  width:100%;text-align:left;background:none;border:0;margin:0;
+  padding:.35rem 0;color:var(--ink);font-family:var(--f-body);
+  font-size:1rem;cursor:pointer;
+}
+.mra-year{font-weight:500}
+.mra-val{color:var(--mute)}
+.mra-item:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+
+.route-list{list-style:none;margin:2rem 0 0;padding:0}
+.route-list li{margin:0 0 .35rem}
+.route-item{
+  display:flex;flex-wrap:wrap;gap:.2rem .9rem;align-items:baseline;
+  width:100%;text-align:left;background:none;border:0;margin:0;
+  padding:.4rem 0;color:var(--ink);font-family:var(--f-body);
+  font-size:1rem;cursor:pointer;
+}
+.route-n{
+  color:var(--gold);font-family:var(--f-mono);
+  font-size:.8rem;letter-spacing:.14em;
+}
+.route-item:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+
+.steps{
+  margin:1.3rem 0 0;padding:0;list-style:none;counter-reset:ora;
+}
+.steps li{
+  position:relative;counter-increment:ora;
+  padding:0 0 0 2.2rem;margin:0 0 .85rem;
+  font-family:var(--f-body);
+  font-size:clamp(.92rem,1.05vw,1rem);
+  line-height:1.6;color:var(--ink);
+}
+.steps li::before{
+  content:counter(ora);
+  position:absolute;left:0;top:.05em;
+  font-family:var(--f-mono);font-size:.74rem;
+  letter-spacing:.1em;color:var(--gold);
+}
+
+.cta-wrap{margin:1.6rem 0 0}
+.cta{
+  display:inline-flex;align-items:center;gap:10px;
+  font-family:var(--f-body);font-size:.92rem;font-weight:500;
+  color:var(--gold);text-decoration:none;
+  padding:.8rem 1.4rem;border:1px solid var(--gold);border-radius:6px;
+  transition:background-color .3s ease,color .3s ease;
+}
+.cta:hover{background:var(--gold);color:#0d0d0c}
+.cta:focus-visible{outline:2px solid var(--gold);outline-offset:4px}
+
+.display-cap{display:none}
+
+/* ===================================================================
+   3. LIVE LAYOUT — only once the script has started
+   =================================================================== */
+.live .display,
+.live .veil,
+.live .art,
+.live .gauge{display:block}
+.live .measure{display:block}
+
+/* --- fixed display word --- */
+.live .display{
+  position:fixed;
+  top:var(--display-top);
+  left:var(--gutter);
+  /* NOT ch: ch resolves against this box's inherited 16px font, not the
+     display font, which collapsed the column to ~240px. */
+  width:min(56vw,56rem);
+  height:var(--word-h);
+  z-index:4;
+  pointer-events:none;
+}
+.live .display .w{
+  position:absolute;
+  inset:0;
+  font-family:var(--f-display);
+  font-weight:600;
+  font-size:clamp(2.4rem,7.4vw,6.4rem);
+  line-height:1.04;
+  letter-spacing:-0.022em;
+  color:var(--ink);
+  white-space:nowrap;
+  will-change:opacity,filter;
+}
+.live .display.morphing{filter:url(#threshold) blur(0.6px)}
+
+/* hidden twin used to measure the tallest word */
+.live .measure{
+  position:fixed;
+  top:0;left:var(--gutter);
+  width:auto;max-width:none;
+  white-space:nowrap;
+  font-family:var(--f-display);
+  font-weight:600;
+  font-size:clamp(2.4rem,7.4vw,6.4rem);
+  line-height:1.04;
+  letter-spacing:-0.022em;
+  visibility:hidden;
+  pointer-events:none;
+  z-index:-1;
+}
+
+/* --- veil under the display word --- */
+.live .veil{
+  position:fixed;
+  top:0;left:0;right:0;
+  height:calc(var(--veil-h) + var(--veil-fade));
+  z-index:3;
+  pointer-events:none;
+  background:linear-gradient(
+    to bottom,
+    var(--bg) 0,
+    var(--bg) calc(100% - var(--veil-fade)),
+    rgba(13,13,12,0.86) calc(100% - var(--veil-fade) * 0.6),
+    rgba(13,13,12,0) 100%
+  );
+}
+
+/* --- artwork --- */
+.live .art{
+  position:fixed;
+  top:var(--veil-h);
+  right:clamp(2rem,4vw,4.5rem);
+  width:min(44vw,640px);
+  height:calc(100vh - var(--veil-h) - 6vh);
+  z-index:0;
+  pointer-events:none;
+  opacity:0;
+  transition:opacity .9s ease;
+  display:flex;align-items:center;justify-content:center;
+}
+.live .art.ready{opacity:1}
+.live .art-inner{width:100%;height:100%;display:flex;align-items:center;justify-content:center;will-change:transform}
+#art-svg{width:100%;height:100%;max-height:100%}
+
+/* --- progress line --- */
+.live .gauge{
+  position:fixed;
+  right:clamp(10px,1.5vw,22px);
+  top:26vh;bottom:26vh;
+  width:1px;
+  background:rgba(242,237,228,0.14);
+  z-index:5;
+  pointer-events:none;
+}
+.live .gauge i{
+  display:block;width:100%;height:100%;
+  background:var(--gold);
+  transform:scaleY(0);
+  transform-origin:top center;
+}
+
+/* On a phone the outro cannot share the screen with the fixed lettering
+   and the map, so there the fixed layers step aside for it. On wide
+   screens all three sit together. */
+.live .display,
+.live .gauge{transition:opacity .55s ease}
+.live.ending .display,
+.live.ending .gauge{opacity:0}
+.live.ending .art.ready{opacity:0}
+
+/* --- story column --- */
+.live .story{
+  max-width:none;
+  margin:0;
+  padding:0 0 0 var(--gutter);
+  width:min(50vw,52rem);
+  position:relative;
+  z-index:2;
+}
+.live .chapter{margin:0}
+.live .chapter--open{padding-top:30vh}
+.live .pin{
+  position:sticky;
+  top:var(--copy-top);
+  max-width:var(--measure);
+  padding-bottom:4vh;
+}
+.live .beat{
+  min-height:125vh;
+  margin:0;
+  display:block;
+}
+.live .copy{
+  position:sticky;
+  top:var(--copy-top);
+  max-width:var(--measure);
+  padding-bottom:3vh;
+}
+/* The closing block gets a wider column than the reading measure: at
+   the narrow measure the disclaimer alone ran 274px and pushed the
+   block past the height where it can stay pinned. */
+.live .beat:last-child .copy{max-width:min(60ch,44vw)}
+.live .outro{
+  padding:0;
+  margin:1.8rem 0 0;
+  max-width:none;
+}
+.live .legal{margin-top:2.5rem;padding-top:1.2rem}
+.live .cue{transition:opacity .6s ease}
+.live.moved .cue{opacity:0}
+.live .cue-line{position:relative;overflow:hidden}
+.live .cue-line::after{
+  content:"";position:absolute;inset:0;
+  background:var(--gold);
+  transform:translateX(-100%);
+  animation:cue 2.8s cubic-bezier(.6,0,.2,1) infinite;
+}
+@keyframes cue{
+  0%{transform:translateX(-100%)}
+  55%{transform:translateX(100%)}
+  100%{transform:translateX(100%)}
+}
+
+/* ---- MRA wheel: live. The list becomes a radial carousel. ---- */
+.live .mra-list{
+  position:fixed;
+  top:var(--veil-h);
+  right:clamp(2rem,4vw,4.5rem);
+  width:min(44vw,640px);
+  height:calc(100vh - var(--veil-h) - 6vh);
+  margin:0;
+  z-index:1;
+  opacity:0;pointer-events:none;
+  transition:opacity .55s ease;
+}
+.live.wheel-on .mra-list{opacity:1;pointer-events:auto}
+.live.wheel-on .art.ready{opacity:0}
+
+/* the ring, and the focal marker on the side that faces the lettering */
+.live .mra-list::before{
+  content:"";position:absolute;left:50%;top:50%;
+  width:var(--wheel-dx,0);height:var(--wheel-dy,0);
+  transform:translate(-50%,calc(-50% + var(--wheel-cy,0px)));
+  border:1px solid rgba(242,237,228,0.13);border-radius:50%;
+}
+.live .mra-list li{position:absolute;left:50%;top:50%;margin:0;will-change:transform}
+.live .mra-item{
+  display:block;white-space:nowrap;width:auto;padding:.3rem .45rem;
+  transform-origin:50% 50%;
+  font-family:var(--f-mono);
+  font-size:clamp(.95rem,1.3vw,1.15rem);
+  letter-spacing:.12em;text-transform:uppercase;
+  will-change:transform,opacity;
+}
+.live .mra-item .mra-year{font-weight:400}
+.live .mra-item .mra-val{
+  position:absolute;width:1px;height:1px;padding:0;margin:-1px;
+  overflow:hidden;clip-path:inset(50%);white-space:nowrap;
+}
+.live .mra-item[aria-current="true"] .mra-year{color:var(--gold)}
+.live .beat--wheel{min-height:340vh}
+
+/* ---- Qualifying routes: three overlapping circles ---- */
+.live .route-list{
+  position:fixed;
+  top:var(--veil-h);
+  right:clamp(2rem,4vw,4.5rem);
+  width:min(44vw,640px);
+  height:calc(100vh - var(--veil-h) - 6vh);
+  margin:0;z-index:1;
+  opacity:0;pointer-events:none;
+  transition:opacity .55s ease;
+}
+.live.rings-on .route-list{opacity:1;pointer-events:auto}
+.live.rings-on .art.ready{opacity:0}
+.live .route-list li{position:absolute;left:50%;top:50%;margin:0;will-change:transform}
+.live .route-item{
+  display:flex;align-items:center;justify-content:center;
+  width:var(--ring-d,200px);height:var(--ring-d,200px);
+  padding:0;border:1px solid var(--line);border-radius:50%;
+  transform-origin:50% 50%;
+  will-change:transform,opacity;
+}
+.live .route-item .route-text{
+  position:absolute;width:1px;height:1px;padding:0;margin:-1px;
+  overflow:hidden;clip-path:inset(50%);white-space:nowrap;
+}
+.live .route-item .route-n{
+  font-size:clamp(.85rem,1.2vw,1.05rem);letter-spacing:.16em;
+  color:var(--mute);
+}
+.live .route-item[aria-current="true"]{border-color:var(--gold)}
+.live .route-item[aria-current="true"] .route-n{color:var(--gold)}
+.live .beat--rings{min-height:260vh}
+.live .beat--tall{min-height:215vh}
+
+/* caption above the big answer; text comes from the chapter data */
+.live .display-cap{
+  display:block;position:fixed;
+  top:calc(var(--display-top) - 1.45rem);
+  left:var(--gutter);
+  font-family:var(--f-mono);font-size:.68rem;letter-spacing:.24em;
+  text-transform:uppercase;color:var(--gold);
+  opacity:0;transition:opacity .4s ease;
+  z-index:4;pointer-events:none;
+}
+.live.wheel-on .display-cap,
+.live.rings-on .display-cap{opacity:1}
+
+/* ===================================================================
+   4. ARTWORK STROKES
+   =================================================================== */
+#art-svg [data-layer] path,
+#art-svg [data-layer] circle,
+#art-svg [data-layer] line{
+  fill:none;
+  stroke:var(--line);
+  stroke-width:1.6;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+#art-svg .l-gold path,
+#art-svg .l-gold circle{stroke:var(--gold)}
+#art-svg .dash{
+  stroke:rgba(242,237,228,0.2);
+  stroke-dasharray:5 11;
+  stroke-width:1.2;
+}
+#art-svg text.label{
+  font-family:var(--f-mono);
+  font-size:17px;
+  letter-spacing:0.16em;
+  fill:var(--mute);
+  stroke:none;
+  text-anchor:start;
+}
+#art-svg text.label--key{fill:var(--gold)}
+#art-svg .fade{opacity:0}
+#art-svg .dot{fill:var(--gold);stroke:none}
+
+/* ===================================================================
+   5. NARROW SCREENS
+   =================================================================== */
+@media (max-width:899px){
+  :root{--veil-fade:48px;--copy-top:calc(var(--veil-h) + 0.4rem)}
+  .live .story{width:100%;padding:0 var(--gutter)}
+  .live .display{left:var(--gutter);right:var(--gutter);width:auto}
+  .live .measure{left:var(--gutter);right:var(--gutter);width:auto}
+  .live .display .w{font-size:clamp(2rem,10.5vw,3.6rem);letter-spacing:-0.018em}
+  .live .measure{font-size:clamp(2rem,10.5vw,3.6rem)}
+  .live .art{
+    top:0;right:0;left:0;
+    width:100%;height:100vh;
+    opacity:0;
+  }
+  .live .art.ready{opacity:0.13}
+  #art-svg{width:118vw;max-width:none;height:auto}
+  .live .pin,
+  .live .copy{
+    max-width:none;
+    background:rgba(13,13,12,0.88);
+    border:1px solid rgba(242,237,228,0.07);
+    border-radius:6px;
+    padding:1.15rem 1.15rem 1.3rem;
+    backdrop-filter:blur(3px);
+    -webkit-backdrop-filter:blur(3px);
+  }
+  /* Mobile cards run 90-160px tall, so a 112vh runway left ~85% of every
+     screen empty. Tightened: the page now scrolls in ~13 screens, not 20. */
+  .live .beat{min-height:62vh}
+  .live .beat--tall{min-height:180vh}
+  /* final beat matches the viewport so the whole outro is still on
+     screen when the page bottoms out */
+  .live .chapter:last-child .beat:last-child{min-height:75vh;padding-bottom:0}
+  /* The wheel and the rings need scroll distance to turn through their
+     items. .beat--wheel and .beat--rings are each an only child, so the
+     old .beat:last-child rule outranked them (0,3,0 vs 0,2,0) and
+     clamped both to 100vh -- at which the wheel cannot advance a single
+     step on a phone. Scoping the final-beat rule to the real last beat
+     lets the author's runway apply. */
+  .live .beat--wheel{min-height:300vh}
+  .live .beat--rings{min-height:240vh}
+  /* the desktop min(60ch,44vw) clamp leaks onto phones and squeezes
+     these two cards into a ~170px column */
+  .live .beat:last-child .copy{max-width:none}
+  .live .mra-list,
+  .live .route-list{left:0;right:0;width:100%}
+  .live .mra-item{font-size:.82rem;letter-spacing:.08em}
+  .live .gauge{top:18vh;bottom:18vh}
+  .live .outro{max-width:none}
+  .copy p{max-width:none}
+  .opening{max-width:none}
+}
+
+/* Short phones: trim the wheel copy so the drum has room below it. */
+@media (max-width:899px) and (max-height:700px){
+  .live .beat--wheel .chapter-label{display:none}
+  .live .wheel-sub{font-size:1.05rem;margin-bottom:.35rem}
+  .live .wheel-q{font-size:.86rem}
+  .live .pin,.live .copy{padding:.9rem .9rem 1rem}
+}
+
+/* ===================================================================
+   6. REDUCED MOTION
+   =================================================================== */
+@media (prefers-reduced-motion:reduce){
+  *{animation-duration:0.001ms !important;animation-iteration-count:1 !important;transition-duration:0.001ms !important}
+}
+.reduced .cue-line::after{display:none}
+.reduced #art-svg .fade{opacity:1}
+.reduced .live .art{transition:none}
 </style>
 </head>
+
 <body>
 
-<nav class="topnav">
-  <a href="/" style="display:flex;align-items:center;"><img src="assets/logo-white.png" alt="Padua Co" style="height:36px;width:auto;"></a>
-  <a href="/review" class="btn-primary" style="font-size:15px;padding:10px 22px;box-shadow:none;">Find out. <span style="font-size:15px;line-height:1;">→</span></a>
-</nav>
+<!-- morph threshold filter -->
+<svg class="defs" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter id="threshold">
+      <feColorMatrix in="SourceGraphic" type="matrix"
+        values="1 0 0 0 0
+                0 1 0 0 0
+                0 0 1 0 0
+                0 0 0 255 -140"/>
+    </filter>
+  </defs>
+</svg>
 
 <nav class="benefit-bar" aria-label="Federal benefit programs">
-    <div class="benefit-bar-inner">
-      <a href="/fers">FERS</a>
-      <a href="/fehb">FEHB</a>
-      <a href="/fegli" aria-current="page">FEGLI</a>
-      <a href="/tsp">TSP</a>
-      <a href="/fsafeds">FSAFEDS</a>
-      <a href="/fedvip">FEDVIP</a>
-    </div>
-  </nav>
+  <a href="/fers">FERS</a>
+  <a href="/fehb">FEHB</a>
+  <a href="/fegli" aria-current="page">FEGLI</a>
+  <a href="/tsp">TSP</a>
+  <a href="/fsafeds">FSAFEDS</a>
+  <a href="/fedvip">FEDVIP</a>
+</nav>
 
-<header class="prog-head">
-  <div class="wrap">
-    <div class="label" style="color:#B59410;margin-bottom:14px;">FEGLI</div>
-    <h1 class="serif" style="font-weight:600;letter-spacing:-.02em;line-height:1.08;font-size:clamp(36px,5.5vw,64px);">Federal Employees' Group Life Insurance</h1>
-    <p style="margin-top:18px;max-width:60ch;font-size:16px;line-height:1.7;color:rgba(255,255,255,.72);">Your life insurance is one of the pieces a specialist walks through with you on the review call — what you have now, and what changes when you retire.</p>
-    <a href="/review" class="btn-primary" style="margin-top:28px;">Find out. <span style="font-size:18px;line-height:1;">→</span></a>
-  </div>
-</header>
+<div class="veil" aria-hidden="true"></div>
 
-<!-- ═══════════════════════════════════════════════════════════════ -->
-<!-- INTERACTIVE SECTION — to be built                              -->
-<!-- ═══════════════════════════════════════════════════════════════ -->
-<section class="slot">
-  <div class="slot-box">
-    <p class="serif" style="font-size:clamp(22px,3vw,30px);font-weight:600;color:#181818;">Interactive FEGLI section</p>
-    <p style="margin-top:10px;font-size:15px;line-height:1.7;color:#585858;">Coming soon.</p>
-  </div>
-</section>
+<div class="display" id="display" aria-hidden="true">
+  <span class="w" id="wOut"></span>
+  <span class="w" id="wIn"></span>
+</div>
+<div class="measure" id="measure" aria-hidden="true"></div>
+<div class="display-cap" id="displayCap" aria-hidden="true"></div>
 
-<footer class="foot">
-  <div style="max-width:1100px;margin:0 auto;">
-    <p>Padua Co LLC is a private company — <strong style="color:rgba(255,255,255,.8);font-weight:600;">not a government agency</strong> — and is not affiliated with, endorsed by, or acting on behalf of the U.S. Office of Personnel Management, the Thrift Savings Plan, or any other federal agency. Nothing on this page is a benefit determination or individualized advice. For official FEGLI rules, check with your employing agency or the official program source (<a href="https://www.opm.gov" target="_blank" rel="noopener">opm.gov</a>).</p>
-    <p style="margin-top:16px;"><a href="/disclaimer">Disclosures, Privacy &amp; Terms</a> · <a href="/">Back to home</a> &middot; <a href="mailto:paduaco@outlook.com">paduaco@outlook.com</a></p>
-    <p style="margin-top:16px;">© 2011 Padua Co · All rights reserved</p>
+<div class="art" id="art" aria-hidden="true">
+  <div class="art-inner" id="artInner">
+    <svg id="art-svg" viewBox="0 0 800 800" xmlns="http://www.w3.org/2000/svg" role="presentation" focusable="false">
+      <!-- 1. BASIC -->
+      <g data-layer="basic">
+        <path d="M290 70 V750"/>
+        <path d="M96 60 H150"/><path d="M96 60 V114"/>
+        <path d="M704 60 H650"/><path d="M704 60 V114"/>
+        <path d="M96 760 H150"/><path d="M96 760 V706"/>
+        <path d="M704 760 H650"/><path d="M704 760 V706"/>
+        <circle cx="290" cy="110" r="11"/>
+        <path d="M301 110 H336"/>
+        <text class="fade label" data-ignore="true" x="350" y="116">YOUR BASIC</text>
+      </g>
+
+      <!-- 2. THE FIVE-YEAR TEST -->
+      <g data-layer="gate">
+        <circle cx="290" cy="180" r="11"/>
+        <path d="M301 180 H336"/>
+        <text class="fade label" data-ignore="true" x="350" y="186">THE FIVE-YEAR TEST</text>
+      </g>
+
+      <!-- 3. THE ELECTION -->
+      <g data-layer="elect">
+        <circle cx="290" cy="250" r="11"/>
+        <path d="M301 250 H336"/>
+        <text class="fade label" data-ignore="true" x="350" y="256">YOU CHOOSE ONCE</text>
+      </g>
+
+      <!-- 4. AGE 65 - where every reduction starts -->
+      <g data-layer="a65" class="l-gold">
+        <circle cx="290" cy="330" r="22"/>
+        <circle cx="290" cy="330" r="7" class="dot"/>
+        <path d="M312 330 H336"/>
+        <path class="fade dash" data-ignore="true" d="M110 330 H264"/>
+        <path class="fade dash" data-ignore="true" d="M556 330 H690"/>
+        <text class="fade label label--key" data-ignore="true" x="350" y="336">AGE 65</text>
+      </g>
+
+      <!-- 5. 75% REDUCTION - the bar falls to a quarter -->
+      <g data-layer="r75">
+        <circle cx="290" cy="420" r="11"/>
+        <path d="M301 420 H336"/>
+        <text class="fade label" data-ignore="true" x="350" y="426">75% REDUCTION</text>
+        <path class="fade dash" data-ignore="true" d="M560 420 H690"/>
+        <path d="M560 420 H592"/>
+      </g>
+
+      <!-- 6. 50% REDUCTION - the bar holds at half -->
+      <g data-layer="r50">
+        <circle cx="290" cy="478" r="11"/>
+        <path d="M301 478 H336"/>
+        <text class="fade label" data-ignore="true" x="350" y="484">50% REDUCTION</text>
+        <path class="fade dash" data-ignore="true" d="M560 478 H690"/>
+        <path d="M560 478 H625"/>
+      </g>
+
+      <!-- 7. NO REDUCTION - the bar stays whole -->
+      <g data-layer="r00">
+        <circle cx="290" cy="536" r="11"/>
+        <path d="M301 536 H336"/>
+        <text class="fade label" data-ignore="true" x="350" y="542">NO REDUCTION</text>
+        <path d="M560 536 H690"/>
+      </g>
+
+      <!-- 8. OPTION B -->
+      <g data-layer="optb">
+        <circle cx="290" cy="600" r="11"/>
+        <path d="M301 600 H336"/>
+        <text class="fade label" data-ignore="true" x="350" y="606">OPTION B</text>
+      </g>
+
+      <!-- 9. OPTION C -->
+      <g data-layer="optc">
+        <circle cx="290" cy="658" r="11"/>
+        <path d="M301 658 H336"/>
+        <text class="fade label" data-ignore="true" x="350" y="664">OPTION C</text>
+      </g>
+
+      <!-- 10. DECIDED -->
+      <g data-layer="done" class="l-gold">
+        <circle cx="290" cy="726" r="14"/>
+        <circle cx="290" cy="726" r="5" class="dot"/>
+        <path d="M250 700 V752"/>
+        <path d="M330 700 V752"/>
+        <text class="fade label label--key" data-ignore="true" x="350" y="732">DECIDED</text>
+      </g>
+
+    </svg>
   </div>
-</footer>
+</div>
+
+<div class="gauge" aria-hidden="true"><i id="bar"></i></div>
+
+<main>
+  <article class="story" id="story"></article>
+</main>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ==================================================================
+     CONTENT — every word on this page lives in this object.
+     Replace the [BRACKETED] values. Nothing else needs editing.
+     ================================================================== */
+  var CONTENT = {
+
+    site: {
+      name: 'Padua Co',
+      returnHref: '/'
+    },
+
+    cue: 'Scroll to discover',
+
+    /* Legal footer — carried over from the previous /fers page.
+       Keep this accurate; it is a disclosure, not decoration. */
+    legal: [
+      'Padua Co LLC is a private company — <strong>not a government agency</strong> — and is not affiliated with, endorsed by, or acting on behalf of the U.S. Office of Personnel Management, the Thrift Savings Plan, or any other federal agency. Nothing on this page is a benefit determination or individualized advice. For official FEGLI rules, check with your employing agency or the official program source (<a href="https://www.opm.gov" target="_blank" rel="noopener">opm.gov</a>).',
+      '<a href="/disclaimer">Disclosures, Privacy &amp; Terms</a> · <a href="mailto:paduaco@outlook.com">paduaco@outlook.com</a>',
+      '© 2011 Padua Co · All rights reserved'
+    ],
+
+    chapters: [
+
+      /* --- 1. OPENING ------------------------------------------- */
+      {
+        id: 'opening',
+        pin: true,
+        heading: 'Keeping your life insurance?',
+        support: '',
+        beats: [
+          { word: '' },
+          { word: 'Before you retire', key: 'Before you retire' }
+        ]
+      },
+
+      /* --- 2. WHAT YOU CARRY NOW --------------------------------
+         Coverage amounts per OPM:
+         opm.gov/frequently-asked-questions/insure-faq/life/
+           what-kind-of-coverage-can-i-get-under-fegli-life-insurance/
+         and the FEGLI Program Booklet for Federal Employees. */
+      {
+        id: 'carry',
+        label: 'What you have now',
+        beats: [
+          { word: 'Basic', key: 'Basic',
+            draw: 'basic',
+            lines: ['Your annual basic pay, rounded up to the next $1,000, plus $2,000.',
+                    'Never less than $10,000.'] },
+
+          { word: 'Option A', key: 'Option A',
+            lines: ['A flat $10,000. It does not move with your salary.',
+                    'It is the one with no decision to make later: it reduces automatically after 65, and is free once it starts.'] },
+
+          { word: 'Option B', key: 'Option B',
+            lines: ['One to five times your annual basic pay, rounded up to the next $1,000.',
+                    'This is usually the biggest piece, and the one that gets expensive.'] },
+
+          { word: 'Option C', key: 'Option C',
+            lines: ['One to five multiples covering your family.',
+                    'Each multiple is $5,000 for your spouse and $2,500 for each eligible child.'] }
+        ]
+      },
+
+      /* --- 3. THE FIVE-YEAR TEST --------------------------------
+         FEGLI Program Booklet: coverage continues if you retire on an
+         immediate annuity and have been covered for the five years of
+         service immediately before the annuity starts, or for all
+         periods during which the coverage was available. */
+      {
+        id: 'gate',
+        label: 'The five-year test',
+        beats: [
+          { word: 'Five years', key: 'Five years',
+            draw: 'gate',
+            lines: ['To carry a coverage into retirement you must have held it for the five years of service right before your annuity starts.',
+                    'If you have been eligible for less than five years, then for every period it was available to you.'] },
+
+          { word: 'Tested separately', key: 'Tested separately',
+            draw: 'elect',
+            lines: ['The test runs on its own for Basic and for each Option.',
+                    'Passing it for Basic does not carry Option B along with it.',
+                    'Accidental Death and Dismemberment coverage stops at retirement either way. It does not continue for annuitants.'] }
+        ]
+      },
+
+      /* --- 4. THE BASIC ELECTION (rings) ------------------------
+         Three elections for Basic. Reduction begins at age 65 or at
+         retirement, whichever is later.
+         Source: opm.gov/retirement-center/apply/fegli-calculator/
+                 basic-insurance-in-retirement/ */
+      {
+        id: 'election',
+        rings: true,
+        label: 'How your Basic can reduce',
+        routes: [
+          { n: '#1', text: '75% Reduction' },
+          { n: '#2', text: '50% Reduction' },
+          { n: '#3', text: 'No Reduction' }
+        ]
+      },
+
+      /* --- 5. WHAT EACH ELECTION DOES ---------------------------
+         Annuitant Basic rates per $1,000 of the Basic Insurance Amount
+         in effect at retirement, monthly. Effective the first pay
+         period on or after October 1, 2021.
+         Source: opm.gov/healthcare-insurance/life-insurance/
+                 program-information/  (FEGLI Premium Overview) */
+      {
+        id: 'each',
+        label: 'What each one does',
+        beats: [
+          { word: 'Age 65', key: 'Age 65',
+            draw: 'a65',
+            lines: ['Whichever election you make, nothing reduces until age 65 or the day you retire, whichever comes later.',
+                    'Until then you pay the same $0.3467 per $1,000 a month that you pay now.'] },
+
+          { word: '75% Reduction', key: '75% Reduction',
+            draw: 'r75',
+            lines: ['Your coverage drops 2% of its original amount every month until a quarter of it is left, then holds there for life.',
+                    'Free once the reduction starts.'] },
+
+          { word: '50% Reduction', key: '50% Reduction',
+            draw: 'r50',
+            lines: ['Drops 1% a month until half is left, then holds.',
+                    '$1.0967 per $1,000 a month until 65, then $0.75 for life.'] },
+
+          { word: 'No Reduction', key: 'No Reduction',
+            draw: 'r00',
+            lines: ['Nothing reduces. The whole amount stays.',
+                    '$2.5967 per $1,000 a month until 65, then $2.25 for life.'] },
+
+          { word: 'One way only', key: 'One way only',
+            lines: ['You can drop from 50% or No Reduction down to 75% at any time.',
+                    'You cannot go back up, and there is no refund of what you already paid.'] }
+        ]
+      },
+
+      /* --- 6. OPTION B BY AGE (wheel) ---------------------------
+         Monthly Option B withholding per $1,000 of coverage, by age
+         band. Same OPM Premium Overview table and effective date. */
+      {
+        id: 'optionb',
+        wheel: true,
+        label: 'What Option B costs',
+        intro: 'Option B is priced by your age, and it climbs.',
+        question: 'What is your age band?',
+        answerLead: 'Monthly, per $1,000',
+        rows: [
+          ['Under 35', '$0.043'],
+          ['35–39',    '$0.043'],
+          ['40–44',    '$0.065'],
+          ['45–49',    '$0.130'],
+          ['50–54',    '$0.217'],
+          ['55–59',    '$0.390'],
+          ['60–64',    '$0.867'],
+          ['65–69',    '$1.040'],
+          ['70–74',    '$1.863'],
+          ['75–79',    '$3.900'],
+          ['80 and over', '$6.240']
+        ]
+      },
+
+      /* --- 7. THE OPTIONS IN RETIREMENT -------------------------
+         Option B and C multiples each take Full Reduction or No
+         Reduction, and may be mixed. Full Reduction runs 2% a month
+         for 50 months, after which those multiples end.
+         Option A cannot elect No Reduction. */
+      {
+        id: 'options',
+        label: 'Your Options in retirement',
+        beats: [
+          { word: 'Option B', key: 'Option B',
+            draw: 'optb',
+            lines: ['Each multiple takes Full Reduction or No Reduction, and you can mix them.',
+                    'Full Reduction is free from 65, then drops 2% a month for 50 months until that multiple is gone.',
+                    'No Reduction keeps the money but you keep paying the rate for your age, for life.'] },
+
+          { word: 'Option C', key: 'Option C',
+            draw: 'optc',
+            lines: ['Same two choices, multiple by multiple.',
+                    'You carry the number of multiples you held for the five years before you retired.',
+                    'At 65, or at retirement if that comes later, you get one more chance to change how these multiples reduce.'] }
+        ]
+      },
+
+      /* --- 8. CLOSE --------------------------------------------- */
+      {
+        id: 'close',
+        label: 'One decision',
+        beats: [
+          { word: 'What is it worth to you?', key: 'What is it worth to you?',
+            draw: 'done',
+            lines: ['Every rate on this page is OPM\u2019s published withholding, effective the first pay period on or after October 1, 2021.',
+                    'What the coverage is worth to you depends on what else you are carrying, and who is relying on it.'],
+            cta: { label: 'If you want help with yours, fill out the questionnaire',
+                   href: '/review' } }
+        ]
+      }
+
+        ]
+  };
+
+  /* The wheel's answer caption lives in the chapter data, not in markup,
+     so this engine can carry a different lookup on another page. */
+  var WHEEL_LEAD = (function () {
+    var c = (CONTENT.chapters || []).filter(function (x) { return x.wheel; })[0];
+    return (c && c.answerLead) || '';
+  }());
+
+  /* ==================================================================
+     RENDER — the article exists in the DOM before anything animates.
+     ================================================================== */
+  function esc(s){
+    return String(s)
+      .replace(/&/g,'&amp;').replace(/</g,'&lt;')
+      .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  function outroHtml(){
+    var h = '<div class="outro">';
+    h += '<a class="return" href="' + esc(CONTENT.site.returnHref) + '">' +
+         'Return to ' + esc(CONTENT.site.name) +
+         ' <span aria-hidden="true">&rarr;</span></a>';
+    /* legal strings are trusted first-party markup, intentionally not escaped */
+    h += '<div class="legal">';
+    (CONTENT.legal || []).forEach(function (p) { h += '<p>' + p + '</p>'; });
+    h += '</div></div>';
+    return h;
+  }
+
+  function build(){
+    var h = '', lastCh = CONTENT.chapters.length - 1;
+    CONTENT.chapters.forEach(function (ch, ci) {
+
+      /* Wheel chapter. The <ol> is a real list of real buttons, so with
+         JS off it reads as a plain birth-year -> MRA table. */
+      if (ch.wheel) {
+        h += '<section class="chapter chapter--wheel" id="' + esc(ch.id) + '">';
+        h += '<div class="beat beat--wheel" id="mra-stage" data-word="">';
+        h += '<div class="copy">';
+        h += '<h2 class="chapter-label">' + esc(ch.label) + '</h2>';
+        h += '<p class="wheel-sub">' + esc(ch.intro) + '</p>';
+        h += '<p class="wheel-q">' + esc(ch.question) + '</p>';
+        h += '</div>';
+        h += '<ol class="mra-list" id="mraList">';
+        ch.rows.forEach(function (row, i) {
+          h += '<li><button type="button" class="mra-item" data-i="' + i +
+               '" data-val="' + esc(row[1]) + '">' +
+               '<span class="mra-year">' + esc(row[0]) + '</span>' +
+               '<span class="mra-val">' + esc(ch.answerLead) + ' ' + esc(row[1]) + '</span>' +
+               '</button></li>';
+        });
+        h += '</ol>';
+        h += '</div></section>';
+        return;
+      }
+
+      if (ch.rings) {
+        h += '<section class="chapter chapter--rings" id="' + esc(ch.id) + '">';
+        h += '<div class="beat beat--rings" id="ring-stage" data-word="">';
+        h += '<div class="copy"><h2 class="chapter-label">' + esc(ch.label) + '</h2></div>';
+        h += '<ol class="route-list" id="routeList">';
+        ch.routes.forEach(function (r, i) {
+          h += '<li><button type="button" class="route-item" data-i="' + i +
+               '" data-val="' + esc(r.text) + '" data-n="' + esc(r.n) + '">' +
+               '<span class="route-n">' + esc(r.n) + '</span>' +
+               '<span class="route-text">' + esc(r.text) + '</span>' +
+               '</button></li>';
+        });
+        h += '</ol></div></section>';
+        return;
+      }
+
+      h += '<section class="chapter' + (ch.pin ? ' chapter--open' : '') + '" id="' + esc(ch.id) + '">';
+      if (ch.pin) {
+        h += '<div class="pin">';
+        h += '<h1 class="opening">' + esc(ch.heading) + '</h1>';
+        if (ch.support) h += '<p class="support">' + esc(ch.support) + '</p>';
+        h += '<p class="cue" aria-hidden="true"><span class="cue-line"></span>' + esc(CONTENT.cue) + '</p>';
+        h += '</div>';
+      }
+      ch.beats.forEach(function (b, i) {
+        h += '<div class="beat' + (b.steps ? ' beat--tall' : '') + '" data-word="' + esc(b.word) + '"' +
+             (b.draw ? ' data-draw="' + esc(b.draw) + '"' : '') + '>';
+        h += '<div class="copy">';
+        if (!ch.pin && i === 0) h += '<h2 class="chapter-label">' + esc(ch.label) + '</h2>';
+        if (b.key) h += '<h3 class="sr-only">' + esc(b.key) + '</h3>';
+        (b.lines || []).forEach(function (p) { h += '<p>' + esc(p) + '</p>'; });
+        var isLast = (ci === lastCh && i === ch.beats.length - 1);
+        if (b.steps) {
+          h += '<ol class="steps">';
+          b.steps.forEach(function (st) { h += '<li>' + esc(st) + '</li>'; });
+          h += '</ol>';
+        }
+        if (b.cta) {
+          h += '<p class="cta-wrap"><a class="cta" href="' + esc(b.cta.href) + '"' +
+               (b.cta.external ? ' target="_blank" rel="noopener"' : '') + '>' +
+               esc(b.cta.label) + ' <span aria-hidden="true">&rarr;</span></a></p>';
+        }
+        if (isLast) h += outroHtml();
+        h += '</div></div>';
+      });
+      h += '</section>';
+    });
+
+    return h;
+  }
+
+  var story = document.getElementById('story');
+  if (!story) return;
+  story.innerHTML = build();
+
+  /* ==================================================================
+     ENGINE
+     ================================================================== */
+  try { engine(); } catch (e) { /* article stays readable, unanimated */ }
+
+  function engine(){
+
+    var reduced =
+      (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) ||
+      /(^|[?&])reduced(=|&|$)/.test(window.location.search);
+    if (reduced) document.documentElement.classList.add('reduced');
+
+    var beats = Array.prototype.slice.call(story.querySelectorAll('.beat'));
+    if (!beats.length) return;
+
+    var words = beats.map(function (b) { return b.getAttribute('data-word') || ''; });
+    var lastI = beats.length - 1;
+
+    /* drawing segments: a layer draws from its own beat to the next drawn beat */
+    var segs = [];
+    beats.forEach(function (b, i) {
+      var d = b.getAttribute('data-draw');
+      if (d) segs.push({ name: d, start: i, end: lastI });
+    });
+    segs.forEach(function (s, i) { if (segs[i + 1]) s.end = segs[i + 1].start; });
+
+    var display  = document.getElementById('display'),
+        wOut     = document.getElementById('wOut'),
+        wIn      = document.getElementById('wIn'),
+        measureEl= document.getElementById('measure'),
+        art      = document.getElementById('art'),
+        artInner = document.getElementById('artInner'),
+        bar      = document.getElementById('bar'),
+        wheelList  = document.getElementById('mraList'),
+        wheelStage = document.getElementById('mra-stage'),
+        wheelItems = wheelList ? Array.prototype.slice.call(wheelList.querySelectorAll('.mra-item')) : [],
+        wheelN     = wheelItems.length,
+        wheelAct   = -1,
+        stageCap   = document.getElementById('displayCap'),
+        routeList  = document.getElementById('routeList'),
+        ringStage  = document.getElementById('ring-stage'),
+        routeItems = routeList ? Array.prototype.slice.call(routeList.querySelectorAll('.route-item')) : [],
+        routeN     = routeItems.length,
+        routeAct   = -1,
+        fitCache   = {},
+        rootStyle= document.documentElement.style;
+
+    var triggers = [], fontPx = [], tRaw = 0, settle = null, prevI = 0,
+        queued = false, idleT = null, vivus = null, ranges = null, fades = [];
+
+    function clamp(v, a, b) { return v < a ? a : (v > b ? b : v); }
+
+    /* Display lettering uses three fixed sizes, not a size per phrase.
+       Each word takes the largest tier it fits on one line at. */
+    var TIERS = [1, 0.68, 0.42];
+    function tierPx(natW, availW, basePx){
+      for (var t = 0; t < TIERS.length; t++) {
+        if (natW * TIERS[t] <= availW) return Math.max(14, Math.round(basePx * TIERS[t]));
+      }
+      return Math.max(14, Math.round(basePx * TIERS[TIERS.length - 1]));
+    }
+
+    /* ---------------- measurement ---------------- */
+    function measure(){
+      var vh = window.innerHeight,
+          y  = window.pageYOffset || document.documentElement.scrollTop;
+
+      triggers = beats.map(function (b) {
+        return b.getBoundingClientRect().top + y - vh * 0.62;
+      });
+      var shift = Math.min(0, triggers[0]);
+      if (shift < 0) triggers = triggers.map(function (v) { return v - shift; });
+      for (var i = 1; i < triggers.length; i++) {
+        if (triggers[i] <= triggers[i - 1]) triggers[i] = triggers[i - 1] + 1;
+      }
+
+      /* Every display word is forced onto ONE line, at whichever of the
+         three tiers it fits. */
+      var basePx = parseFloat(window.getComputedStyle(measureEl).fontSize) || 64,
+          availW = display.clientWidth || 1,
+          maxH = 0;
+      fontPx = [];
+      fitCache = {};
+      for (var j = 0; j < words.length; j++) {
+        measureEl.style.fontSize = basePx + 'px';
+        measureEl.textContent = words[j] || '';
+        var px = tierPx(measureEl.scrollWidth, availW, basePx);
+        fontPx.push(px);
+        measureEl.style.fontSize = px + 'px';
+        if (words[j]) maxH = Math.max(maxH, measureEl.offsetHeight);
+      }
+      measureEl.textContent = '';
+      measureEl.style.fontSize = '';
+      if (!maxH) maxH = Math.round(vh * 0.16);
+
+      /* Sticky only works for copy that fits on screen. Anything taller
+         would be pinned with its tail permanently off the bottom, so let
+         it scroll instead. */
+      var blocks = story.querySelectorAll('.copy, .pin');
+      for (var k = 0; k < blocks.length; k++) {
+        blocks[k].style.position = '';
+        if (blocks[k].offsetHeight > vh * 0.82) blocks[k].style.position = 'static';
+      }
+
+      rootStyle.setProperty('--word-h', maxH + 'px');
+      /* measured, not assumed: the nav bar moved the display word down */
+      var dTop = display.getBoundingClientRect().top;
+      rootStyle.setProperty('--veil-h', Math.round(dTop + maxH + Math.min(40, vh * 0.03)) + 'px');
+    }
+
+    /* ---------------- scroll -> t ---------------- */
+    function beatPosition(){
+      var y = window.pageYOffset || document.documentElement.scrollTop;
+      if (y <= triggers[0]) return 0;
+      if (y >= triggers[lastI]) return lastI;
+      var i = 0;
+      while (i < lastI && triggers[i + 1] <= y) i++;
+      return i + (y - triggers[i]) / (triggers[i + 1] - triggers[i]);
+    }
+
+    function morphF(t){
+      var frac = t - Math.floor(t);
+      return clamp((frac - 0.45) / 0.45, 0, 1);
+    }
+
+    /* ---------------- word morph ---------------- */
+    function setWord(a, b, f){
+      if (wOut.textContent !== a) wOut.textContent = a;
+      if (wIn.textContent  !== b) wIn.textContent  = b;
+
+      if (f <= 0.002) {
+        wOut.style.opacity = '1'; wOut.style.filter = 'none';
+        wIn.style.opacity  = '0'; wIn.style.filter  = 'none';
+        display.classList.remove('morphing');
+        return;
+      }
+      if (f >= 0.998) {
+        wOut.style.opacity = '0'; wOut.style.filter = 'none';
+        wIn.style.opacity  = '1'; wIn.style.filter  = 'none';
+        display.classList.remove('morphing');
+        return;
+      }
+      var g = 1 - f;
+      wIn.style.filter  = 'blur(' + Math.min(8 / f - 8, 100).toFixed(2) + 'px)';
+      wIn.style.opacity = Math.pow(f, 0.4).toFixed(3);
+      wOut.style.filter  = 'blur(' + Math.min(8 / g - 8, 100).toFixed(2) + 'px)';
+      wOut.style.opacity = Math.pow(g, 0.4).toFixed(3);
+      display.classList.add('morphing');
+    }
+
+    /* ---------------- drawing ---------------- */
+    function layerRanges(){
+      var r = {}, map = (vivus && vivus.map) || [], fl = (vivus && vivus.frameLength) || 0, i, o, g, n, a, b;
+      for (i = 0; i < map.length; i++) {
+        o = map[i];
+        if (!o || !o.el || typeof o.startAt !== 'number' || !fl) continue;
+        g = o.el.closest ? o.el.closest('[data-layer]') : climb(o.el);
+        if (!g) continue;
+        n = g.getAttribute('data-layer');
+        a = o.startAt / fl;
+        b = (o.startAt + (o.duration || 0)) / fl;
+        if (!r[n]) r[n] = { from: a, to: b };
+        else { r[n].from = Math.min(r[n].from, a); r[n].to = Math.max(r[n].to, b); }
+      }
+      segs.forEach(function (s, i) {           /* fallback: even split */
+        if (!r[s.name]) r[s.name] = { from: i / segs.length, to: (i + 1) / segs.length };
+      });
+      return r;
+    }
+    function climb(el){
+      while (el && el.getAttribute) {
+        if (el.getAttribute('data-layer')) return el;
+        el = el.parentNode;
+      }
+      return null;
+    }
+
+    function segLocal(s, t){
+      if (t >= s.end) return 1;
+      if (t <= s.start) return 0;
+      return (t - s.start) / (s.end - s.start);
+    }
+
+    function artProgress(t){
+      var p = 0;
+      for (var i = 0; i < segs.length; i++) {
+        var s = segs[i], R = ranges[s.name];
+        if (!R) continue;
+        if (t >= s.end) { p = R.to; continue; }
+        if (t <= s.start) break;
+        p = R.from + (R.to - R.from) * segLocal(s, t);
+        break;
+      }
+      return clamp(p, 0, 1);
+    }
+
+    function paintFades(t){
+      for (var i = 0; i < fades.length; i++) {
+        var el = fades[i], g = el.closest ? el.closest('[data-layer]') : climb(el);
+        if (!g) continue;
+        var name = g.getAttribute('data-layer'), s = null;
+        for (var j = 0; j < segs.length; j++) if (segs[j].name === name) s = segs[j];
+        if (!s) continue;
+        var local = segLocal(s, t);
+        el.style.opacity = clamp((local - 0.3) / 0.45, 0, 1).toFixed(3);
+      }
+    }
+
+    /* ---------------- MRA wheel ---------------- */
+    /* Same auto-fit rule as the beat words, for strings the wheel
+       feeds into the display slot on the fly. */
+    function fitPx(text){
+      if (fitCache[text] != null) return fitCache[text];
+      var basePx = parseFloat(window.getComputedStyle(measureEl).fontSize) || 64,
+          availW = display.clientWidth || 1;
+      measureEl.style.fontSize = basePx + 'px';
+      measureEl.textContent = text;
+      var px = tierPx(measureEl.scrollWidth, availW, basePx);
+      measureEl.textContent = '';
+      measureEl.style.fontSize = '';
+      fitCache[text] = px;
+      return px;
+    }
+
+    /* A circle on wide screens. On a phone a circle cannot hold labels
+       this wide, so it becomes a tall narrow ellipse: horizontally tight
+       enough to stay on screen, vertically stretched so the readable
+       labels near the focus do not collide. */
+    /* On a phone the wheel takes whatever room is left under the copy,
+       measured rather than assumed, so it never lands on top of it. */
+    function wheelLayout(){
+      var copy = wheelStage.querySelector('.copy'),
+          vh = window.innerHeight;
+
+      if (window.innerWidth >= 900) {
+        wheelList.style.top = ''; wheelList.style.height = '';
+        /* Keep the wheel clear of the copy column. At middling widths the
+           focal label otherwise reaches into it by a few pixels. */
+        wheelList.style.width = '';
+        if (copy) {
+          /* the focal label is centred on the circle's edge, so it hangs
+             half its own width further left than the circle does */
+          var widest = 0;
+          for (var wi = 0; wi < wheelItems.length; wi++) {
+            widest = Math.max(widest, wheelItems[wi].scrollWidth);
+          }
+          var minLeft = copy.getBoundingClientRect().right + 24 + widest * 0.7,
+              box = wheelList.getBoundingClientRect();
+          if (box.left < minLeft) {
+            wheelList.style.width = Math.max(240, Math.round(box.right - minLeft)) + 'px';
+          }
+        }
+        return;
+      }
+
+      wheelList.style.width = '';
+      var cb = copy ? copy.getBoundingClientRect().bottom : vh * 0.42,
+          /* floored so that, while the copy is still sliding into its
+             sticky slot, the wheel cannot ride up over it; the ceiling
+             leaves the drum a usable minimum */
+          top = Math.max(vh * 0.34, Math.min(cb + 14, vh - 190));
+      wheelList.style.top = Math.round(top) + 'px';
+      wheelList.style.height = Math.round(vh - top) + 'px';
+    }
+
+    function stageProgress(stage){
+      var r = stage.getBoundingClientRect(),
+          vh = window.innerHeight,
+          span = r.height - vh * 0.55;
+      if (span <= 0) return -1;
+      var pr = (vh * 0.55 - r.top) / span;
+      if (pr < 0 || pr > 1.06) return -1;
+      return clamp(pr, 0, 1);
+    }
+
+    /* The copy is sticky; on the way in it has not latched yet and sits
+       low on screen. Hold the stage back until it has. */
+    function stageCopyStuck(stage){
+      var el = stage.querySelector('.copy');
+      if (!el) return true;
+      var want = parseFloat(window.getComputedStyle(el).top) || 0;
+      return el.getBoundingClientRect().top <= want + 2;
+    }
+
+    /* A stage owns the display slot while it is on. */
+    function setStageWord(val, cap){
+      if (cap != null && stageCap) stageCap.textContent = cap;
+      wOut.textContent = val;
+      wIn.textContent  = '';
+      wOut.style.fontSize = fitPx(val) + 'px';
+      wOut.style.opacity = '1'; wOut.style.filter = 'none';
+      wIn.style.opacity  = '0'; wIn.style.filter  = 'none';
+      display.classList.remove('morphing');
+    }
+
+    /* Clicking or focusing an item scrolls it to the focal point, so
+       scroll position stays the single source of truth. */
+    function stageGoTo(stage, i, n){
+      if (!stage || n < 2) return;
+      var r = stage.getBoundingClientRect(),
+          vh = window.innerHeight,
+          y = window.pageYOffset || document.documentElement.scrollTop,
+          span = r.height - vh * 0.55;
+      if (span <= 0) return;
+      var target = (r.top + y) - vh * 0.55 + (i / (n - 1)) * span;
+      try { window.scrollTo({ top: target, behavior: reduced ? 'auto' : 'smooth' }); }
+      catch (e) { window.scrollTo(0, target); }
+    }
+
+    function wheelRadii(){
+      var w = wheelList.clientWidth,
+          h = wheelList.clientHeight,
+          narrow = window.innerWidth < 900,
+          rx, ry;
+      if (narrow) {
+        rx = Math.max(56, w * 0.26);
+        ry = Math.max(96, h * 0.46);
+      } else {
+        rx = ry = Math.max(70, Math.min(w, h) * 0.40);
+      }
+      wheelList.style.setProperty('--wheel-r',  rx + 'px');
+      wheelList.style.setProperty('--wheel-dx', (rx * 2) + 'px');
+      wheelList.style.setProperty('--wheel-dy', (ry * 2) + 'px');
+      return { rx: rx, ry: ry };
+    }
+
+    function paintWheel(){
+      if (!wheelN || !wheelStage) return false;
+      var p = stageProgress(wheelStage), on = p >= 0 && stageCopyStuck(wheelStage);
+      document.body.classList.toggle('wheel-on', on);
+      if (!on) { wheelAct = -1; return false; }
+
+      wheelLayout();
+      var rad = wheelRadii(),
+          narrow = window.innerWidth < 900,
+          focal = narrow ? -Math.PI / 2 : Math.PI,
+          cyShift = 0,
+          /* A phone cannot fit 13 labels around one turn without the
+             enlarged focal label clipping its neighbours, so widen the
+             step there. The far side wraps and doubles up, which is
+             invisible at those opacities. */
+          step = ((Math.PI * 2) / wheelN) * (narrow ? 1.9 : 1),
+          off  = -(p * (wheelN - 1)) * step,
+          act  = Math.round(p * (wheelN - 1));
+
+      wheelList.style.setProperty('--wheel-cy', cyShift + 'px');
+
+      for (var i = 0; i < wheelN; i++) {
+        /* Offset from the focal point, in radians, before any wrapping. */
+        var rel = i * step + off, dAng, hidden = false;
+
+        if (narrow) {
+          /* A drum, not a loop: the widened step means a wrapped ring
+             would stack item i on item i+8 right at the focus. Anything
+             past half a turn is simply hidden. */
+          if (Math.abs(rel) > Math.PI) { hidden = true; rel = rel > 0 ? Math.PI : -Math.PI; }
+          dAng = Math.abs(rel);
+        } else {
+          dAng = Math.abs(Math.atan2(Math.sin(rel), Math.cos(rel)));
+        }
+
+        var th = focal + rel,
+            x  = Math.cos(th) * rad.rx,
+            y  = Math.sin(th) * rad.ry + cyShift,
+            d  = dAng / Math.PI,
+            near = 1 - d,
+            sc = 0.55 + 0.85 * near * near,
+            op = hidden ? 0 : (0.10 + 0.90 * Math.pow(near, 2.4));
+
+        wheelItems[i].parentNode.style.transform =
+          'translate(' + x.toFixed(1) + 'px,' + y.toFixed(1) + 'px)';
+        wheelItems[i].style.transform = 'translate(-50%,-50%) scale(' + sc.toFixed(3) + ')';
+        wheelItems[i].style.opacity = op.toFixed(3);
+        wheelItems[i].style.pointerEvents = hidden ? 'none' : '';
+        wheelItems[i].setAttribute('aria-current', i === act ? 'true' : 'false');
+      }
+
+      if (act !== wheelAct) {
+        wheelAct = act;
+        setStageWord(wheelItems[act].getAttribute('data-val') || '', WHEEL_LEAD);
+      }
+      return true;
+    }
+
+    /* ---------------- qualifying routes ----------------
+       Three overlapping circles turning as one cluster. The route at
+       the focal point comes forward, goes gold and fills the lettering. */
+    function paintRings(){
+      if (!routeN || !ringStage) return false;
+      var p = stageProgress(ringStage), on = p >= 0 && stageCopyStuck(ringStage);
+      document.body.classList.toggle('rings-on', on);
+      if (!on) { routeAct = -1; return false; }
+
+      var narrow = window.innerWidth < 900,
+          w = routeList.clientWidth,
+          h = routeList.clientHeight,
+          R = Math.max(80, Math.min(w, h) * 0.5),
+          grow = 0.88 + 0.18 * p,               /* the cluster grows as you go */
+          ringD = R * 0.86 * grow,
+          orbit = R * 0.40 * grow,
+          focal = narrow ? -Math.PI / 2 : Math.PI,
+          step = (Math.PI * 2) / routeN,
+          off  = -(p * (routeN - 1)) * step,
+          act  = Math.round(p * (routeN - 1));
+
+      routeList.style.setProperty('--ring-d', ringD.toFixed(1) + 'px');
+
+      for (var i = 0; i < routeN; i++) {
+        var rel = i * step + off,
+            dAng = Math.abs(Math.atan2(Math.sin(rel), Math.cos(rel))),
+            th = focal + rel,
+            x = Math.cos(th) * orbit,
+            y = Math.sin(th) * orbit,
+            near = 1 - dAng / Math.PI,
+            sc = 0.72 + 0.55 * near * near,
+            op = 0.30 + 0.70 * Math.pow(near, 1.8);
+        routeItems[i].parentNode.style.transform =
+          'translate(' + x.toFixed(1) + 'px,' + y.toFixed(1) + 'px)';
+        routeItems[i].parentNode.style.zIndex = (i === act) ? '2' : '1';
+        routeItems[i].style.transform = 'translate(-50%,-50%) scale(' + sc.toFixed(3) + ')';
+        routeItems[i].style.opacity = op.toFixed(3);
+        routeItems[i].setAttribute('aria-current', i === act ? 'true' : 'false');
+      }
+
+      if (act !== routeAct) {
+        routeAct = act;
+        setStageWord(routeItems[act].getAttribute('data-val') || '',
+                     routeItems[act].getAttribute('data-n') || '');
+      }
+      return true;
+    }
+
+    wheelItems.forEach(function (btn, i) {
+      btn.addEventListener('click', function () { stageGoTo(wheelStage, i, wheelN); });
+      btn.addEventListener('focus', function () { stageGoTo(wheelStage, i, wheelN); });
+    });
+    routeItems.forEach(function (btn, i) {
+      btn.addEventListener('click', function () { stageGoTo(ringStage, i, routeN); });
+      btn.addEventListener('focus', function () { stageGoTo(ringStage, i, routeN); });
+    });
+
+    function endingCheck(){
+      var el = story.querySelector('.outro');
+      if (!el) return;
+      /* Width is the wrong test: a short desktop window cannot pin the
+         outro either. Go by whether it actually pinned. */
+      var copy = el.parentNode;
+      while (copy && copy.className.indexOf && copy.className.indexOf('copy') === -1) copy = copy.parentNode;
+      var pinned = copy && window.getComputedStyle(copy).position === 'sticky';
+      var on = !pinned && el.getBoundingClientRect().top < window.innerHeight * 0.55;
+      document.body.classList.toggle('ending', on);
+    }
+
+    /* ---------------- paint ---------------- */
+    function paint(t){
+      var wheelOn = paintWheel(),
+          ringsOn = paintRings();
+
+      if (!wheelOn && !ringsOn) {
+        var i = Math.min(Math.floor(t), lastI),
+            a = words[i],
+            b = words[Math.min(i + 1, lastI)],
+            f = settle ? settle.v : morphF(t);
+
+        if (a === b) f = 0;
+        else if (reduced) f = f < 0.5 ? 0 : 1;
+        else if (Math.abs(i - prevI) > 1) f = f < 0.5 ? 0 : 1;   /* big jump: one word at most */
+        prevI = i;
+
+        if (fontPx.length) {
+          wOut.style.fontSize = fontPx[i] + 'px';
+          wIn.style.fontSize  = fontPx[Math.min(i + 1, lastI)] + 'px';
+        }
+        setWord(a, b, f);
+      }
+
+      var prog = lastI ? t / lastI : 0;
+      bar.style.transform = 'scaleY(' + prog.toFixed(4) + ')';
+      artInner.style.transform = 'scale(' + (0.94 + 0.08 * prog).toFixed(4) + ')';
+      document.body.classList.toggle('moved', t > 0.25);
+      endingCheck();
+
+      if (vivus && ranges && !reduced) {
+        try { vivus.setFrameProgress(artProgress(t)); } catch (e) {}
+        paintFades(t);
+      }
+    }
+
+    /* ---------------- loop ---------------- */
+    function frame(){
+      queued = false;
+      if (settle) {
+        settle.v += (settle.to - settle.v) * 0.14;
+        if (Math.abs(settle.to - settle.v) < 0.004) { settle.v = settle.to; paint(tRaw); settle = null; return; }
+        paint(tRaw);
+        request();
+        return;
+      }
+      tRaw = beatPosition();
+      paint(tRaw);
+    }
+    function request(){
+      if (!queued) { queued = true; window.requestAnimationFrame(frame); }
+    }
+    function onIdle(){
+      if (reduced) return;
+      var f = morphF(tRaw);
+      if (f > 0.002 && f < 0.998) { settle = { v: f, to: f < 0.5 ? 0 : 1 }; request(); }
+    }
+
+    /* ---------------- wire up ---------------- */
+    document.body.classList.add('live');
+    measure();
+    tRaw = beatPosition();
+    paint(tRaw);
+
+    window.addEventListener('scroll', function () {
+      settle = null;
+      if (idleT) clearTimeout(idleT);
+      idleT = setTimeout(onIdle, 160);
+      request();
+    }, { passive: true });
+
+    var rT = null;
+    window.addEventListener('resize', function () {
+      if (rT) clearTimeout(rT);
+      rT = setTimeout(function () { measure(); tRaw = beatPosition(); paint(tRaw); }, 140);
+    }, { passive: true });
+
+    if (document.fonts && document.fonts.ready && document.fonts.ready.then) {
+      document.fonts.ready.then(function () { measure(); paint(beatPosition()); });
+    }
+
+    /* ---------------- Vivus ---------------- */
+    function artStatic(){
+      var all = document.querySelectorAll('#art-svg .fade');
+      for (var i = 0; i < all.length; i++) all[i].style.opacity = '1';
+      art.classList.add('ready');
+    }
+
+    var s = document.createElement('script');
+    s.src = 'https://cdnjs.cloudflare.com/ajax/libs/vivus/0.4.6/vivus.min.js';
+    s.async = true;
+    s.onerror = artStatic;
+    s.onload = function () {
+      try {
+        vivus = new Vivus('art-svg', {
+          type: 'oneByOne',
+          start: 'manual',
+          duration: 400,
+          animTimingFunction: Vivus.LINEAR,
+          pathTimingFunction: Vivus.LINEAR
+        });
+        ranges = layerRanges();
+        fades = Array.prototype.slice.call(document.querySelectorAll('#art-svg .fade'));
+        if (reduced) {
+          vivus.setFrameProgress(1);
+          for (var i = 0; i < fades.length; i++) fades[i].style.opacity = '1';
+        } else {
+          vivus.setFrameProgress(artProgress(tRaw));
+          paintFades(tRaw);
+        }
+        art.classList.add('ready');
+        paint(tRaw);
+      } catch (e) {
+        artStatic();
+      }
+    };
+    document.head.appendChild(s);
+  }
+})();
+</script>
 
 </body>
 </html>
