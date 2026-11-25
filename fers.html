@@ -563,6 +563,12 @@ main{display:block}
     backdrop-filter:blur(3px);
     -webkit-backdrop-filter:blur(3px);
   }
+  /* a beat with no visible content keeps its element, for the sr-only
+     key and for the scripts that measure .copy, but takes no chrome */
+  .live .copy--bare{
+    background:none;border:0;padding:0;
+    backdrop-filter:none;-webkit-backdrop-filter:none;
+  }
   /* Mobile cards run 90-160px tall, so a 112vh runway left ~85% of every
      screen empty. Tightened: the page now scrolls in ~13 screens, not 20. */
   .live .beat{min-height:62vh}
@@ -595,7 +601,7 @@ main{display:block}
   .live .beat--wheel .chapter-label{display:none}
   .live .wheel-sub{font-size:1.05rem;margin-bottom:.35rem}
   .live .wheel-q{font-size:.86rem}
-  .live .pin,.live .copy{padding:.9rem .9rem 1rem}
+  .live .pin,.live .copy:not(.copy--bare){padding:.9rem .9rem 1rem}
 }
 
 /* ===================================================================
@@ -992,23 +998,35 @@ main{display:block}
       ch.beats.forEach(function (b, i) {
         h += '<div class="beat' + (b.steps ? ' beat--tall' : '') + '" data-word="' + esc(b.word) + '"' +
              (b.draw ? ' data-draw="' + esc(b.draw) + '"' : '') + '>';
-        h += '<div class="copy">';
-        if (!ch.pin && i === 0) h += '<h2 class="chapter-label">' + esc(ch.label) + '</h2>';
-        if (b.key) h += '<h3 class="sr-only">' + esc(b.key) + '</h3>';
-        (b.lines || []).forEach(function (p) { h += '<p>' + esc(p) + '</p>'; });
+        /* Build the card body first. A beat whose only content is the
+           sr-only key -- or nothing at all, like the opening beat --
+           must not be given card chrome, or the narrow-screen styles
+           paint it as an empty bordered box on top of the real card. */
+        var inner = '', shows = false;
+        if (!ch.pin && i === 0) {
+          inner += '<h2 class="chapter-label">' + esc(ch.label) + '</h2>';
+          shows = true;
+        }
+        if (b.key) inner += '<h3 class="sr-only">' + esc(b.key) + '</h3>';
+        (b.lines || []).forEach(function (p) {
+          inner += '<p>' + esc(p) + '</p>'; shows = true;
+        });
         var isLast = (ci === lastCh && i === ch.beats.length - 1);
         if (b.steps) {
-          h += '<ol class="steps">';
-          b.steps.forEach(function (st) { h += '<li>' + esc(st) + '</li>'; });
-          h += '</ol>';
+          inner += '<ol class="steps">';
+          b.steps.forEach(function (st) { inner += '<li>' + esc(st) + '</li>'; });
+          inner += '</ol>';
+          shows = true;
         }
         if (b.cta) {
-          h += '<p class="cta-wrap"><a class="cta" href="' + esc(b.cta.href) + '"' +
+          inner += '<p class="cta-wrap"><a class="cta" href="' + esc(b.cta.href) + '"' +
                (b.cta.external ? ' target="_blank" rel="noopener"' : '') + '>' +
                esc(b.cta.label) + ' <span aria-hidden="true">&rarr;</span></a></p>';
+          shows = true;
         }
-        if (isLast) h += outroHtml();
-        h += '</div></div>';
+        if (isLast) { inner += outroHtml(); shows = true; }
+        h += '<div class="copy' + (shows ? '' : ' copy--bare') + '">' + inner + '</div>';
+        h += '</div>';
       });
       h += '</section>';
     });
