@@ -540,7 +540,7 @@ main{display:block}
    5. NARROW SCREENS
    =================================================================== */
 @media (max-width:899px){
-  :root{--veil-fade:48px;--copy-top:calc(var(--veil-h) + 3.6rem)}
+  :root{--veil-fade:48px;--copy-top:calc(var(--veil-h) + 0.4rem)}
   .live .story{width:100%;padding:0 var(--gutter)}
   .live .display{left:var(--gutter);right:var(--gutter);width:auto}
   .live .measure{left:var(--gutter);right:var(--gutter);width:auto}
@@ -563,13 +563,24 @@ main{display:block}
     backdrop-filter:blur(3px);
     -webkit-backdrop-filter:blur(3px);
   }
-  .live .beat{min-height:112vh}
-  .live .beat--wheel{min-height:300vh}
-  .live .beat--rings{min-height:240vh}
-  .live .beat--tall{min-height:250vh}
+  /* Mobile cards run 90-160px tall, so a 112vh runway left ~85% of every
+     screen empty. Tightened: the page now scrolls in ~13 screens, not 20. */
+  .live .beat{min-height:62vh}
+  .live .beat--tall{min-height:180vh}
   /* final beat matches the viewport so the whole outro is still on
      screen when the page bottoms out */
-  .live .beat:last-child{min-height:100vh;padding-bottom:0}
+  .live .chapter:last-child .beat:last-child{min-height:75vh;padding-bottom:0}
+  /* The wheel and the rings need scroll distance to turn through their
+     items. .beat--wheel and .beat--rings are each an only child, so the
+     old .beat:last-child rule outranked them (0,3,0 vs 0,2,0) and
+     clamped both to 100vh -- at which the wheel cannot advance a single
+     step on a phone. Scoping the final-beat rule to the real last beat
+     lets the author's runway apply. */
+  .live .beat--wheel{min-height:300vh}
+  .live .beat--rings{min-height:240vh}
+  /* the desktop min(60ch,44vw) clamp leaks onto phones and squeezes
+     these two cards into a ~170px column */
+  .live .beat:last-child .copy{max-width:none}
   .live .mra-list,
   .live .route-list{left:0;right:0;width:100%}
   .live .mra-item{font-size:.82rem;letter-spacing:.08em}
